@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>UrlBase64</id>
+    <version>0.1.2</version>
+    <authors>NeoSmart Technologies, Mahmoud Al-Qudsi</authors>
+    <owners>NeoSmart Technologies, Mahmoud Al-Qudsi</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://cdn.rawgit.com/neosmart/UrlBase64/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/neosmart/UrlBase64/</projectUrl>
+    <iconUrl>https://cdn.rawgit.com/neosmart/UrlBase64/373067d3/Icon/UrlBase64.png</iconUrl>
+    <description>A standards-compliant implementation of url-safe base64 encode/decode for .NET projects.</description>
+    <releaseNotes>0.1.2:
+
+    * New PaddingPolicy option to specify output padding
+    * Lower .NET Standard requirement to 1.0
+
+
+0.1.1:
+
+    * Fixed an encoded error with inputs of a certain length.
+
+
+0.1:
+
+    * Initial release</releaseNotes>
+    <copyright>Copyright NeoSmart Technologies 2017-2018</copyright>
+    <tags>url, web, base64, encoding, binary</tags>
+    <repository type="git" url="https://github.com/neosmart/UrlBase64/" />
+    <dependencies>
+      <group targetFramework=".NETFramework2.0" />
+      <group targetFramework=".NETFramework4.0" />
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

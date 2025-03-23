@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>csFastFloat</id>
+    <version>4.1.4</version>
+    <title>csFastFloat : a fast and accurate float parser</title>
+    <authors>Carl Verret</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>readme.md</readme>
+    <description>C# port of Daniel Lemire's fast_float fully ported from C++ to C#. It is up to 9 times faster than the standard library in some cases while providing exact results.</description>
+    <copyright>csFastFloat is licensed under the MIT license</copyright>
+    <tags>C# Double Float Parsing</tags>
+    <repository type="git" url="https://github.com/CarlVerret/csFastFloat" commit="3752dc9b41570e3d2b9ab98db54ef8921474ddce" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework="net5.0" />
+      <group targetFramework="net8.0" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Memory" version="4.5.4" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

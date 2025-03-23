@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>GeometryDashAPI</id>
+    <version>0.2.29</version>
+    <authors>Folleach</authors>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>logo.png</icon>
+    <description>API for game Geometry Dash</description>
+    <tags>api, geometry, dash</tags>
+    <repository type="git" url="https://github.com/Folleach/GeometryDashAPI" commit="96bb8bba204acd287df5d5ece6067b2ec3820adc" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="SharpZipLib" version="1.4.2" exclude="Build,Analyzers" />
+        <dependency id="UrlBase64" version="0.1.2" exclude="Build,Analyzers" />
+        <dependency id="csFastFloat" version="4.1.4" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="SharpZipLib" version="1.4.2" exclude="Build,Analyzers" />
+        <dependency id="UrlBase64" version="0.1.2" exclude="Build,Analyzers" />
+        <dependency id="csFastFloat" version="4.1.4" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

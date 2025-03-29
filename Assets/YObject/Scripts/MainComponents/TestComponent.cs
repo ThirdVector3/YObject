@@ -26,25 +26,29 @@ public class TestComponent : YMonoBehaviour
         int freeGroup = YGameManager.Instance.GetFreeGroup();
         itemEditAddX.groups = new int[] { freeGroup };
         YGameManager.Instance.AddGroup(freeGroup);
-        var itemCompareAddX = new ItemCompare(YGameManager.Instance.GetIdByName("Input.P1Left"), 0, true, true, 1, 1, ItemCompare.Operation.Equals, freeGroup, 0, new YTrigger[] { itemEditAddX }, new YTrigger[0]);
+        var itemCompareAddX = YInput.GetP1Left(freeGroup, 0, new YTrigger[] { itemEditAddX }, new YTrigger[0]); 
+
 
         var itemEditSubX = new ItemEdit(YGameManager.Instance.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Subtract, 0.05f);
         freeGroup = YGameManager.Instance.GetFreeGroup();
         itemEditSubX.groups = new int[] { freeGroup };
         YGameManager.Instance.AddGroup(freeGroup);
-        var itemCompareSubX = new ItemCompare(YGameManager.Instance.GetIdByName("Input.P1Right"), 0, true, true, 1, 1, ItemCompare.Operation.Equals, freeGroup, 0, new YTrigger[] { itemEditSubX }, new YTrigger[0]);
+        var itemCompareSubX = YInput.GetP1Right(freeGroup, 0, new YTrigger[] { itemEditSubX }, new YTrigger[0]);
+
 
         var itemEditAddY = new ItemEdit(YGameManager.Instance.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Add, 0.05f);
         freeGroup = YGameManager.Instance.GetFreeGroup();
         itemEditAddY.groups = new int[] { freeGroup };
         YGameManager.Instance.AddGroup(freeGroup);
-        var itemCompareAddY = new ItemCompare(YGameManager.Instance.GetIdByName("Input.P2Left"), 0, true, true, 1, 1, ItemCompare.Operation.Equals, freeGroup, 0, new YTrigger[] { itemEditAddY }, new YTrigger[0]);
+        var itemCompareAddY = YInput.GetP2Left(freeGroup, 0, new YTrigger[] { itemEditAddY }, new YTrigger[0]);
+
 
         var itemEditSubY = new ItemEdit(YGameManager.Instance.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Subtract, 0.05f);
         freeGroup = YGameManager.Instance.GetFreeGroup();
         itemEditSubY.groups = new int[] { freeGroup };
         YGameManager.Instance.AddGroup(freeGroup);
-        var itemCompareSubY = new ItemCompare(YGameManager.Instance.GetIdByName("Input.P2Right"), 0, true, true, 1, 1, ItemCompare.Operation.Equals, freeGroup, 0, new YTrigger[] { itemEditSubY }, new YTrigger[0]);
+        var itemCompareSubY = YInput.GetP2Right(freeGroup, 0, new YTrigger[] { itemEditSubY }, new YTrigger[0]);
+
 
         triggers.Add(itemCompareAddX);
         triggers.Add(itemCompareSubX);

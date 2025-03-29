@@ -123,6 +123,35 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!21 &10108370
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 1, g: 0, b: 0, a: 1}
+    - _Color2: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &18089065
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +206,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1292403763}
+  - {fileID: 757174781}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -228,7 +257,7 @@ MonoBehaviour:
   color1: 3
   color2: 3
   color3: 4
---- !u!21 &183785800
+--- !u!21 &179573251
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -250,12 +279,41 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     m_Colors:
     - _Color1: {r: 1, g: 0, b: 0, a: 1}
     - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
     - _Color3: {r: 0.024262428, g: 0, b: 1, a: 1}
+  m_BuildTextureStacks: []
+--- !u!21 &180757505
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 1, g: 0, b: 0, a: 1}
+    - _Color2: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
   m_BuildTextureStacks: []
 --- !u!1 &225185370
 GameObject:
@@ -311,7 +369,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1681023785}
+  - {fileID: 1982097756}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -690,6 +748,35 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!21 &385636623
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color2: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color3: {r: 1, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &504170552
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +831,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2083029389}
+  - {fileID: 1018158479}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -795,6 +882,35 @@ MonoBehaviour:
   color1: 5
   color2: 4
   color3: 3
+--- !u!21 &549981713
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color2: {r: 1, g: 0, b: 0, a: 1}
+    - _Color3: {r: 1, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &614576649
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,7 +965,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1419552535}
+  - {fileID: 385636623}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1002,7 +1118,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 183785800}
+  - {fileID: 1533279270}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1101,7 +1217,7 @@ Transform:
   m_Father: {fileID: 2136394705}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &772198763
+--- !u!21 &757174781
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -1123,10 +1239,10 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     m_Colors:
-    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color1: {r: 1, g: 0, b: 0, a: 1}
     - _Color2: {r: 1, g: 0, b: 0, a: 1}
     - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
   m_BuildTextureStacks: []
@@ -1719,6 +1835,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e559b8e2a6d5b2143a9233245a48a886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!21 &1018158479
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color3: {r: 1, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1056304440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,35 +1912,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1094054828
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
-    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
-    - _Color3: {r: 1, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1176085780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,7 +2014,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1244461104}
+  - {fileID: 179573251}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2003,7 +2119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1503718522}
+  - {fileID: 10108370}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2054,64 +2170,6 @@ MonoBehaviour:
   color1: 3
   color2: 5
   color3: 4
---- !u!21 &1244461104
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 1, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
-    - _Color3: {r: 0.024262428, g: 0, b: 1, a: 1}
-  m_BuildTextureStacks: []
---- !u!21 &1292403763
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 1, g: 0, b: 0, a: 1}
-    - _Color2: {r: 1, g: 0, b: 0, a: 1}
-    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
-  m_BuildTextureStacks: []
 --- !u!43 &1343570156
 Mesh:
   m_ObjectHideFlags: 0
@@ -2330,7 +2388,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1094054828}
+  - {fileID: 1649013874}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2429,64 +2487,6 @@ Transform:
   m_Father: {fileID: 2136394705}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1419552535
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 0, g: 1, b: 0.1475563, a: 1}
-    - _Color2: {r: 0.024262428, g: 0, b: 1, a: 1}
-    - _Color3: {r: 1, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
---- !u!21 &1424604307
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 1, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0.024262428, g: 0, b: 1, a: 1}
-    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
-  m_BuildTextureStacks: []
 --- !u!43 &1468297698
 Mesh:
   m_ObjectHideFlags: 0
@@ -2651,35 +2651,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!21 &1503718522
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 1, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0.024262428, g: 0, b: 1, a: 1}
-    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1525979794
 GameObject:
   m_ObjectHideFlags: 0
@@ -2728,6 +2699,35 @@ Transform:
   m_Father: {fileID: 2136394705}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1533279270
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 1, g: 0, b: 0, a: 1}
+    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color3: {r: 0.024262428, g: 0, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!43 &1547864477
 Mesh:
   m_ObjectHideFlags: 0
@@ -2946,7 +2946,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1704901315}
+  - {fileID: 2138342863}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3051,7 +3051,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2041128686}
+  - {fileID: 549981713}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3156,7 +3156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1424604307}
+  - {fileID: 180757505}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3207,7 +3207,7 @@ MonoBehaviour:
   color1: 3
   color2: 5
   color3: 4
---- !u!21 &1681023785
+--- !u!21 &1649013874
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -3229,41 +3229,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     m_Colors:
-    - _Color1: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
     - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
-    - _Color3: {r: 0.024262428, g: 0, b: 1, a: 1}
-  m_BuildTextureStacks: []
---- !u!21 &1704901315
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 1, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
-    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color3: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!1 &1720337071
 GameObject:
@@ -3319,7 +3290,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 772198763}
+  - {fileID: 2134089803}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3794,7 +3765,7 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!21 &2041128686
+--- !u!21 &1982097756
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -3816,12 +3787,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     m_Colors:
-    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
-    - _Color2: {r: 1, g: 0, b: 0, a: 1}
-    - _Color3: {r: 1, g: 0, b: 0, a: 1}
+    - _Color1: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color3: {r: 0.024262428, g: 0, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!43 &2056520921
 Mesh:
@@ -3987,35 +3958,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!21 &2083029389
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs/Triangle
-  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: -1
-    - _BUILTIN_QueueOffset: 0
-    m_Colors:
-    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
-    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
-    - _Color3: {r: 1, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2083394811
 GameObject:
   m_ObjectHideFlags: 0
@@ -4228,6 +4170,35 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!21 &2134089803
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 0.024262428, g: 0, b: 1, a: 1}
+    - _Color2: {r: 1, g: 0, b: 0, a: 1}
+    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &2136394703
 GameObject:
   m_ObjectHideFlags: 0
@@ -4319,3 +4290,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf9735a6c9859f488aedec8864348e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!21 &2138342863
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs/Triangle
+  m_Shader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueOffset: 0
+    m_Colors:
+    - _Color1: {r: 1, g: 0, b: 0, a: 1}
+    - _Color2: {r: 0, g: 1, b: 0.1475563, a: 1}
+    - _Color3: {r: 0, g: 1, b: 0.1475563, a: 1}
+  m_BuildTextureStacks: []

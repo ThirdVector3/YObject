@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class YTriangle : MonoBehaviour
 {
@@ -74,7 +75,7 @@ public class YTriangle : MonoBehaviour
     private void OnValidate()
     {
         //UpdateMesh();
-        //ValidateLayerParent();
+        ValidateLayerParent();
         SetTriangleColors();
     }
 
@@ -106,15 +107,31 @@ public class YTriangle : MonoBehaviour
         }
         else
         {
+            bool noLayerParents = true;
             foreach (var item in FindObjectsOfType<YTriangle>())
             {
                 if (item.transform.parent != transform.parent || item.transform == transform)
                     continue;
 
-                if (!item.layerParent && item.layer == layer)
+                if (item.layerParent && item.layer == layer)
                 {
-                    item.layerParent = true;
+                    noLayerParents = false;
                     break;
+                }
+            }
+
+            if (noLayerParents)
+            {
+                foreach (var item in FindObjectsOfType<YTriangle>())
+                {
+                    if (item.transform.parent != transform.parent || item.transform == transform)
+                        continue;
+
+                    if (!item.layerParent && item.layer == layer)
+                    {
+                        item.layerParent = true;
+                        break;
+                    }
                 }
             }
         }

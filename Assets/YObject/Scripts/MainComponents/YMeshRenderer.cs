@@ -21,15 +21,15 @@ public class YMeshRenderer : YMonoBehaviour
         int vertexId = 0; 
         foreach (YVertex v in GetComponentsInChildren<YVertex>())
         {
-            int id1 = YGameManager.Instance.GetFreeIdFloat();
-            YGameManager.Instance.AddVariable($"{gameObject.name}.vertices[{vertexId}].x", id1, true);
-            int id2 = YGameManager.Instance.GetFreeIdFloat();
-            YGameManager.Instance.AddVariable($"{gameObject.name}.vertices[{vertexId}].y", id2, true);
-            int id3 = YGameManager.Instance.GetFreeIdFloat();
-            YGameManager.Instance.AddVariable($"{gameObject.name}.vertices[{vertexId}].z", id3, true);
-            int id4 = YGameManager.Instance.GetFreeIdFloat();
-            YGameManager.Instance.AddVariable($"{gameObject.name}.vertexObjects[{vertexId}]", id3, true);
-            YGameManager.Instance.AddGroup(id4);
+            int id1 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertices[{vertexId}].x", id1, true);
+            int id2 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertices[{vertexId}].y", id2, true);
+            int id3 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertices[{vertexId}].z", id3, true);
+            int id4 = YGameManager.Instance.IDsManager.GetFreeIdFloatAndGroup();
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertexObjects[{vertexId}]", id4, true);
+            YGameManager.Instance.IDsManager.AddGroup(id4);
 
             v.xId = id1;
             v.yId = id2;
@@ -54,19 +54,19 @@ public class YMeshRenderer : YMonoBehaviour
                     { 9994, id3 },
                     { 9993, id4 },
 
-                    { 9992, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.position.x") },
-                    { 9991, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.position.y") },
-                    { 9990, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.position.z") },
-                    { 9989, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.rotation.sin.x") },
-                    { 9988, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.rotation.sin.y") },
-                    { 9987, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.rotation.sin.z") },
-                    { 9986, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.rotation.cos.x") },
-                    { 9985, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.rotation.cos.y") },
-                    { 9984, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.rotation.cos.z") },
-                    { 9983, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.scale.x") },
-                    { 9982, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.scale.y") },
-                    { 9981, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.scale.z") },
-                    { 9980, YGameManager.Instance.GetIdByName(gameObject.name + ".transform.state") },
+                    { 9992, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.x") },
+                    { 9991, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.y") },
+                    { 9990, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.z") },
+                    { 9989, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.sin.x") },
+                    { 9988, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.sin.y") },
+                    { 9987, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.sin.z") },
+                    { 9986, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.cos.x") },
+                    { 9985, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.cos.y") },
+                    { 9984, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.cos.z") },
+                    { 9983, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.x") },
+                    { 9982, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.y") },
+                    { 9981, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.z") },
+                    { 9980, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.state") },
                 });
             }
             else
@@ -99,11 +99,11 @@ public class YMeshRenderer : YMonoBehaviour
             var vertexObject = new SimpleObject();
 
 
-            xItemEdit.groups = new int[] { 1000 };
-            yItemEdit.groups = new int[] { 1000 };
-            zItemEdit.groups = new int[] { 1000 };
-            spawn136.groups = new int[] { 1000 };
-            vertexObject.groups = new int[] { id4 };
+            xItemEdit.AddGroup(1000);// = new int[] { 1000 };
+            yItemEdit.AddGroup(1000);// = new int[] { 1000 };
+            zItemEdit.AddGroup(1000);// = new int[] { 1000 };
+            spawn136.AddGroup(1000);// = new int[] { 1000 };
+            vertexObject.AddGroup(id4);// = new int[] { id4 };
 
 
             objects.Add(xItemEdit);
@@ -119,26 +119,33 @@ public class YMeshRenderer : YMonoBehaviour
         {
             if (t.layerParent)
             {
-                int group = YGameManager.Instance.GetFreeGroup();
-                YGameManager.Instance.AddGroup(group);
+                int group = YGameManager.Instance.IDsManager.GetFreeGroup();
+                YGameManager.Instance.IDsManager.AddGroup(group);
                 layersIds.Add(t.layer, group);
             }
         }
 
         foreach (YTriangle t in GetComponentsInChildren<YTriangle>())
         {
-            int gradientOffGroup = YGameManager.Instance.GetFreeGroup();
-            YGameManager.Instance.AddGroup(gradientOffGroup);
-            int gradientOnGroup = YGameManager.Instance.GetFreeGroup();
-            YGameManager.Instance.AddGroup(gradientOnGroup);
-            int gradientExtraGroup = YGameManager.Instance.GetFreeGroup();
-            YGameManager.Instance.AddGroup(gradientExtraGroup);
+            int gradientOffGroup = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(gradientOffGroup);
+            int gradientOnGroup = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(gradientOnGroup);
+            int gradientExtraGroup = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(gradientExtraGroup);
+
+            int gradientID1 = YGameManager.Instance.IDsManager.GetFreeGradient();
+            YGameManager.Instance.IDsManager.AddGradient(gradientID1);
+            int gradientID2 = YGameManager.Instance.IDsManager.GetFreeGradient();
+            YGameManager.Instance.IDsManager.AddGradient(gradientID2);
+            int gradientID3 = YGameManager.Instance.IDsManager.GetFreeGradient();
+            YGameManager.Instance.IDsManager.AddGradient(gradientID3);
 
             if (t.layerParent)
             {
-                int colliderGroup = YGameManager.Instance.GetFreeIdFloatAndGroup();
-                YGameManager.Instance.AddGroup(colliderGroup);
-                YGameManager.Instance.AddVariable(gameObject.name + ".meshRenderer.collider" + colliderGroup, colliderGroup, true);
+                int colliderGroup = YGameManager.Instance.IDsManager.GetFreeIdFloatAndGroup();
+                YGameManager.Instance.IDsManager.AddGroup(colliderGroup);
+                YGameManager.Instance.IDsManager.AddVariable(gameObject.name + ".meshRenderer.collider" + colliderGroup, colliderGroup, true);
 
                 var spawn35 = new Spawn(35, false, 0, new Dictionary<int, int> {
                     { 9999, t.vertices[0].zId },
@@ -146,14 +153,14 @@ public class YMeshRenderer : YMonoBehaviour
                     { 9997, t.vertices[2].zId },
                     { 9996, colliderGroup },
                 });
-                spawn35.groups = new int[] { 1003 };
+                spawn35.AddGroup(1003);// = new int[] { 1003 };
 
                 var collisionTrigger = new Collision(layersIds[t.layer], 1, gradientOffGroup, false);
-                collisionTrigger.groups = new int[] { 1001 };
+                collisionTrigger.AddGroup(1001);// = new int[] { 1001 };
 
                 var collisionObject = new CollisionObject(gradientOffGroup, false);
-                collisionObject.groups = new int[] { colliderGroup };
-                collisionObject.groupsParent = new int[] { colliderGroup };
+                collisionObject.AddGroup(colliderGroup);// = new int[] { colliderGroup };
+                collisionObject.AddGroupParent(colliderGroup);// = new int[] { colliderGroup };
 
                 objects.Add(spawn35);
                 objects.Add(collisionTrigger);
@@ -174,22 +181,22 @@ public class YMeshRenderer : YMonoBehaviour
                     { 989, gradientOffGroup },
                     { 987, gradientOnGroup },
                 });
-            spawn146.groups = new int[] { 1002 };
+            spawn146.AddGroup(1002);// = new int[] { 1002 };
 
-            var gradientOff = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientOffGroup, true, 2, t.color1, Gradient.Type.Normal);
-            gradientOff.groups = new int[] { gradientOffGroup, layersIds[t.layer] };
-            var gradientOff1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientOnGroup, true, 2, t.color2, Gradient.Type.Additive);
-            gradientOff1.groups = new int[] { gradientOffGroup, layersIds[t.layer] };
-            var gradientOff2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientExtraGroup, true, 2, t.color3, Gradient.Type.Additive);
-            gradientOff2.groups = new int[] { gradientOffGroup, layersIds[t.layer] };
+            var gradientOff = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientID1, true, 2, t.color1, Gradient.Type.Normal);
+            gradientOff.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer] });
+            var gradientOff1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientID2, true, 2, t.color2, Gradient.Type.Additive);
+            gradientOff1.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer] });
+            var gradientOff2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientID3, true, 2, t.color3, Gradient.Type.Additive);
+            gradientOff2.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer] });
 
 
-            var gradientOn = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientOffGroup, false, 2, t.color3, Gradient.Type.Normal);
-            gradientOn.groups = new int[] { gradientOnGroup, layersIds[t.layer] };
-            var gradientOn1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientOnGroup, false, 2, t.color2, Gradient.Type.Additive);
-            gradientOn1.groups = new int[] { gradientOnGroup, layersIds[t.layer] };
-            var gradientOn2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientExtraGroup, false, 2, t.color1, Gradient.Type.Additive);
-            gradientOn2.groups = new int[] { gradientOnGroup, layersIds[t.layer] };
+            var gradientOn = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientID1, false, 2, t.color3, Gradient.Type.Normal);
+            gradientOn.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer] });
+            var gradientOn1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientID2, false, 2, t.color2, Gradient.Type.Additive);
+            gradientOn1.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer] });
+            var gradientOn2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientID3, false, 2, t.color1, Gradient.Type.Additive);
+            gradientOn2.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer] });
 
 
             objects.Add(spawn146);

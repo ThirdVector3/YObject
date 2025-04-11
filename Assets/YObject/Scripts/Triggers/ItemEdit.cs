@@ -82,8 +82,8 @@ public class ItemEdit : YTrigger
 
     public override void Activate()
     {
-        var memVal1 = YGameManager.Instance.GetMemoryValue(setID1);
-        var memVal2 = YGameManager.Instance.GetMemoryValue(setID2);
+        var memVal1 = YGameManager.Instance.IDsManager.GetMemoryValue(setID1);
+        var memVal2 = YGameManager.Instance.IDsManager.GetMemoryValue(setID2);
 
         float result = 0;
 
@@ -175,23 +175,23 @@ public class ItemEdit : YTrigger
             switch (operation)
             {
                 case Operation.Equals:
-                    YGameManager.Instance.SetMemoryValue(editID, result);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, result);
                     break;
                 case Operation.Add:
-                    var editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, editVal.Item2 + result);
+                    var editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, editVal.Item2 + result);
                     break;
                 case Operation.Subtract:
-                    editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, editVal.Item2 - result);
+                    editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, editVal.Item2 - result);
                     break;
                 case Operation.Multiply:
-                    editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, editVal.Item2 * result);
+                    editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, editVal.Item2 * result);
                     break;
                 case Operation.Divide:
-                    editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, editVal.Item2 / result);
+                    editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, editVal.Item2 / result);
                     break;
             }
         }
@@ -200,23 +200,23 @@ public class ItemEdit : YTrigger
             switch (operation)
             {
                 case Operation.Equals:
-                    YGameManager.Instance.SetMemoryValue(editID, (int)result);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)result);
                     break;
                 case Operation.Add:
-                    var editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, (int)(editVal.Item2 + result));
+                    var editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 + result));
                     break;
                 case Operation.Subtract:
-                    editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, (int)(editVal.Item2 - result));
+                    editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 - result));
                     break;
                 case Operation.Multiply:
-                    editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, (int)(editVal.Item2 * result));
+                    editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 * result));
                     break;
                 case Operation.Divide:
-                    editVal = YGameManager.Instance.GetMemoryValue(editID);
-                    YGameManager.Instance.SetMemoryValue(editID, (int)(editVal.Item2 / result));
+                    editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 / result));
                     break;
             }
         }

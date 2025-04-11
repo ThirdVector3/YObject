@@ -133,5 +133,61 @@ public static class YMath
         return triggers.ToArray();
     }
 
+    public static YTrigger[] TanDeg(int idIn, int idOut)
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+        triggers.AddRange(SinDeg(idIn, idOut));
+        triggers.AddRange(CosDeg(idIn, 9993));
+        triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Divide, 1, 9993, true, 0, true, ItemEdit.Operation.Add));
+        return triggers.ToArray();
+    }
+    public static YTrigger[] TanRad(int idIn, int idOut)
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+        triggers.AddRange(SinRad(idIn, idOut));
+        triggers.AddRange(CosRad(idIn, 9993));
+        triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Divide, 1, 9993, true, 0, true, ItemEdit.Operation.Add));
+        return triggers.ToArray();
+    }
+
+    public static YTrigger[] CotDeg(int idIn, int idOut)
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+        triggers.AddRange(CosDeg(idIn, idOut));
+        triggers.AddRange(SinDeg(idIn, 9993));
+        triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Divide, 1, 9993, true, 0, true, ItemEdit.Operation.Add));
+        return triggers.ToArray();
+    }
+    public static YTrigger[] CotRad(int idIn, int idOut)
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+        triggers.AddRange(CosRad(idIn, idOut));
+        triggers.AddRange(SinRad(idIn, 9993));
+        triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Divide, 1, 9993, true, 0, true, ItemEdit.Operation.Add));
+        return triggers.ToArray();
+    }
+
     #endregion
+
+
+    public static YTrigger[] Sqrt(int idIn, int idOut)
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+
+        var trigger1 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1.01f);
+        var trigger10 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 10.01f);
+        var trigger100 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 100.01f);
+        var trigger1000 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1000.01f);
+
+        //triggers.Add(new ItemCompare(idIn, 0, true, true, 1, 100, ItemCompare.Operation.Less));
+        triggers.Add(trigger1);
+
+        for (int i = 0; i < 5; i++)
+        {
+            triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Add, 1, idIn, true, idOut, true, ItemEdit.Operation.Divide));
+            triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Multiply, 0.5f));
+        }
+
+        return triggers.ToArray();
+    }
 }

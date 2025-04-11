@@ -24,7 +24,7 @@ public class ItemCompare : YTrigger
     private YTrigger[] falseTriggers;
 
 
-    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, int trueId, int falseId, YTrigger[] trueTriggers, YTrigger[] falseTriggers)
+    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers)
     {
         this.id1 = id1;
         this.id2 = id2;
@@ -33,16 +33,28 @@ public class ItemCompare : YTrigger
         this.multiplier1 = multiplier1;
         this.multiplier2 = multiplier2;
         this.operation = operation;
-        this.trueId = trueId;
-        this.falseId = falseId;
+        if (trueTriggers != null && trueTriggers.Length > 0) 
+        {
+            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(trueId);
+        }
+        else
+            trueId = 0;
+        if (falseTriggers != null && falseTriggers.Length > 0)
+        {
+            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(falseId);
+        }
+        else
+            falseId = 0;
         this.trueTriggers = trueTriggers;
         this.falseTriggers = falseTriggers;
     }
 
     public override void Activate()
     {
-        float a = is1float ? YGameManager.Instance.GetMemoryValue(id1).Item2 : YGameManager.Instance.GetMemoryValue(id1).Item1;
-        float b = is2float ? YGameManager.Instance.GetMemoryValue(id2).Item2 : YGameManager.Instance.GetMemoryValue(id2).Item1;
+        float a = is1float ? YGameManager.Instance.IDsManager.GetMemoryValue(id1).Item2 : YGameManager.Instance.IDsManager.GetMemoryValue(id1).Item1;
+        float b = is2float ? YGameManager.Instance.IDsManager.GetMemoryValue(id2).Item2 : YGameManager.Instance.IDsManager.GetMemoryValue(id2).Item1;
 
         if (id2 == 0)
             b = 1;
@@ -93,12 +105,14 @@ public class ItemCompare : YTrigger
         string triggers = "";
         foreach (var trigger in trueTriggers)
         {
-            triggers += trigger.GetString(triggersPos, new int[] { trueId });
+            trigger.AddGroup(trueId);
+            triggers += trigger.GetString(triggersPos);
             triggersPos.x += 2;
         }
         foreach (var trigger in falseTriggers)
         {
-            triggers += trigger.GetString(triggersPos, new int[] { falseId });
+            trigger.AddGroup(falseId);
+            triggers += trigger.GetString(triggersPos);
             triggersPos.x += 2;
         }
 

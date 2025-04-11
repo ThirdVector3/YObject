@@ -9,12 +9,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class YGameManager : MonoBehaviour
 {
     private static YGameManager _instance;
-
     public static YGameManager Instance
     {
         get
@@ -24,228 +22,24 @@ public class YGameManager : MonoBehaviour
             return _instance;
         }
     }
-
-    private int[] takenGroups = new int[]
-    {
-        689,
-        1000,
-        1001,
-        1002,
-        1003,
-        6000,
-        6001,
-        6002,
-        6003,
-        6004,
-        6005,
-        6006
-    };
-
-    private Dictionary<string, (int, bool)> variables = new Dictionary<string, (int, bool)>();
-    private (int, float)[] memory = new (int, float)[10000];
-    private List<int> pickedGroups = new List<int>();
+    public YIDsManager IDsManager;
 
 
-    private List<YTrigger> beginTriggers = new List<YTrigger>();
-    private List<YTrigger> tickTriggers = new List<YTrigger>();
-    private List<YGDObject> initGDObjects = new List<YGDObject>();
+
+
+
+    private List<YTrigger> globalBeginTriggers = new List<YTrigger>();
+    private List<YTrigger> globalTickTriggers = new List<YTrigger>();
+    private List<YGDObject> globalInitGDObjects = new List<YGDObject>();
+    private Dictionary<string, List<YTrigger>> groupsBeginTriggers = new Dictionary<string, List<YTrigger>>();
+    private Dictionary<string, List<YTrigger>> groupsTickTriggers = new Dictionary<string, List<YTrigger>>();
+    private Dictionary<string, List<YGDObject>> groupsInitGDObjects = new Dictionary<string, List<YGDObject>>();
 
 
     public string levelName = "Level";
     public string sampleLevelName = "SampleLevel";
     public LevelSavingType levelSavingType;
     public bool updateLevel;
-
-    public void AddVariable(string name, int id, bool isFloat)
-    {
-        if (variables.ContainsKey(name))
-        {
-            throw new System.Exception("More than one variable with same name");
-        }
-
-        variables.Add(name, (id, isFloat));
-    }
-    public void RemoveVariable(string name)
-    {
-        if (!variables.ContainsKey(name))
-        {
-            throw new System.Exception("No variable with that name");
-        }
-
-        variables.Remove(name);
-    }
-    public void SetMemoryValue(int id, float value)
-    {
-        memory[id] = (memory[id].Item1, value);
-    }
-    public void SetMemoryValue(int id, int value)
-    {
-        memory[id] = (value, memory[id].Item2);
-    }
-    public void SetMemoryValueByName(string name, float value)
-    {
-        if (GetIsFloatByName(name))
-        {
-            memory[GetIdByName(name)] = (memory[GetIdByName(name)].Item1, value);
-        }
-    }
-    public void SetMemoryValueByName(string name, int value)
-    {
-        if (!GetIsFloatByName(name))
-        {
-            memory[GetIdByName(name)] = (value, memory[GetIdByName(name)].Item1);
-        }
-    }
-    public (int, float) GetMemoryValue(int id)
-    {
-        return memory[id];
-    }
-    public (int, float) GetMemoryValueByName(string name)
-    {
-        return GetMemoryValue(GetIdByName(name));
-    }
-    public int GetIdByName(string name)
-    {
-        return variables[name].Item1;
-    }
-    public bool GetIsFloatByName(string name)
-    {
-        return variables[name].Item2;
-    }
-    public int GetFreeIdInt()
-    {
-        List<int> allIds = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIds.Add(i);
-        }
-        foreach (var variable in variables.Values)
-        {
-            if (variable.Item2 == false)
-            {
-                allIds.Remove(variable.Item1);
-            }
-        }
-        return allIds.Min();
-    }
-    public int GetFreeIdFloat()
-    {
-        List<int> allIds = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIds.Add(i);
-        }
-        foreach (var variable in variables.Values)
-        {
-            if (variable.Item2 == true)
-            {
-                allIds.Remove(variable.Item1);
-            }
-        }
-        return allIds.Min();
-    }
-    public int GetFreeGroup()
-    {
-        List<int> allIds = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIds.Add(i);
-        }
-        foreach (var variable in takenGroups)
-        {
-            allIds.Add(variable);
-        }
-        foreach (var group in pickedGroups)
-        {
-            allIds.Remove(group);
-        }
-        return allIds.Min();
-    }
-    public void AddGroup(int group)
-    {
-        if (!pickedGroups.Contains(group))
-            pickedGroups.Add(group);
-    }
-    public int GetFreeIdFloatAndGroup()
-    {
-        List<int> allIdsGroup = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIdsGroup.Add(i);
-        }
-        foreach (var variable in takenGroups)
-        {
-            allIdsGroup.Add(variable);
-        }
-        foreach (var group in pickedGroups)
-        {
-            allIdsGroup.Remove(group);
-        }
-
-
-        List<int> allIdsFloat = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIdsFloat.Add(i);
-        }
-        foreach (var variable in variables.Values)
-        {
-            if (variable.Item2 == true)
-            {
-                allIdsFloat.Remove(variable.Item1);
-            }
-        }
-
-
-        while (allIdsGroup.Count > 0)
-        {
-            if (allIdsFloat.Contains(allIdsGroup.Min()))
-                return allIdsGroup.Min();
-
-            allIdsGroup.Remove(allIdsGroup.Min());
-        }
-        return 9999;
-    }
-    public int GetFreeIdIntAndGroup()
-    {
-        List<int> allIdsGroup = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIdsGroup.Add(i);
-        }
-        foreach (var variable in takenGroups)
-        {
-            allIdsGroup.Add(variable);
-        }
-        foreach (var group in pickedGroups)
-        {
-            allIdsGroup.Remove(group);
-        }
-
-
-        List<int> allIdsInt = new List<int>();
-        for (int i = 500; i < 10000; i++)
-        {
-            allIdsInt.Add(i);
-        }
-        foreach (var variable in variables.Values)
-        {
-            if (variable.Item2 == false)
-            {
-                allIdsInt.Remove(variable.Item1);
-            }
-        }
-
-
-        while (allIdsGroup.Count > 0)
-        {
-            if (allIdsInt.Contains(allIdsGroup.Min()))
-                return allIdsGroup.Min();
-
-            allIdsGroup.Remove(allIdsGroup.Min());
-        }
-        return 9999;
-    }
 
     public enum LevelSavingType
     {
@@ -260,19 +54,21 @@ public class YGameManager : MonoBehaviour
 
         Vector2 pos = new Vector2(100, 100);
 
-        foreach (var gdObject in initGDObjects)
+        foreach (var gdObject in globalInitGDObjects)
         {
             objs += gdObject.GetString(pos);
             pos.x += 2;
         }
-        foreach (var trigger in beginTriggers)
+        foreach (var trigger in globalBeginTriggers)
         {
-            objs += trigger.GetString(pos, new int[] { 1001 });
+            trigger.AddGroup(1001);
+            objs += trigger.GetString(pos);
             pos.x += 2;
         }
-        foreach (var trigger in tickTriggers)
+        foreach (var trigger in globalTickTriggers)
         {
-            objs += trigger.GetString(pos, new int[] { 1000 });
+            trigger.AddGroup(1000);
+            objs += trigger.GetString(pos);
             pos.x += 2;
         }
 
@@ -297,10 +93,10 @@ public class YGameManager : MonoBehaviour
 
         //PrintLevelStringAsync("t");
 
+
+
         InitAll();
         BeginAll();
-
-
 
         //foreach (var variable in variables)
         //{
@@ -332,85 +128,58 @@ public class YGameManager : MonoBehaviour
 
     private void UpdateCoreVariables()
     {
-        SetMemoryValueByName("Input.P1Left", Input.GetKey(KeyCode.A) ? 1f : 0f);
-        SetMemoryValueByName("Input.P1Right", Input.GetKey(KeyCode.D) ? 1f : 0f);
-        SetMemoryValueByName("Input.P1Up", Input.GetKey(KeyCode.W) ? 1f : 0f);
-        SetMemoryValueByName("Input.P2Left", Input.GetKey(KeyCode.LeftArrow) ? 1f : 0f);
-        SetMemoryValueByName("Input.P2Right", Input.GetKey(KeyCode.RightArrow) ? 1f : 0f);
-        SetMemoryValueByName("Input.P2Up", Input.GetKey(KeyCode.UpArrow) ? 1f : 0f);
-        SetMemoryValueByName("Time.deltaTime", Time.fixedDeltaTime);
-        SetMemoryValueByName("Time.time", Time.time);
+        IDsManager.SetMemoryValueByName("Input.P1Left", Input.GetKey(KeyCode.A) ? 1f : 0f);
+        IDsManager.SetMemoryValueByName("Input.P1Right", Input.GetKey(KeyCode.D) ? 1f : 0f);
+        IDsManager.SetMemoryValueByName("Input.P1Up", Input.GetKey(KeyCode.W) ? 1f : 0f);
+        IDsManager.SetMemoryValueByName("Input.P2Left", Input.GetKey(KeyCode.LeftArrow) ? 1f : 0f);
+        IDsManager.SetMemoryValueByName("Input.P2Right", Input.GetKey(KeyCode.RightArrow) ? 1f : 0f);
+        IDsManager.SetMemoryValueByName("Input.P2Up", Input.GetKey(KeyCode.UpArrow) ? 1f : 0f);
+        IDsManager.SetMemoryValueByName("Time.deltaTime", Time.fixedDeltaTime);
+        IDsManager.SetMemoryValueByName("Time.time", Time.time);
     }
 
     private void InitAll()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        memory = new (int, float)[10000];
-        variables = new Dictionary<string, (int, bool)>()
-        {
-            {"Camera.position.x", (1, true) },
-            {"Camera.position.y", (2, true) },
-            {"Camera.position.z", (3, true) },
 
-            {"Camera.rotation.x", (4, true) },
-            {"Camera.rotation.y", (5, true) },
-            {"Camera.rotation.z", (11, true) },
-
-            {"Camera.rotation.sin.x", (6, true) },
-            {"Camera.rotation.sin.y", (7, true) },
-            {"Camera.rotation.sin.z", (12, true) },
-
-            {"Camera.rotation.cos.x", (8, true) },
-            {"Camera.rotation.cos.y", (9, true) },
-            {"Camera.rotation.cos.z", (13, true) },
-
-            {"Camera.focalLen", (16, true) },
-
-            {"PI", (10, true) },
-
-            {"Input.P1Left", (17, true) },
-            {"Input.P1Right", (18, true) },
-            {"Input.P1Up", (19, true) },
-
-            {"Input.P2Left", (20, true) },
-            {"Input.P2Right", (21, true) },
-            {"Input.P2Up", (22, true) },
-
-            {"ZERO", (23, true) },
-
-            {"Time.deltaTime", (14, true) },
-            {"Time.time", (15, true) },
-        };
-        pickedGroups = new List<int>();
+        IDsManager = new YIDsManager();
 
 
 
-        initGDObjects.Clear();
-        beginTriggers.Clear();
-        tickTriggers.Clear();
 
-        foreach (var yMono in GameObject.FindObjectsOfType<YMonoBehaviour>(true))
+        globalInitGDObjects.Clear();
+        globalBeginTriggers.Clear();
+        globalTickTriggers.Clear();
+        groupsBeginTriggers.Clear();
+        groupsTickTriggers.Clear();
+        groupsInitGDObjects.Clear();
+
+
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             yMono.Uninit();
         }
 
-        foreach (var yMono in GameObject.FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
-            initGDObjects.AddRange(yMono.Init());
-            beginTriggers.AddRange(yMono.Begin());
-            tickTriggers.AddRange(yMono.Tick());
+            globalInitGDObjects.AddRange(yMono.Init());
+        }
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        {
+            globalBeginTriggers.AddRange(yMono.Begin());
+            globalTickTriggers.AddRange(yMono.Tick());
         }
     }
     private void BeginAll()
     {
-        foreach (YTrigger trigger in beginTriggers)
+        foreach (YTrigger trigger in globalBeginTriggers)
         {
             trigger.Activate();
         }
     }
     private void TickAll()
     {
-        foreach (YTrigger trigger in tickTriggers)
+        foreach (YTrigger trigger in globalTickTriggers)
         {
             trigger.Activate();
         }

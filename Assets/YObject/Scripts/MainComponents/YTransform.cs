@@ -259,29 +259,30 @@ public class YTransform : YMonoBehaviour
     {
         if (!gameObject.isStatic)
         {
+            var group = GetComponent<YGameobjectGroup>();
             transform.position = new Vector3(
-                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.x").Item2,
-                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.y").Item2,
-                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.z").Item2
+                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.x", group != null ? group.GetName() : null).Item2,
+                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.y", group != null ? group.GetName() : null).Item2,
+                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.z", group != null ? group.GetName() : null).Item2
             );
-            if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state").Item2 == 1 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state").Item2 == 3)
+            if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state", group != null ? group.GetName() : null).Item2 == 1 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
             {
                 transform.eulerAngles = new Vector3(
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.rotation.x").Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.rotation.y").Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.rotation.z").Item2
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.rotation.x", group != null ? group.GetName() : null).Item2,
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.rotation.y", group != null ? group.GetName() : null).Item2,
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.rotation.z", group != null ? group.GetName() : null).Item2
                 );
             }
             else
             {
                 transform.eulerAngles = Vector3.zero;
             }
-            if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state").Item2 == 2 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state").Item2 == 3)
+            if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state", group != null ? group.GetName() : null).Item2 == 2 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
             {
                 transform.localScale = new Vector3(
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.scale.x").Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.scale.y").Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.scale.z").Item2
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.scale.x", group != null ? group.GetName() : null).Item2,
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.scale.y", group != null ? group.GetName() : null).Item2,
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.scale.z", group != null ? group.GetName() : null).Item2
                 );
             }
             else

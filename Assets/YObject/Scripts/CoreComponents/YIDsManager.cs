@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-
 public class YIDsManager
 {
     private int[] standartTakenGroups = new int[]
@@ -71,6 +70,17 @@ public class YIDsManager
             {"Time.time", (15, true) },
         };
         globalPickedGroups = standartTakenGroups.ToList();
+
+
+    }
+    public void InitGroups(string[] groups)
+    {
+        foreach (var group in groups)
+        {
+            groupsVariables.Add(group, new Dictionary<string, (int, bool)>());
+            groupsPickedGroups.Add(group, new List<int>());
+            groupsPickedGradientIDs.Add(group, new List<int>());
+        }
     }
 
     public void SetCurrentGroupName(string groupName)

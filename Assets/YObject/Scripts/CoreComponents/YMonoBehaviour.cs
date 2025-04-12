@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class YMonoBehaviour : MonoBehaviour
 {
     protected bool initialised;
-    public void Uninit()
+    public virtual void Uninit()
     {
         initialised = false;
     }

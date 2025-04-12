@@ -1,6 +1,7 @@
 ﻿using GeometryDashAPI.Data;
 using GeometryDashAPI.Data.Models;
 using GeometryDashAPI.Levels;
+using GeometryDashAPI.Levels.GameObjects.Default;
 using GeometryDashAPI.Levels.Structures;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class YGameManager : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class YGameManager : MonoBehaviour
         }
     }
     public YIDsManager IDsManager;
+    public YGameobjectGroupsManager GameobjectGroupsManager;
 
 
 
@@ -31,9 +34,12 @@ public class YGameManager : MonoBehaviour
     private List<YTrigger> globalBeginTriggers = new List<YTrigger>();
     private List<YTrigger> globalTickTriggers = new List<YTrigger>();
     private List<YGDObject> globalInitGDObjects = new List<YGDObject>();
-    private Dictionary<string, List<YTrigger>> groupsBeginTriggers = new Dictionary<string, List<YTrigger>>();
+    public Dictionary<string, List<YTrigger>> groupsBeginTriggers = new Dictionary<string, List<YTrigger>>();
     private Dictionary<string, List<YTrigger>> groupsTickTriggers = new Dictionary<string, List<YTrigger>>();
     private Dictionary<string, List<YGDObject>> groupsInitGDObjects = new Dictionary<string, List<YGDObject>>();
+    public Dictionary<string, int> groupsGroup = new Dictionary<string, int>();
+    public Dictionary<string, int> groupsBeginGroup = new Dictionary<string, int>();
+    public Dictionary<string, List<GameObject>> groupsGameobject = new Dictionary<string, List<GameObject>>();
 
 
     public string levelName = "Level";
@@ -54,9 +60,20 @@ public class YGameManager : MonoBehaviour
 
         Vector2 pos = new Vector2(100, 100);
 
+        foreach (var group in groupsGroup)
+        {
+            var toggle = new Toggle(group.Value, false);
+            toggle.AddGroup(1001);
+            objs += toggle.GetString(pos);
+            pos.x += 2;
+        }
+
         foreach (var gdObject in globalInitGDObjects)
         {
-            objs += gdObject.GetString(pos);
+            if (gdObject.pos != Vector2.zero)
+                objs += gdObject.GetString(gdObject.pos);
+            else
+                objs += gdObject.GetString(pos);
             pos.x += 2;
         }
         foreach (var trigger in globalBeginTriggers)
@@ -70,6 +87,37 @@ public class YGameManager : MonoBehaviour
             trigger.AddGroup(1000);
             objs += trigger.GetString(pos);
             pos.x += 2;
+        }
+
+        foreach (var gr in groupsGroup)
+        {
+            int groupOfGroup = gr.Value;
+            int groupOfStart = groupsBeginGroup[gr.Key];
+
+            foreach (var yGDObject in groupsInitGDObjects[gr.Key])
+            {
+                yGDObject.AddGroup(groupOfGroup);
+                if (yGDObject.pos != Vector2.zero)
+                    objs += yGDObject.GetString(yGDObject.pos);
+                else
+                    objs += yGDObject.GetString(pos);
+                pos.x += 2;
+            }
+
+            foreach (var trigger in groupsBeginTriggers[gr.Key])
+            {
+                trigger.AddGroup(groupOfStart);
+                trigger.AddGroup(groupOfGroup);
+                objs += trigger.GetString(pos);
+                pos.x += 2;
+            }
+            foreach (var trigger in groupsTickTriggers[gr.Key])
+            {
+                trigger.AddGroup(groupOfGroup);
+                trigger.AddGroup(1000);
+                objs += trigger.GetString(pos);
+                pos.x += 2;
+            }
         }
 
         SaveLevelString(objs, levelName, updateLevel, null, 2010, levelSavingType, sampleLevelName, 2010);
@@ -143,6 +191,7 @@ public class YGameManager : MonoBehaviour
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
         IDsManager = new YIDsManager();
+        GameobjectGroupsManager = new YGameobjectGroupsManager();
 
 
 
@@ -153,25 +202,82 @@ public class YGameManager : MonoBehaviour
         groupsBeginTriggers.Clear();
         groupsTickTriggers.Clear();
         groupsInitGDObjects.Clear();
+        groupsGroup.Clear();
+        groupsBeginGroup.Clear();
+        groupsGameobject.Clear();
 
+
+        IDsManager.SetCurrentGroupName(null);
 
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             yMono.Uninit();
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !groupsBeginTriggers.ContainsKey(yGameobjectGroup.GetName()))
+            {
+                groupsBeginTriggers.Add(yGameobjectGroup.GetName(), new List<YTrigger>());
+                groupsTickTriggers.Add(yGameobjectGroup.GetName(), new List<YTrigger>());
+                groupsInitGDObjects.Add(yGameobjectGroup.GetName(), new List<YGDObject>());
+                groupsGameobject.Add(yGameobjectGroup.GetName(), new List<GameObject>());
+
+                int gr = IDsManager.GetFreeGroup(null);
+                IDsManager.AddGroup(gr, null);
+                groupsGroup.Add(yGameobjectGroup.GetName(), gr);
+
+                gr = IDsManager.GetFreeGroup(null);
+                IDsManager.AddGroup(gr, null);
+                groupsBeginGroup.Add(yGameobjectGroup.GetName(), gr);
+            }
+
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup2))
+            {
+                if (!groupsGameobject[yGameobjectGroup2.GetName()].Contains(yMono.gameObject))
+                {
+                    groupsGameobject[yGameobjectGroup2.GetName()].Add(yMono.gameObject);
+                }
+            }
         }
+        IDsManager.InitGroups(groupsGroup.Keys.ToArray());
 
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
-            globalInitGDObjects.AddRange(yMono.Init());
+            if (yMono.GetComponent<YGameobjectGroup>() == null)
+                globalInitGDObjects.AddRange(yMono.Init());
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
-            globalBeginTriggers.AddRange(yMono.Begin());
-            globalTickTriggers.AddRange(yMono.Tick());
+            if (yMono.GetComponent<YGameobjectGroup>() == null)
+            {
+                globalBeginTriggers.AddRange(yMono.Begin());
+                globalTickTriggers.AddRange(yMono.Tick());
+            }
+        }
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        {
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
+            {
+                IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                groupsInitGDObjects[yGameobjectGroup.GetName()].AddRange(yMono.Init());
+            }
+        }
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        {
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
+            {
+                IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(yMono.Begin());
+                groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(yMono.Tick());
+            }
         }
     }
     private void BeginAll()
     {
+        foreach (var group in groupsGameobject)
+        {
+            foreach (var go in group.Value)
+            {
+                go.SetActive(false);
+            }
+        }
         foreach (YTrigger trigger in globalBeginTriggers)
         {
             trigger.Activate();
@@ -182,6 +288,13 @@ public class YGameManager : MonoBehaviour
         foreach (YTrigger trigger in globalTickTriggers)
         {
             trigger.Activate();
+        }
+        if (GameobjectGroupsManager.CurrentGroup != null)
+        {
+            foreach (YTrigger trigger in groupsTickTriggers[GameobjectGroupsManager.CurrentGroup])
+            {
+                trigger.Activate();
+            }
         }
     }
     private async void SaveLevelString(string objs, string levelName, bool updateLevel, List<Gradient> colors, int lastgroup, YGameManager.LevelSavingType levelSavingType = YGameManager.LevelSavingType.Override, string sampleName = "", int startGroup = -1)

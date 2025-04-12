@@ -1,11 +1,21 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(YTransform))]
 public class YMeshRenderer : YMonoBehaviour
 {
+    private static List<int> points = new List<int>();
+    private static List<int> collisionBlocks = new List<int>();
     public Mesh meshToCreate;
+
+
+    public override void Uninit()
+    {
+        base.Uninit();
+        points = new List<int>();
+    }
 
     public override YTrigger[] Begin()
     {
@@ -110,7 +120,11 @@ public class YMeshRenderer : YMonoBehaviour
             objects.Add(yItemEdit);
             objects.Add(zItemEdit);
             objects.Add(spawn136);
-            objects.Add(vertexObject);
+            if (!points.Contains(id4))
+            {
+                objects.Add(vertexObject);
+                points.Add(id4);
+            }
         }
 
         Dictionary<int, int> layersIds = new Dictionary<int, int>();
@@ -158,13 +172,20 @@ public class YMeshRenderer : YMonoBehaviour
                 var collisionTrigger = new Collision(layersIds[t.layer], 1, gradientOffGroup, false);
                 collisionTrigger.AddGroup(1001);// = new int[] { 1001 };
 
-                var collisionObject = new CollisionObject(gradientOffGroup, false);
-                collisionObject.AddGroup(colliderGroup);// = new int[] { colliderGroup };
-                collisionObject.AddGroupParent(colliderGroup);// = new int[] { colliderGroup };
-
                 objects.Add(spawn35);
                 objects.Add(collisionTrigger);
-                objects.Add(collisionObject);
+
+
+
+                if (!points.Contains(colliderGroup))
+                {
+                    var collisionObject = new CollisionObject(gradientOffGroup, false);
+                    collisionObject.AddGroup(colliderGroup);// = new int[] { colliderGroup };
+                    collisionObject.AddGroupParent(colliderGroup);// = new int[] { colliderGroup };
+                    objects.Add(collisionObject);
+                }
+
+                
             }
 
             var spawn146 = new Spawn(146, false, 0, new Dictionary<int, int> {

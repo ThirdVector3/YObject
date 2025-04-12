@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-
 public class Spawn : YTrigger
 {
     private int spawnID;

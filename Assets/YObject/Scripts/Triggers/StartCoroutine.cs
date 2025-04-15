@@ -2,11 +2,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class StartCoroutineTrigger : YTrigger
+public class StartCoroutine : YTrigger
 {
     private int group;
-    private CoroutineTrigger coroutine;
-    public StartCoroutineTrigger(CoroutineTrigger coroutine)
+    private Coroutine coroutine;
+    public StartCoroutine(Coroutine coroutine)
     {
         group = coroutine.group;
         this.coroutine = coroutine;

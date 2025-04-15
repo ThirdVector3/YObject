@@ -17,10 +17,13 @@ public class TestComponent : YMonoBehaviour
         return triggers.ToArray();
     }
 
-    private CoroutineTrigger yCoroutine;
+    private Coroutine yCoroutine;
     public override YGDObject[] Init()
     {
         List<YTrigger> triggers = new List<YTrigger>();
+
+        GetComponent<YTransform>().Init();
+
         triggers.Add(new YWaitForSeconds(3));
         triggers.AddRange(GetComponent<YTransform>().SetPosition(0f, 0, 0));
         triggers.Add(new YWaitForSeconds(1));
@@ -52,8 +55,8 @@ public class TestComponent : YMonoBehaviour
 
 
 
-        triggers.Add(YInput.GetP1Left(YGameManager.Instance.GameobjectGroupsManager.SetCurrentGroup("2"), new YTrigger[0]));
-        triggers.Add(YInput.GetP1Right(YGameManager.Instance.GameobjectGroupsManager.SetCurrentGroup("1"), new YTrigger[0]));
+        //triggers.Add(YInput.GetP1Left(YGameManager.Instance.GameobjectGroupsManager.SetCurrentGroup("2"), new YTrigger[0]));
+        //triggers.Add(YInput.GetP1Right(YGameManager.Instance.GameobjectGroupsManager.SetCurrentGroup("1"), new YTrigger[0]));
 
 
         return triggers.ToArray();

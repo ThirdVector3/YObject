@@ -1,15 +1,42 @@
-﻿using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
+[ExecuteInEditMode]
 [RequireComponent(typeof(YTransform))]
 public class YMeshRenderer : YMonoBehaviour
 {
     private static List<int> points = new List<int>();
     private static List<int> collisionBlocks = new List<int>();
+
     public Mesh meshToCreate;
 
+
+    public bool LODSystemEnabled = true;
+    public YMeshLOD[] LODs = new YMeshLOD[0];
+
+    public float cullDistance = 10;
+
+
+    private void Update()
+    {
+        if (gameObject.isStatic)
+            LODSystemEnabled = false;
+        float minDist = 0;
+        foreach (var LOD in LODs)
+        {
+            float dist = Vector3.Distance(YMainCamera.Instance.transform.position, transform.position);
+            if (dist > minDist && dist < LOD.distance)
+                LOD.parent.gameObject.SetActive(true);
+            else
+                LOD.parent.gameObject.SetActive(false);
+
+            minDist = LOD.distance;
+        }
+    }
 
     public override void Uninit()
     {
@@ -26,19 +53,55 @@ public class YMeshRenderer : YMonoBehaviour
     {
         List<YGDObject> objects = new List<YGDObject>();
 
-        GetComponent<YTransform>().Init();
+        for (int i = 0; i < LODs.Length; i++)
+        {
+            if (LODs.Length > i + 1)
+            {
+                if (LODs[i].parent.GetComponentsInChildren<YVertex>().Length < LODs[i + 1].parent.GetComponentsInChildren<YVertex>().Length ||
+                    LODs[i].parent.GetComponentsInChildren<YTriangle>().Length < LODs[i + 1].parent.GetComponentsInChildren<YTriangle>().Length)
+                {
+                    throw new Exception($"LODs in incorrect order in {gameObject.name}");
+                }
+            }
+        }
 
-        int vertexId = 0; 
-        foreach (YVertex v in GetComponentsInChildren<YVertex>())
+        GetComponent<YTransform>().Init();
+        float minDist = 0;
+        if (LODSystemEnabled)
+        {
+            foreach (var LOD in LODs)
+            {
+                objects.AddRange(LODInit(LOD, minDist));
+
+                minDist = LOD.distance;
+            }
+        }
+        else
+        {
+            objects.AddRange(LODInit(new YMeshLOD() { parent = this.transform, distance = cullDistance }, minDist));
+        }
+
+        return objects.ToArray();
+    }
+
+    private YGDObject[] LODInit(YMeshLOD LOD, float minDist = 0, bool isNotLOD = false)
+    {
+        List<YGDObject> objects = new List<YGDObject>();
+
+        int LODGroupId = YGameManager.Instance.IDsManager.GetFreeGroup();
+        YGameManager.Instance.IDsManager.AddGroup(LODGroupId);
+
+        int vertexId = 0;
+        foreach (YVertex v in LOD.parent.GetComponentsInChildren<YVertex>())
         {
             int id1 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertices[{vertexId}].x", id1, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertices[{vertexId}].x", id1, true);
             int id2 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertices[{vertexId}].y", id2, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertices[{vertexId}].y", id2, true);
             int id3 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertices[{vertexId}].z", id3, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertices[{vertexId}].z", id3, true);
             int id4 = YGameManager.Instance.IDsManager.GetFreeIdFloatAndGroup();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.vertexObjects[{vertexId}]", id4, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertexObjects[{vertexId}]", id4, true);
             YGameManager.Instance.IDsManager.AddGroup(id4);
 
             v.xId = id1;
@@ -109,10 +172,10 @@ public class YMeshRenderer : YMonoBehaviour
             var vertexObject = new SimpleObject();
 
 
-            xItemEdit.AddGroup(1000);// = new int[] { 1000 };
-            yItemEdit.AddGroup(1000);// = new int[] { 1000 };
-            zItemEdit.AddGroup(1000);// = new int[] { 1000 };
-            spawn136.AddGroup(1000);// = new int[] { 1000 };
+            xItemEdit.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
+            yItemEdit.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
+            zItemEdit.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
+            spawn136.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
             vertexObject.AddGroup(id4);// = new int[] { id4 };
 
 
@@ -129,7 +192,7 @@ public class YMeshRenderer : YMonoBehaviour
 
         Dictionary<int, int> layersIds = new Dictionary<int, int>();
 
-        foreach (YTriangle t in GetComponentsInChildren<YTriangle>())
+        foreach (YTriangle t in LOD.parent.GetComponentsInChildren<YTriangle>())
         {
             if (t.layerParent)
             {
@@ -139,7 +202,7 @@ public class YMeshRenderer : YMonoBehaviour
             }
         }
 
-        foreach (YTriangle t in GetComponentsInChildren<YTriangle>())
+        foreach (YTriangle t in LOD.parent.GetComponentsInChildren<YTriangle>())
         {
             int gradientOffGroup = YGameManager.Instance.IDsManager.GetFreeGroup();
             YGameManager.Instance.IDsManager.AddGroup(gradientOffGroup);
@@ -159,7 +222,7 @@ public class YMeshRenderer : YMonoBehaviour
             {
                 int colliderGroup = YGameManager.Instance.IDsManager.GetFreeIdFloatAndGroup();
                 YGameManager.Instance.IDsManager.AddGroup(colliderGroup);
-                YGameManager.Instance.IDsManager.AddVariable(gameObject.name + ".meshRenderer.collider" + colliderGroup, colliderGroup, true);
+                YGameManager.Instance.IDsManager.AddVariable(gameObject.name + "." + LOD.parent.name + ".meshRenderer.collider" + colliderGroup, colliderGroup, true);
 
                 var spawn35 = new Spawn(35, false, 0, new Dictionary<int, int> {
                     { 9999, t.vertices[0].zId },
@@ -167,7 +230,7 @@ public class YMeshRenderer : YMonoBehaviour
                     { 9997, t.vertices[2].zId },
                     { 9996, colliderGroup },
                 });
-                spawn35.AddGroup(1003);// = new int[] { 1003 };
+                spawn35.AddGroups(1003, LODGroupId);// = new int[] { 1003 };
 
                 var collisionTrigger = new Collision(layersIds[t.layer], 1, gradientOffGroup, false);
                 collisionTrigger.AddGroup(1001);// = new int[] { 1001 };
@@ -185,7 +248,7 @@ public class YMeshRenderer : YMonoBehaviour
                     objects.Add(collisionObject);
                 }
 
-                
+
             }
 
             var spawn146 = new Spawn(146, false, 0, new Dictionary<int, int> {
@@ -205,19 +268,19 @@ public class YMeshRenderer : YMonoBehaviour
             spawn146.AddGroup(1002);// = new int[] { 1002 };
 
             var gradientOff = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientID1, true, 2, t.color1, Gradient.Type.Normal);
-            gradientOff.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer] });
+            gradientOff.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer], LODGroupId });
             var gradientOff1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientID2, true, 2, t.color2, Gradient.Type.Additive);
-            gradientOff1.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer] });
+            gradientOff1.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer], LODGroupId });
             var gradientOff2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientID3, true, 2, t.color3, Gradient.Type.Additive);
-            gradientOff2.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer] });
+            gradientOff2.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer], LODGroupId });
 
 
             var gradientOn = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientID1, false, 2, t.color3, Gradient.Type.Normal);
-            gradientOn.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer] });
+            gradientOn.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer], LODGroupId });
             var gradientOn1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientID2, false, 2, t.color2, Gradient.Type.Additive);
-            gradientOn1.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer] });
+            gradientOn1.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer], LODGroupId });
             var gradientOn2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientID3, false, 2, t.color1, Gradient.Type.Additive);
-            gradientOn2.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer] });
+            gradientOn2.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer], LODGroupId });
 
 
             objects.Add(spawn146);
@@ -227,6 +290,47 @@ public class YMeshRenderer : YMonoBehaviour
             objects.Add(gradientOff);
             objects.Add(gradientOff1);
             objects.Add(gradientOff2);
+        }
+
+        if (!isNotLOD)
+        {
+
+            List<YTrigger> triggers = new List<YTrigger>();
+
+            List<YTrigger> triggers1 = new List<YTrigger>()
+            {
+                new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 1, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.x"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9998, true, ItemEdit.Operation.Equals, 1, 2, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9997, true, ItemEdit.Operation.Equals, 1, 3, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.z"), true, ItemEdit.Operation.Subtract),
+
+                new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 9999, true, 9999, true, ItemEdit.Operation.Multiply),
+                new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, 9998, true, 9998, true, ItemEdit.Operation.Multiply),
+                new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, 9997, true, 9997, true, ItemEdit.Operation.Multiply),
+
+                new ItemEdit(9500, true, ItemEdit.Operation.Equals, 1, 9997, true, 0, true, ItemEdit.Operation.Add),
+            };
+
+            List<YTrigger> triggers2 = new List<YTrigger>()
+            {
+                new Stop(LODGroupId),
+                new Toggle(LODGroupId, false)
+            };
+
+            List<YTrigger> triggers3 = new List<YTrigger>()
+            {
+                new Toggle(LODGroupId, true),
+                //new Spawn(LODGroupId, false, 0, new Dictionary<int, int>())
+            };
+
+            var trig = new ItemCompare(9999, 0, true, true, 1, minDist * minDist, ItemCompare.Operation.More, triggers3.ToArray(), triggers2.ToArray());
+
+            triggers.AddRange(triggers1);
+            triggers.Add(new ItemCompare(9999, 0, true, true, 1, LOD.distance * LOD.distance, ItemCompare.Operation.More, triggers2.ToArray(), new YTrigger[] { trig }));
+
+            foreach (var trigger in triggers)
+                trigger.AddGroup(1003);
+
+            objects.AddRange(triggers);
         }
 
         return objects.ToArray();
@@ -242,13 +346,17 @@ public class YMeshRenderer : YMonoBehaviour
         if (meshToCreate == null)
             return;
 
+        GameObject g = new GameObject($"LOD {LODs.Length}");
+        g.transform.parent = this.transform;
+        g.transform.localPosition = Vector3.zero;
+        g.transform.localRotation = Quaternion.identity;
+        g.transform.localScale = Vector3.one;
+        Transform transform = g.transform;
 
         List<YVertex> spawnedVertices = new List<YVertex>();
 
         var compressed = CompressMeshData(meshToCreate);
 
-
-        print(meshToCreate.vertices.Length);
         foreach (var pos in compressed.Item1)
         {
             YVertex vertex = Instantiate(Resources.Load<YProjectSettings>("YProjectSettings").vertexPrefab, transform);
@@ -268,6 +376,9 @@ public class YMeshRenderer : YMonoBehaviour
             triangle.CreateMesh();
         }
 
+        List<YMeshLOD> yMeshLODs = LODs.ToList();
+        yMeshLODs.Add(new YMeshLOD() { parent = transform, distance = (yMeshLODs.Count > 0 ? yMeshLODs[yMeshLODs.Count - 1].distance + 10 : 10) });
+        LODs = yMeshLODs.ToArray();
 
         meshToCreate = null;
     }
@@ -300,4 +411,11 @@ public class YMeshRenderer : YMonoBehaviour
 
         return ( vertices.ToArray(), triangles.ToArray() );
     }
+}
+
+[Serializable]
+public class YMeshLOD
+{
+    public Transform parent;
+    public float distance;
 }

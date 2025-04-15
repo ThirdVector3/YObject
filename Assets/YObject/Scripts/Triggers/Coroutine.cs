@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CoroutineTrigger : YTrigger
+public class Coroutine : YTrigger
 {
     private YTrigger[] triggers;
     public int group;
 
-    public CoroutineTrigger(YTrigger[] triggers)
+    public Coroutine(YTrigger[] triggers)
     {
         this.triggers = triggers;
         group = YGameManager.Instance.IDsManager.GetFreeGroup();
@@ -19,9 +19,9 @@ public class CoroutineTrigger : YTrigger
 
     public override void Activate()
     {
-        YGameManager.Instance.StartCoroutine(Coroutine());
+        YGameManager.Instance.StartCoroutine(IECoroutine());
     }
-    private IEnumerator Coroutine()
+    private IEnumerator IECoroutine()
     {
         foreach (var trigger in triggers)
         {

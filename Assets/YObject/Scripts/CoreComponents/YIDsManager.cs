@@ -313,7 +313,7 @@ public class YIDsManager
     public int GetFreeGradient(string groupName)
     {
         List<int> allIds = new List<int>();
-        for (int i = 1; i < 1000; i++)
+        for (int i = -1; i > -10000; i--)
         {
             allIds.Add(i);
         }
@@ -330,8 +330,9 @@ public class YIDsManager
                     allIds.Remove(group);
             }
         }
-
-        return allIds.Min();
+        if (allIds.Count == 0)
+            return -10000;
+        return allIds.Max();
     }
     public void AddGradient(int group)
     {

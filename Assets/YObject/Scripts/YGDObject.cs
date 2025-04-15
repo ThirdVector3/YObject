@@ -22,6 +22,12 @@ public abstract class YGDObject
         gs.Add(group);
         groupsParent = gs.ToArray();
     }
+    public virtual void AddGroups(params int[] groups)
+    {
+        List<int> gs = this.groups.ToList();
+        gs.AddRange(groups);
+        this.groups = gs.ToArray();
+    }
     public virtual void AddGroups(int[] groups, bool toChildren = false)
     {
         List<int> gs = this.groups.ToList();

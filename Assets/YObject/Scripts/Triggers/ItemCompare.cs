@@ -50,6 +50,21 @@ public class ItemCompare : YTrigger
         this.trueTriggers = trueTriggers;
         this.falseTriggers = falseTriggers;
     }
+    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers, int trueId, int falseId)
+    {
+        this.id1 = id1;
+        this.id2 = id2;
+        this.is1float = is1float;
+        this.is2float = is2float;
+        this.multiplier1 = multiplier1;
+        this.multiplier2 = multiplier2;
+        this.operation = operation;
+        this.trueId = trueId;
+        this.falseId = falseId;
+        this.trueTriggers = trueTriggers;
+        this.falseTriggers = falseTriggers;
+    }
+
 
     public override void Activate()
     {

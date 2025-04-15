@@ -14,6 +14,10 @@ public class YTriangle : MonoBehaviour
     public int color2;
     public int color3;
 
+    public Color color1Corrector = new Color(1, 0.5f, 0.5f);
+    public Color color2Corrector = new Color(1, 0.5f, 0.5f);
+    public Color color3Corrector = new Color(1, 0.5f, 0.5f);
+
 
     private void Awake()
     {
@@ -87,9 +91,44 @@ public class YTriangle : MonoBehaviour
 
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.sharedMaterial = new Material(Resources.Load<YProjectSettings>("YProjectSettings").triangleShader);
-        meshRenderer.sharedMaterial.SetColor("_Color1", Resources.Load<YProjectSettings>("YProjectSettings").colorChannels[color1]);
-        meshRenderer.sharedMaterial.SetColor("_Color2", Resources.Load<YProjectSettings>("YProjectSettings").colorChannels[color2]);
-        meshRenderer.sharedMaterial.SetColor("_Color3", Resources.Load<YProjectSettings>("YProjectSettings").colorChannels[color3]);
+
+        Color c1 = Resources.Load<YProjectSettings>("YProjectSettings").colorChannels[color1];
+        Color c2 = Resources.Load<YProjectSettings>("YProjectSettings").colorChannels[color2];
+        Color c3 = Resources.Load<YProjectSettings>("YProjectSettings").colorChannels[color3];
+
+
+
+        Color.RGBToHSV(c1, out float h11, out float s11, out float v11);
+        Color.RGBToHSV(color1Corrector, out float h12, out float s12, out float v12);
+        h11 += h12;
+        if (h11 > 1)
+            h11 -= 1;
+        s11 = Mathf.Clamp01(s11 + (s12 - 0.5f) * 2);
+        v11 *= v12;
+        c1 = Color.HSVToRGB(h11, s11, v11);
+
+        Color.RGBToHSV(c2, out float h21, out float s21, out float v21);
+        Color.RGBToHSV(color2Corrector, out float h22, out float s22, out float v22);
+        h21 += h22;
+        if (h21 > 1)
+            h21 -= 1;
+        s21 = Mathf.Clamp01(s21 + (s22 - 0.5f) * 2);
+        v21 *= v22;
+        c2 = Color.HSVToRGB(h21, s21, v21);
+
+        Color.RGBToHSV(c3, out float h31, out float s31, out float v31);
+        Color.RGBToHSV(color3Corrector, out float h32, out float s32, out float v32);
+        h31 += h32;
+        if (h31 > 1)
+            h31 -= 1;
+        s31 = Mathf.Clamp01(s31 + (s32 - 0.5f) * 2);
+        v31 *= v32;
+        c3 = Color.HSVToRGB(h31, s31, v31);
+
+
+        meshRenderer.sharedMaterial.SetColor("_Color1", c1);
+        meshRenderer.sharedMaterial.SetColor("_Color2", c2);
+        meshRenderer.sharedMaterial.SetColor("_Color3", c3);
     }
 
     private void ValidateLayerParent()

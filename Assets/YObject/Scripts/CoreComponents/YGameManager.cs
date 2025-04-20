@@ -26,7 +26,7 @@ public class YGameManager : MonoBehaviour
     }
     public YIDsManager IDsManager;
     public YGameobjectGroupsManager GameobjectGroupsManager;
-
+    public YSoundManager SoundManager;
 
 
 
@@ -40,6 +40,7 @@ public class YGameManager : MonoBehaviour
     public Dictionary<string, int> groupsGroup = new Dictionary<string, int>();
     public Dictionary<string, int> groupsBeginGroup = new Dictionary<string, int>();
     public Dictionary<string, List<GameObject>> groupsGameobject = new Dictionary<string, List<GameObject>>();
+
 
 
     public string levelName = "Level";
@@ -96,7 +97,7 @@ public class YGameManager : MonoBehaviour
 
             foreach (var yGDObject in groupsInitGDObjects[gr.Key])
             {
-                yGDObject.AddGroup(groupOfGroup);
+                yGDObject.AddGroup(groupOfGroup, true);
                 if (yGDObject.pos != Vector2.zero)
                     objs += yGDObject.GetString(yGDObject.pos);
                 else
@@ -107,25 +108,25 @@ public class YGameManager : MonoBehaviour
             foreach (var trigger in groupsBeginTriggers[gr.Key])
             {
                 trigger.AddGroup(groupOfStart);
-                trigger.AddGroup(groupOfGroup);
+                trigger.AddGroup(groupOfGroup, true);
                 objs += trigger.GetString(pos);
                 pos.x += 2;
             }
             foreach (var trigger in groupsTickTriggers[gr.Key])
             {
-                trigger.AddGroup(groupOfGroup);
+                trigger.AddGroup(groupOfGroup, true);
                 trigger.AddGroup(1000);
                 objs += trigger.GetString(pos);
                 pos.x += 2;
             }
         }
 
-        SaveLevelString(objs, levelName, updateLevel, null, 2010, levelSavingType, sampleLevelName, 2010);
+        SaveLevelString(objs, levelName, updateLevel, 2010, levelSavingType, sampleLevelName, 500);
     }
     public void CreateSampleLevel()
     {
         string objs = "";
-        SaveLevelString(objs, sampleLevelName, false, new List<Gradient>(), 300);
+        SaveLevelString(objs, sampleLevelName, false, 500);
     }
 
 
@@ -141,7 +142,8 @@ public class YGameManager : MonoBehaviour
 
         //PrintLevelStringAsync("t");
 
-
+        SoundManager = new YSoundManager();
+        SoundManager.Init();
 
         InitAll();
         BeginAll();
@@ -151,11 +153,16 @@ public class YGameManager : MonoBehaviour
         //    print(variable.Key);
         //    print(variable.Value.Item1);
         //}
+
+    }
+    private void OnApplicationQuit()
+    {
+        YColorManager.InitColors();
     }
     private async void AAA()
     {
         var local = await LocalLevels.LoadFileAsync();
-        string level = await PrintLevelStringAsync("newSample");
+        string level = await PrintLevelStringAsync("SampleLevel");
 
         File.WriteAllText(Application.dataPath + "/sampleLevel.txt", level);
     }
@@ -195,7 +202,6 @@ public class YGameManager : MonoBehaviour
 
 
 
-
         globalInitGDObjects.Clear();
         globalBeginTriggers.Clear();
         globalTickTriggers.Clear();
@@ -208,6 +214,7 @@ public class YGameManager : MonoBehaviour
 
 
         IDsManager.SetCurrentGroupName(null);
+        YColorManager.InitColors();
 
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
@@ -297,7 +304,7 @@ public class YGameManager : MonoBehaviour
             }
         }
     }
-    private async void SaveLevelString(string objs, string levelName, bool updateLevel, List<Gradient> colors, int lastgroup, YGameManager.LevelSavingType levelSavingType = YGameManager.LevelSavingType.Override, string sampleName = "", int startGroup = -1)
+    private async void SaveLevelString(string objs, string levelName, bool updateLevel, int lastgroup, LevelSavingType levelSavingType = LevelSavingType.Override, string sampleName = "", int startGroup = -1)
     {
         var local = await LocalLevels.LoadFileAsync();
 
@@ -316,7 +323,7 @@ public class YGameManager : MonoBehaviour
         if (!local.LevelExists(levelName))
         {
             string leveltext = YStaticData.savingLevelSample;
-            if (levelSavingType == YGameManager.LevelSavingType.UseSample)
+            if (levelSavingType == LevelSavingType.UseSample)
             {
                 var li = local.GetLevel(sampleName);
                 leveltext = Level.Decompress(li.LevelString);
@@ -358,7 +365,7 @@ public class YGameManager : MonoBehaviour
         else
         {
             string leveltext = YStaticData.savingLevelSample;
-            if (levelSavingType == YGameManager.LevelSavingType.UseSample)
+            if (levelSavingType == LevelSavingType.UseSample)
             {
 
                 var li = local.GetLevel(sampleName);
@@ -401,6 +408,6 @@ public class YGameManager : MonoBehaviour
         }
         local.Save();
         print("Saved");
-        print("Last Group: " + lastgroup + (startGroup != -1 ? " ,Groups Used: " + (lastgroup - startGroup) : ""));
+        print("Last Group: " + Instance.IDsManager.GetFreeGroup() + (startGroup != -1 ? " ,Groups Used: " + (Instance.IDsManager.GetFreeGroup() - startGroup) : ""));
     }
 }

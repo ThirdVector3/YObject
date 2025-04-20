@@ -10,10 +10,10 @@ public class Gradient : YTrigger
     private bool disable;
     private int color1;
     private int color2;
-    private float hue1;
+    private int hue1;
     private float sat1;
     private float val1;
-    private float hue2;
+    private int hue2;
     private float sat2;
     private float val2;
     public enum Type
@@ -25,7 +25,7 @@ public class Gradient : YTrigger
     }
     private Type type;
 
-    public Gradient(int bl, int br, int tl, int tr, int id, bool disable, int color1, int color2, Type type)
+    public Gradient(int bl, int br, int tl, int tr, int id, bool disable, int color1, int color2, Type type, int hue1 = 0, float sat1 = 0, float val1 = 1, int hue2 = 0, float sat2 = 0, float val2 = 1)
     {
         blID = bl;
         brID = br;
@@ -35,12 +35,12 @@ public class Gradient : YTrigger
         this.color1 = color1;
         this.color2 = color2;
         this.id = id;
-        hue1 = 0;
-        sat1 = 0;
-        val1 = 1;
-        hue2 = 0;
-        sat2 = 0;
-        val2 = 1;
+        this.hue1 = hue1;
+        this.sat1 = sat1;
+        this.val1 = val1;
+        this.hue2 = hue2;
+        this.sat2 = sat2;
+        this.val2 = val2;
         this.type = type;
     }
 

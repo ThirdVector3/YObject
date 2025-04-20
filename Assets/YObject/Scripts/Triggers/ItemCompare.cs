@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class ItemCompare : YTrigger
 {
@@ -110,6 +112,81 @@ public class ItemCompare : YTrigger
             foreach (var trigger in falseTriggers)
             {
                 trigger.Activate();
+            }
+        }
+    }
+
+    public override void AddGroup(int group, bool toChildren = false)
+    {
+        List<int> gs = groups.ToList();
+        gs.Add(group);
+        groups = gs.ToArray();
+        if (toChildren)
+        {
+            foreach(var trigger in trueTriggers)
+            {
+                trigger.AddGroup(group, toChildren);
+            }
+            foreach (var trigger in falseTriggers)
+            {
+                trigger.AddGroup(group, toChildren);
+            }
+        }
+    }
+    public override void AddGroupParent(int group, bool toChildren = false)
+    {
+        List<int> gs = groupsParent.ToList();
+        gs.Add(group);
+        groupsParent = gs.ToArray();
+        if (toChildren)
+        {
+            foreach (var trigger in trueTriggers)
+            {
+                trigger.AddGroupParent(group, toChildren);
+            }
+            foreach (var trigger in falseTriggers)
+            {
+                trigger.AddGroupParent(group, toChildren);
+            }
+        }
+    }
+    public override void AddGroups(params int[] groups)
+    {
+        List<int> gs = this.groups.ToList();
+        gs.AddRange(groups);
+        this.groups = gs.ToArray();
+    }
+    public override void AddGroups(int[] groups, bool toChildren = false)
+    {
+        List<int> gs = this.groups.ToList();
+        gs.AddRange(groups);
+        this.groups = gs.ToArray();
+        if (toChildren)
+        {
+            foreach (var trigger in trueTriggers)
+            {
+                trigger.AddGroups(groups, toChildren);
+            }
+            foreach (var trigger in falseTriggers)
+            {
+                trigger.AddGroups(groups, toChildren);
+            }
+        }
+    }
+    public override void AddGroupsParent(int[] groups, bool toChildren = false)
+    {
+        List<int> gs = groupsParent.ToList();
+        gs.AddRange(groups);
+        groupsParent = gs.ToArray();
+        if (toChildren)
+        {
+            foreach (var trigger in trueTriggers)
+            {
+                trigger.AddGroupsParent(groups, toChildren);
+            }
+            foreach (var trigger in falseTriggers)
+            {
+                trigger.AddGroupsParent(groups, toChildren);
             }
         }
     }

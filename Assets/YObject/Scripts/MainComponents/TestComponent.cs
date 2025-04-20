@@ -14,6 +14,10 @@ public class TestComponent : YMonoBehaviour
 
         //triggers.Add(YCoroutines.StartCoroutine(yCoroutine));
 
+        //triggers.Add(new ColorTrigger(1000, 1, Color.white));
+
+        //triggers.Add(new SongTrigger(63, 0, 1, true, 0, 0, 0, 0));
+
         return triggers.ToArray();
     }
 

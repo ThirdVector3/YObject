@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class YGameobjectGroupsManager
+﻿public class YGameobjectGroupsManager
 {
     private string currentGroup = null;
     public string CurrentGroup 

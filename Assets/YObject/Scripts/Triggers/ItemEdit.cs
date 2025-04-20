@@ -38,6 +38,7 @@ public class ItemEdit : YTrigger
 
     public ItemEdit(int editID, bool isEditFloat, Operation operation, float number)
     {
+
         this.editID = editID;
         this.operation = operation;
         this.setID1 = 0;
@@ -52,6 +53,8 @@ public class ItemEdit : YTrigger
     }
     public ItemEdit(int editID, bool isEditFloat, Operation operation, float multiplier, int setID1, bool isSetFloat, int setID2, bool isSetFloat2, Operation operation2)
     {
+        if (operation2 == Operation.Equals)
+            operation2 = Operation.Add;
         this.editID = editID;
         this.operation = operation;
         this.setID1 = setID1;
@@ -63,10 +66,14 @@ public class ItemEdit : YTrigger
         this.multiplier = multiplier;
         this.operation3 = 0;
         this.operation4 = 0;
+       
+
     }
 
     public ItemEdit(int editID, bool isEditFloat, Operation operation, float multiplier, int setID1, bool isSetFloat, int setID2, bool isSetFloat2, Operation operation2, Operation2 operation3, Operation3 operation4)
     {
+        if (operation2 == Operation.Equals)
+            operation2 = Operation.Add;
         this.editID = editID;
         this.operation = operation;
         this.setID1 = setID1;

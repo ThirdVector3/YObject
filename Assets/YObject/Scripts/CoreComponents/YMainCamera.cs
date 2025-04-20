@@ -27,7 +27,7 @@ public class YMainCamera : MonoBehaviour
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.y").Item2,
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.z").Item2
         );
-        transform.eulerAngles = new Vector3(
+        transform.eulerAngles = -new Vector3(
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2,
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2,
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2

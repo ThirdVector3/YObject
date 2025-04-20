@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
+[SelectionBase]
 [ExecuteInEditMode]
 [RequireComponent(typeof(YTransform))]
 public class YMeshRenderer : YMonoBehaviour
@@ -92,6 +93,7 @@ public class YMeshRenderer : YMonoBehaviour
         YGameManager.Instance.IDsManager.AddGroup(LODGroupId);
 
         int vertexId = 0;
+        int perfomanceUpdate = 1010;
         foreach (YVertex v in LOD.parent.GetComponentsInChildren<YVertex>())
         {
             int id1 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
@@ -172,10 +174,10 @@ public class YMeshRenderer : YMonoBehaviour
             var vertexObject = new SimpleObject();
 
 
-            xItemEdit.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
-            yItemEdit.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
-            zItemEdit.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
-            spawn136.AddGroups(1000, LODGroupId);// = new int[] { 1000 };
+            xItemEdit.AddGroups(perfomanceUpdate, LODGroupId);// = new int[] { 1000 };
+            yItemEdit.AddGroups(perfomanceUpdate, LODGroupId);// = new int[] { 1000 };
+            zItemEdit.AddGroups(perfomanceUpdate, LODGroupId);// = new int[] { 1000 };
+            spawn136.AddGroups(perfomanceUpdate, LODGroupId);// = new int[] { 1000 };
             vertexObject.AddGroup(id4);// = new int[] { id4 };
 
 
@@ -188,6 +190,9 @@ public class YMeshRenderer : YMonoBehaviour
                 objects.Add(vertexObject);
                 points.Add(id4);
             }
+            perfomanceUpdate++;
+            if (perfomanceUpdate > 1015)
+                perfomanceUpdate = 1010;
         }
 
         Dictionary<int, int> layersIds = new Dictionary<int, int>();
@@ -275,11 +280,11 @@ public class YMeshRenderer : YMonoBehaviour
             gradientOff2.AddGroups(new int[] { gradientOffGroup, layersIds[t.layer], LODGroupId });
 
 
-            var gradientOn = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientID1, false, 2, t.color3, Gradient.Type.Normal);
+            var gradientOn = new Gradient(t.vertices[0].objId, t.vertices[1].objId, t.vertices[2].objId, t.vertices[2].objId, gradientID1, false, 2, t.color3, Gradient.Type.Normal, hue2: t.GetCorrectorGDHues().Item3, sat2: t.GetCorrectorGDSaturations().Item3, val2: t.GetCorrectorGDValues().Item3);
             gradientOn.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer], LODGroupId });
-            var gradientOn1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientID2, false, 2, t.color2, Gradient.Type.Additive);
+            var gradientOn1 = new Gradient(t.vertices[1].objId, t.vertices[2].objId, t.vertices[0].objId, t.vertices[0].objId, gradientID2, false, 2, t.color2, Gradient.Type.Additive, hue2: t.GetCorrectorGDHues().Item2, sat2: t.GetCorrectorGDSaturations().Item2, val2: t.GetCorrectorGDValues().Item2);
             gradientOn1.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer], LODGroupId });
-            var gradientOn2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientID3, false, 2, t.color1, Gradient.Type.Additive);
+            var gradientOn2 = new Gradient(t.vertices[2].objId, t.vertices[0].objId, t.vertices[1].objId, t.vertices[1].objId, gradientID3, false, 2, t.color1, Gradient.Type.Additive, hue2: t.GetCorrectorGDHues().Item1, sat2: t.GetCorrectorGDSaturations().Item1, val2: t.GetCorrectorGDValues().Item1);
             gradientOn2.AddGroups(new int[] { gradientOnGroup, layersIds[t.layer], LODGroupId });
 
 

@@ -15,6 +15,10 @@ MonoBehaviour:
   triangleShader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
   vertexPrefab: {fileID: 2625958304142248768, guid: 301efea202185754ba1483f861cdf3ca, type: 3}
   trianglePrefab: {fileID: 1658627886748779419, guid: 7d9c59f7e5e94314a8e0db00d2fdb5b5, type: 3}
+  songs:
+    _serializedList:
+    - Key: 63
+      Value: {fileID: 8300000, guid: 6a385eedf339d3d45b1ba5a8ec7d59cf, type: 3}
   colorChannels:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 1, g: 1, b: 1, a: 1}

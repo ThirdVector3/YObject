@@ -248,14 +248,22 @@ public class YGameManager : MonoBehaviour
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null)
-                globalInitGDObjects.AddRange(yMono.Init());
+            {
+                var a = yMono.Init();
+                if (a != null)
+                    globalInitGDObjects.AddRange(a);
+            }
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null)
             {
-                globalBeginTriggers.AddRange(yMono.Begin());
-                globalTickTriggers.AddRange(yMono.Tick());
+                var a = yMono.Begin();
+                if (a != null)
+                    globalBeginTriggers.AddRange(a);
+                var b = yMono.Tick();
+                if (b != null)
+                    globalTickTriggers.AddRange(b);
             }
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
@@ -263,7 +271,9 @@ public class YGameManager : MonoBehaviour
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
-                groupsInitGDObjects[yGameobjectGroup.GetName()].AddRange(yMono.Init());
+                var a = yMono.Init();
+                if (a != null)
+                    groupsInitGDObjects[yGameobjectGroup.GetName()].AddRange(a);
             }
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
@@ -271,8 +281,12 @@ public class YGameManager : MonoBehaviour
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
-                groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(yMono.Begin());
-                groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(yMono.Tick());
+                var a = yMono.Begin();
+                if (a != null)
+                    groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(a);
+                var b = yMono.Tick();
+                if (b != null)
+                    groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(b);
             }
         }
     }

@@ -5,8 +5,8 @@ Unity to GD tool
 
 The core principles behind YObject:
 
-- **Almost the same approach to game creation as in Unity
-- **Group objects "see" global objects but global objects doesn't "see" group objects
+- Almost the same approach to game creation as in Unity
+- Group objects "see" global objects but global objects doesn't "see" group objects
 
 
 ## 🛠️ Quick Start

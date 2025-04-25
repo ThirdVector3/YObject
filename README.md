@@ -10,7 +10,8 @@ The core principles behind YObject:
 
 
 ## 🛠️ Quick Start
-For a quick start you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your component). Implement there Init, Begin and Tick methods.
+For a quick start you need to have YGameManager and Camera with YMainCamera component on scene.
+You can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your component). Implement there Init, Begin and Tick methods.
 - In Init you can create variables, objects, coroutines etc.
 - In Begin you can create triggers that will activate at start of game (or when group is loaded if gameobject has a group)
 - In Tick you can create triggers that will activate every tick
@@ -70,6 +71,9 @@ public class FlyCamera : YMonoBehaviour
     }
 }
 ```
+
+to export game to GD you need to click "Create Level" button in the YGameManager on the scene
+
 
 ## 🧩 Core Concepts & Features
 

@@ -53,8 +53,14 @@ public class TestComponent : YMonoBehaviour
 
 ### 🧭 Built-in Components
 - YTransform: Position, Rotation, Scale
+    ```cs
+    GetComponent<YTransform>().Translate(1f,5f,3f);
+    ```
 - YMeshRenderer: Renders 3D models
 - YMainCamera: Main camera data
+    ```cs
+    YMainCamera.Instance.Translate(1f,5f,3f);
+    ```
 
 ### 🔁 Coroutines
 

@@ -10,8 +10,66 @@ The core principles behind YObject:
 
 
 ## 🛠️ Quick Start
+For a quick start you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your component). Implement there Init, Begin and Tick methods.
+- In Init you can create variables, objects, coroutines etc.
+- In Begin you can create triggers that will activate at start of game (or when group is loaded if gameobject has a group)
+- In Tick you can create triggers that will activate every tick
+```cs
+public class FlyCamera : YMonoBehaviour
+{
+    public override YTrigger[] Begin()
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
 
-...
+        triggers.Add(YCoroutines.StartCoroutine(yCoroutine));
+
+        triggers.Add(new ColorTrigger(1000, 1, Color.white));
+
+        triggers.Add(new SongTrigger(63, 0, 1, true, 0, 0, 0, 0));
+
+        return triggers.ToArray();
+    }
+    private Coroutine yCoroutine;
+    public override YGDObject[] Init()
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+
+        GetComponent<YTransform>().Init();
+
+        triggers.Add(new YWaitForSeconds(3));
+        triggers.AddRange(GetComponent<YTransform>().SetPosition(0f, 0, 0));
+        triggers.Add(new YWaitForSeconds(1));
+        triggers.AddRange(GetComponent<YTransform>().SetPosition(1f, 1, 1));
+        triggers.Add(new YWaitForSeconds(1));
+        triggers.AddRange(GetComponent<YTransform>().SetPosition(2f, 2, 2));
+        triggers.Add(new YWaitForSeconds(1));
+        triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
+
+        yCoroutine = YCoroutines.GetCoroutine(new Vector2(300, 300), triggers.ToArray());
+        return new YGDObject[]{ yCoroutine };
+    }
+
+    public override YTrigger[] Tick()
+    {
+        List<YTrigger> triggers = new List<YTrigger>();
+        triggers.AddRange(YMainCamera.Instance.GetSin(9999,9998,9997));
+        triggers.AddRange(YMainCamera.Instance.GetCos(9996,9995,9994));
+        triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Divide, 30));
+        triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Divide, -30));
+        triggers.Add(new ItemEdit(9999, true, ItemEdit.Operation.Divide, 30));
+        triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add));
+        triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add));
+        triggers.Add(new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add));
+        triggers.Add(YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]));
+        triggers.Add(YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]));
+        triggers.Add(YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]));
+        triggers.Add(YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]));
+        triggers.Add(YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]));
+        triggers.Add(YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]));
+        return triggers.ToArray();
+    }
+}
+```
 
 ## 🧩 Core Concepts & Features
 
@@ -49,7 +107,16 @@ public class TestComponent : YMonoBehaviour
 }
 
 ```
-  
+
+### Main Triggers For Code Logic
+- ItemEdit
+    ```cs
+    new ItemEdit(9999, true, ItemEdit.Operation.Equals, 10);
+    ```
+- ItemCompare
+    ```cs
+    new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals, triggersTrue, triggersFalse);
+    ```
 
 ### 🧭 Built-in Components
 - YTransform: Position, Rotation, Scale
@@ -101,10 +168,11 @@ public class TestComponent : YMonoBehaviour
 
 ### ✎ Level of Detail (LOD)
 Reduce mesh detail based on camera distance.
-
 ...
 
 ### 📦 Group Loading / Unloading
+To add group to an object you need to add YGameobjectGroup component to it
+
 - Load and unload groups of objects to exclude filling in all IDs and improve perfomance
 
 ```cs
@@ -132,3 +200,9 @@ YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0])
 ```
 
 ### ⏱️ Delta Time & Time Control
+- Use variable Time.time to get Game time
+- Use variable Time.deltaTime to get Delta time
+
+```cs
+GetComponent<YTransform>().Rotate(23, YGameManager.Instance.IDsManager.GetIdByName("Time.time"), 23);
+```

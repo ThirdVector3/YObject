@@ -55,9 +55,9 @@ MonoBehaviour:
   color1: 1
   color2: 1
   color3: 1
-  color1Corrector: {r: 1, g: 0.5, b: 0.5, a: 1}
-  color2Corrector: {r: 1, g: 0.5, b: 0.5, a: 1}
-  color3Corrector: {r: 1, g: 0.5, b: 0.5, a: 1}
+  color1Corrector: {r: 0.5, g: 0.25, b: 0.25, a: 1}
+  color2Corrector: {r: 0.5, g: 0.25, b: 0.25, a: 1}
+  color3Corrector: {r: 0.5, g: 0.25, b: 0.25, a: 1}
 --- !u!33 &7298993217673704488
 MeshFilter:
   m_ObjectHideFlags: 0

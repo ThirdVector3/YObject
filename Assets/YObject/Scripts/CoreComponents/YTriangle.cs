@@ -14,9 +14,9 @@ public class YTriangle : MonoBehaviour
     public int color2;
     public int color3;
 
-    public UnityEngine.Color color1Corrector = new UnityEngine.Color(1, 0.5f, 0.5f);
-    public UnityEngine.Color color2Corrector = new UnityEngine.Color(1, 0.5f, 0.5f);
-    public UnityEngine.Color color3Corrector = new UnityEngine.Color(1, 0.5f, 0.5f);
+    public UnityEngine.Color color1Corrector = new UnityEngine.Color(0.5f, 0.25f, 0.25f);
+    public UnityEngine.Color color2Corrector = new UnityEngine.Color(0.5f, 0.25f, 0.25f);
+    public UnityEngine.Color color3Corrector = new UnityEngine.Color(0.5f, 0.25f, 0.25f);
 
 
     private void Awake()
@@ -104,7 +104,7 @@ public class YTriangle : MonoBehaviour
         if (h11 > 1)
             h11 -= 1;
         s11 = Mathf.Clamp01(s11 + (s12 - 0.5f) * 2);
-        v11 *= v12;
+        v11 = Mathf.Clamp01(v11 + (v12 - 0.5f) * 2);
         c1 = UnityEngine.Color.HSVToRGB(h11, s11, v11);
 
         UnityEngine.Color.RGBToHSV(c2, out float h21, out float s21, out float v21);
@@ -113,7 +113,7 @@ public class YTriangle : MonoBehaviour
         if (h21 > 1)
             h21 -= 1;
         s21 = Mathf.Clamp01(s21 + (s22 - 0.5f) * 2);
-        v21 *= v22;
+        v21 = Mathf.Clamp01(v21 + (v22 - 0.5f) * 2);
         c2 = UnityEngine.Color.HSVToRGB(h21, s21, v21);
 
         UnityEngine.Color.RGBToHSV(c3, out float h31, out float s31, out float v31);
@@ -122,7 +122,7 @@ public class YTriangle : MonoBehaviour
         if (h31 > 1)
             h31 -= 1;
         s31 = Mathf.Clamp01(s31 + (s32 - 0.5f) * 2);
-        v31 *= v32;
+        v31 = Mathf.Clamp01(v31 + (v32 - 0.5f) * 2);
         c3 = UnityEngine.Color.HSVToRGB(h31, s31, v31);
 
 
@@ -153,7 +153,7 @@ public class YTriangle : MonoBehaviour
         UnityEngine.Color.RGBToHSV(color1Corrector, out float _, out float _, out float v1);
         UnityEngine.Color.RGBToHSV(color2Corrector, out float _, out float _, out float v2);
         UnityEngine.Color.RGBToHSV(color3Corrector, out float _, out float _, out float v3);
-        return (v1, v2, v3);
+        return (v1 * 2, v2 * 2, v3 * 2);
     }
 
     private void ValidateLayerParent()

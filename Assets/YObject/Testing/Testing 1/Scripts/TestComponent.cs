@@ -10,6 +10,9 @@ public class TestComponent : YMonoBehaviour
 
     public override YTrigger[] Begin()
     {
+
+
+
         List<YTrigger> triggers = new List<YTrigger>();
 
         //triggers.Add(YCoroutines.StartCoroutine(yCoroutine));

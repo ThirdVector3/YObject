@@ -243,7 +243,6 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-        IDsManager.InitGroups(groupsGroup.Keys.ToArray());
 
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
@@ -266,6 +265,7 @@ public class YGameManager : MonoBehaviour
                     globalTickTriggers.AddRange(b);
             }
         }
+        IDsManager.InitGroups(groupsGroup.Keys.ToArray());
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))

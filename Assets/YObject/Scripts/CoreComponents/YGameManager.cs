@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class YGameManager : MonoBehaviour
 {
@@ -134,6 +135,7 @@ public class YGameManager : MonoBehaviour
 
     private void Awake()
     {
+        _instance = this;
         //ItemEdit itemEdit = new ItemEdit(1, ItemEdit.Operation.Add, 1, 1, ItemEdit.Operation.Add, true, true, true, 1, ItemEdit.Operation2.None, ItemEdit.Operation3.None);
 
         //Spawn spawn = new Spawn(123, false, 0.5f, new Dictionary<int, int> { { 100, 200 }, { 101, 201 } });

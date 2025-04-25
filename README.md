@@ -72,7 +72,7 @@ public class FlyCamera : YMonoBehaviour
 }
 ```
 
-to export game to GD you need to click "Create Level" button in the YGameManager on the scene
+To export game to GD level you need to click "Create Level" button in the YGameManager
 
 
 ## 🧩 Core Concepts & Features

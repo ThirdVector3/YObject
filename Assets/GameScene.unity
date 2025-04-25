@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf824e3c69c3a8d4ba2b0d6894f4c26a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: t2
+  levelName: Game
   sampleLevelName: SampleLevel
   levelSavingType: 1
   updateLevel: 1

@@ -5,6 +5,8 @@ using UnityEngine;
 public class YMainCamera : MonoBehaviour
 {
     private static YMainCamera _instance;
+
+    private Camera cameraComponent;
     public static YMainCamera Instance
     {
         get
@@ -18,6 +20,8 @@ public class YMainCamera : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+
+        cameraComponent = GetComponent<Camera>();
     }
 
     void Update()
@@ -32,6 +36,8 @@ public class YMainCamera : MonoBehaviour
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2,
             YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2
         );
+        cameraComponent.focalLength = YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.focalLen").Item2;
+
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.x", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2 * Mathf.Deg2Rad));
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.y", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.z", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
@@ -40,7 +46,18 @@ public class YMainCamera : MonoBehaviour
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.y", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.z", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
     }
-
+    public YTrigger SetFocalLen(float focalLen)
+    {
+        return new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, focalLen);
+    }
+    public YTrigger SetFocalLen(int idIn)
+    {
+        return new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, 1, idIn, true, 0, true, ItemEdit.Operation.Add);
+    }
+    public YTrigger GetFocalLen(int idOut)
+    {
+        return new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, 0, true, ItemEdit.Operation.Add);
+    }
     public YTrigger[] SetPosition(int idInX, int idInY, int idInZ)
     {
         YTrigger[] result = new YTrigger[]

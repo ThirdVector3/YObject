@@ -77,9 +77,9 @@ public class FlyCamera : YMonoBehaviour
 
         triggers.AddRange(YMainCamera.Instance.GetSin(9999,9998,9997));
         triggers.AddRange(YMainCamera.Instance.GetCos(9996,9995,9994));
-        triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Divide, 30));
-        triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Divide, -30));
-        triggers.Add(new ItemEdit(9999, true, ItemEdit.Operation.Divide, 30));
+        triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Divide, 10));
+        triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Divide, -10));
+        triggers.Add(new ItemEdit(9999, true, ItemEdit.Operation.Divide, 10));
         triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add));
         triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add));
         triggers.Add(new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add));
@@ -89,7 +89,6 @@ public class FlyCamera : YMonoBehaviour
         triggers.Add(YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]));
         triggers.Add(YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]));
         triggers.Add(YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]));
-
 
 
 

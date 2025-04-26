@@ -144,6 +144,7 @@ public class YGameManager : MonoBehaviour
 
         //PrintLevelStringAsync("t");
 
+
         SoundManager = new YSoundManager();
         SoundManager.Init();
 
@@ -161,12 +162,13 @@ public class YGameManager : MonoBehaviour
     {
         YColorManager.InitColors();
     }
-    private async void AAA()
+    private async void ImportSampleLevel()
     {
         var local = await LocalLevels.LoadFileAsync();
         string level = await PrintLevelStringAsync("SampleLevel");
 
         File.WriteAllText(Application.dataPath + "/sampleLevel.txt", level);
+        print("imported");
     }
     private async Task<string> PrintLevelStringAsync(string levelName)
     {
@@ -194,15 +196,12 @@ public class YGameManager : MonoBehaviour
         IDsManager.SetMemoryValueByName("Time.deltaTime", Time.fixedDeltaTime);
         IDsManager.SetMemoryValueByName("Time.time", Time.time);
     }
-
     private void InitAll()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
         IDsManager = new YIDsManager();
         GameobjectGroupsManager = new YGameobjectGroupsManager();
-
-
 
         globalInitGDObjects.Clear();
         globalBeginTriggers.Clear();
@@ -218,6 +217,11 @@ public class YGameManager : MonoBehaviour
         IDsManager.SetCurrentGroupName(null);
         YColorManager.InitColors();
 
+        InitGameobjects();
+    }
+
+    private void InitGameobjects()
+    {
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             yMono.Uninit();
@@ -292,6 +296,7 @@ public class YGameManager : MonoBehaviour
             }
         }
     }
+
     private void BeginAll()
     {
         foreach (var group in groupsGameobject)

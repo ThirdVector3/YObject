@@ -87,6 +87,7 @@ public class YIDsManager
             {"Time.deltaTime", (14, true) },
             {"Time.time", (15, true) },
         };
+        SetMemoryValueByName("Camera.focalLen", 8f);
         globalPickedGroups = standartTakenGroups.ToList();
 
         globalFreeInts = new List<int>();

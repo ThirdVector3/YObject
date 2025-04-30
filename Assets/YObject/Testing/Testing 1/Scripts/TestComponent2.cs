@@ -11,7 +11,7 @@ public class TestComponent2 : YMonoBehaviour
 
     public override YTrigger[] Begin()
     {
-        return new YTrigger[0];
+        return null;//new YTrigger[] { new SongTrigger(63, 0, 1, true, 0, 0, 0, 0) };
     }
 
     public override YGDObject[] Init()
@@ -28,8 +28,8 @@ public class TestComponent2 : YMonoBehaviour
         //triggers.Add(new ItemEdit(5001, true, ItemEdit.Operation.Equals, 100));
         //triggers.AddRange(YMath.Sqrt(5001, 5000));
 
-        triggers.AddRange(GetComponent<YTransform>().SetState(1));
-        triggers.AddRange(GetComponent<YTransform>().Rotate(0, rot, 0));
+        //triggers.AddRange(GetComponent<YTransform>().SetState(1));
+        //triggers.AddRange(GetComponent<YTransform>().Rotate(0, rot, 0));
 
         //triggers.AddRange(yt.GetSin(9999, 9998, 9997));
         //triggers.AddRange(yt.GetCos(9996, 9995, 9994));

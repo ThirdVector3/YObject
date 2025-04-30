@@ -1,4 +1,4 @@
-# YObject
+# ![](imgs\yobjectLogomini.png) YObject
 Unity to GD tool
 
 ## 🚀 Philosophy
@@ -11,7 +11,14 @@ The core principles behind YObject:
 
 ## 🛠️ Quick Start
 For a quick start you need to have YGameManager and Camera with YMainCamera component on scene.
-You can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your component). Implement there Init, Begin and Tick methods.
+
+![](imgs\3.png)
+
+Let's get started with adding simple cube on scene. You can create object and put YMeshRenderer on it. Then you can put mesh on this object by selecting mesh and pressing "Create Mesh".
+
+![](imgs\1.png)
+
+Then you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your component). Implement there Init, Begin and Tick methods.
 - In Init you can create variables, objects, coroutines etc.
 - In Begin you can create triggers that will activate at start of game (or when group is loaded if gameobject has a group)
 - In Tick you can create triggers that will activate every tick
@@ -33,6 +40,9 @@ public class FlyCamera : YMonoBehaviour
     private Coroutine yCoroutine;
     public override YGDObject[] Init()
     {
+        YIDsManager.Instance.AddVariable(gameObject.name + ".variable", YIDsManager.Instance.GetFreeIdFloat(), true);
+
+
         List<YTrigger> triggers = new List<YTrigger>();
 
         GetComponent<YTransform>().Init();
@@ -72,7 +82,7 @@ public class FlyCamera : YMonoBehaviour
 }
 ```
 
-To export game to GD level you need to click "Create Level" button in the YGameManager
+#### To export game to GD level you need to click "Create Level" button in the YGameManager
 
 
 ## 🧩 Core Concepts & Features
@@ -172,23 +182,27 @@ public class TestComponent : YMonoBehaviour
 
 ### ✎ Level of Detail (LOD)
 Reduce mesh detail based on camera distance.
-...
+![](imgs\2.png)
 
 ### 📦 Group Loading / Unloading
 To add group to an object you need to add YGameobjectGroup component to it
+![](imgs\4.png)
 
 - Load and unload groups of objects to exclude filling in all IDs and improve perfomance
 
 ```cs
-YGameManager.Instance.GameobjectGroupsManager.SetCurrentGroup("2");
+YGameobjectGroupsManager.Instance.SetCurrentGroup("2");
 ```
 
+
 ### 🔊 Audio System
-audio support with volume and looping.
+Audio support with volume and looping.
 
 ```cs
 new SongTrigger(63, 0, 1, true, 0, 0, 0, 0);
 ```
+And you can add songs in the YProjectSettings in Assets/YObject/Resources/
+![](imgs\5.png)
 
 ### 🎨 Colors
 Built-in support for changing colors in color channels.
@@ -196,6 +210,9 @@ Built-in support for changing colors in color channels.
 ```cs
 new ColorTrigger(3, 1, Color.white)
 ```
+
+And you can change color channels in the YProjectSettings in Assets/YObject/Resources/
+![](imgs\5.png)
 
 ### 🎮 Input System
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GeometryDashAPI.Data;
+using UnityEngine;
 
 public class SongTrigger : YTrigger
 {
@@ -27,7 +28,7 @@ public class SongTrigger : YTrigger
 
     public override void Activate()
     {
-        YGameManager.Instance.SoundManager.PlaySong(channel, id, volume, loop, startMs, endMs);
+        YSoundManager.Instance.PlaySong(channel, id, volume, loop, startMs, endMs);
     }
 
     public override string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null)

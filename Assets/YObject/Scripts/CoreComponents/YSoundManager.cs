@@ -5,10 +5,13 @@ using UnityEngine.Rendering;
 
 public class YSoundManager
 {
+    public static YSoundManager Instance { get; private set; }
+
     private List<AudioSource> songSources = new List<AudioSource>();
     private UnityEngine.Coroutine[] songCoroutines = new UnityEngine.Coroutine[5];
     public void Init()
     {
+        Instance = this;
         for (int i = 0; i < 5; i++)
         {
             GameObject gameObject = new GameObject("SongChannel" + i, typeof(AudioSource));

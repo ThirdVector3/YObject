@@ -198,6 +198,7 @@ public class YGameManager : MonoBehaviour
     }
     private void InitAll()
     {
+        _instance = this;
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
         IDsManager = new YIDsManager();

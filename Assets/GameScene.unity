@@ -251,8 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Game
   sampleLevelName: SampleLevel
-  levelSavingType: 1
-  updateLevel: 1
+  levelSavingType: 0
+  updateLevel: 0
 --- !u!4 &1056304442
 Transform:
   m_ObjectHideFlags: 0

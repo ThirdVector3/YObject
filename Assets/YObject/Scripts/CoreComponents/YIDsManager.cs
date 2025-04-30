@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.VisualScripting;
 public class YIDsManager
 {
+    public static YIDsManager Instance { get; private set; }
     private int[] standartTakenGroups = new int[]
     {
         689,
@@ -52,6 +53,7 @@ public class YIDsManager
     private string currentGroupName = null;
     public YIDsManager()
     {
+        Instance = this;
         globalVariables = new Dictionary<string, (int, bool)>()
         {
             {"Camera.position.x", (1, true) },

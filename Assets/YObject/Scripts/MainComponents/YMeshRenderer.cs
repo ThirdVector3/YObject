@@ -30,7 +30,7 @@ public class YMeshRenderer : YMonoBehaviour
         foreach (var LOD in LODs)
         {
             float dist = Vector3.Distance(YMainCamera.Instance.transform.position, transform.position);
-            if (dist > minDist && dist < LOD.distance)
+            if (dist >= minDist && dist < LOD.distance)
                 LOD.parent.gameObject.SetActive(true);
             else
                 LOD.parent.gameObject.SetActive(false);

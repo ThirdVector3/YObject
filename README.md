@@ -1,4 +1,5 @@
-# ![](imgs/yobjectLogomini.png) YObject
+![](imgs/yobjectLogomini.png) 
+# YObject
 Unity to GD tool
 
 ## 🚀 Philosophy
@@ -182,10 +183,12 @@ public class TestComponent : YMonoBehaviour
 
 ### ✎ Level of Detail (LOD)
 Reduce mesh detail based on camera distance.
+
 ![](imgs/2.png)
 
 ### 📦 Group Loading / Unloading
 To add group to an object you need to add YGameobjectGroup component to it
+
 ![](imgs/4.png)
 
 - Load and unload groups of objects to exclude filling in all IDs and improve perfomance
@@ -202,6 +205,7 @@ Audio support with volume and looping.
 new SongTrigger(63, 0, 1, true, 0, 0, 0, 0);
 ```
 And you can add songs in the YProjectSettings in Assets/YObject/Resources/
+
 ![](imgs/5.png)
 
 ### 🎨 Colors
@@ -212,6 +216,7 @@ new ColorTrigger(3, 1, Color.white)
 ```
 
 And you can change color channels in the YProjectSettings in Assets/YObject/Resources/
+
 ![](imgs/5.png)
 
 ### 🎮 Input System

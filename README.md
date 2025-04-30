@@ -1,5 +1,4 @@
-![](imgs/yobjectLogomini.png) 
-# YObject
+# ![](imgs/YObjectLogomini.png)  YObject
 Unity to GD tool
 
 ## 🚀 Philosophy

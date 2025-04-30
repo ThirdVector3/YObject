@@ -231,3 +231,9 @@ YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0])
 ```cs
 GetComponent<YTransform>().Rotate(23, YGameManager.Instance.IDsManager.GetIdByName("Time.time"), 23);
 ```
+
+## How to use
+- download unity (version >= 2021.3.38f1)
+- add this files as project (Add project button)
+- open project
+- create game of your dreams

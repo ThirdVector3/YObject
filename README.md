@@ -7,6 +7,7 @@ The core principles behind YObject:
 
 - Almost the same approach to game creation as in Unity
 - Group objects "see" global objects but global objects doesn't "see" group objects
+- All gameobjects must have different names
 
 
 ## 🛠️ Quick Start
@@ -119,8 +120,37 @@ public class TestComponent : YMonoBehaviour
         return triggers.ToArray();
     }
 }
-
 ```
+
+### Main Operations
+
+<!-- - Add variable
+    ```cs
+    YIDsManager.Instance.AddVariable(gameObject.name + ".component.vector.x", YIDsManager.Instance.GetFreeIdFloat(), true);
+    YIDsManager.Instance.AddVariable(gameObject.name + ".component.vector.y", YIDsManager.Instance.GetFreeIdFloat(), true);
+    YIDsManager.Instance.AddVariable(gameObject.name + ".component.vector.z", YIDsManager.Instance.GetFreeIdFloat(), true);
+    ```
+    -->
+- Get free ids, groups or gradients
+    ```cs
+    YIDsManager.Instance.GetFreeIdFloat();
+
+    YIDsManager.Instance.GetFreeIdInt();
+
+    YIDsManager.Instance.GetFreeGroup();
+    
+    YIDsManager.Instance.GetFreeGradient();
+    ```
+- Add (Take place in memory) ids, groups or gradients
+    ```cs
+    YIDsManager.Instance.AddVariable($"varName", id, true);
+
+    YIDsManager.Instance.AddVariable($"varName", id, false);
+
+    YIDsManager.Instance.AddGroup(group);
+
+    YIDsManager.Instance.AddGradient(gradient);
+    ```
 
 ### Main Triggers For Code Logic
 - ItemEdit

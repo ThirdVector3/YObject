@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YMainCamera : MonoBehaviour
+public class YMainCamera : YMonoBehaviour
 {
     private static YMainCamera _instance;
 
@@ -46,6 +46,35 @@ public class YMainCamera : MonoBehaviour
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.y", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.z", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
     }
+
+
+    public override YGDObject[] Init()
+    {
+        return null;
+    }
+
+    public override YTrigger[] Begin()
+    {
+        List<YTrigger> triggers = new List<YTrigger>()
+        {
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Equals, transform.position.x),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Equals, transform.position.y),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Equals, transform.position.z),
+
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, transform.eulerAngles.x),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, transform.eulerAngles.y),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, transform.eulerAngles.z),
+        };
+
+        return triggers.ToArray();
+    }
+
+    public override YTrigger[] Tick()
+    {
+        return null;
+    }
+
+
     public YTrigger SetFocalLen(float focalLen)
     {
         return new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, focalLen);
@@ -178,4 +207,5 @@ public class YMainCamera : MonoBehaviour
         };
         return result;
     }
+
 }

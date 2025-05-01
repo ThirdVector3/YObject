@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class YTransform : YMonoBehaviour
 {
+    [Header(@"0 - changable position
+1 - changable position and rotation
+2 - changable position and scale
+3 - changable position, rotation and scale")]
+    [Range(0,3)] [SerializeField] private int state;
+
     public override YTrigger[] Begin()
     {
         List<YTrigger> triggers = new List<YTrigger>();
@@ -21,6 +27,8 @@ public class YTransform : YMonoBehaviour
         triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.x"), true, ItemEdit.Operation.Equals, transform.localScale.x));
         triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.y"), true, ItemEdit.Operation.Equals, transform.localScale.y));
         triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.z"), true, ItemEdit.Operation.Equals, transform.localScale.z));
+
+        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.state"), true, ItemEdit.Operation.Equals, state));
 
         return triggers.ToArray();
     }

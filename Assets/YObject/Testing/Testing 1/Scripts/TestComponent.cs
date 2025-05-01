@@ -29,6 +29,7 @@ public class TestComponent : YMonoBehaviour
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
+
         GetComponent<YTransform>().Init();
 
         triggers.Add(new YWaitForSeconds(3));

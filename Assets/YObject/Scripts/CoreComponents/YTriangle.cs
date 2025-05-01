@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 
 public class YTriangle : MonoBehaviour
@@ -54,15 +55,16 @@ public class YTriangle : MonoBehaviour
         {
             meshFilter.sharedMesh = new Mesh();
         }
-        transform.position = Vector3.zero;
-        transform.eulerAngles = Vector3.zero;
+
+        transform.localPosition = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;
         //transform.localScale = OneDivideVector(transform.parent.localScale);
         meshFilter.sharedMesh.Clear();
 
         Vector3[] meshVertices = new Vector3[vertices.Length];
         for (int i = 0; i < vertices.Length; i++)
         {
-            meshVertices[i] = vertices[i].transform.position;
+            meshVertices[i] = vertices[i].transform.localPosition;
         }
         int[] triangle = new int[] { 0, 1, 2 };
 
@@ -73,14 +75,21 @@ public class YTriangle : MonoBehaviour
         };
         meshFilter.sharedMesh.RecalculateNormals();
         //meshCollider.sharedMesh = meshFilter.sharedMesh;
+
         UpdateColor();
     }
 
     private void OnValidate()
     {
-        //UpdateMesh();
         ValidateLayerParent();
         SetTriangleColors();
+        UpdateMesh();
+    }
+
+    private async void UpdateMeshAsync()
+    {
+        await Task.Delay(1000);
+        UpdateMesh();
     }
 
     public void SetTriangleColors()

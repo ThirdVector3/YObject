@@ -122,7 +122,7 @@ public class TestComponent : YMonoBehaviour
 }
 ```
 
-### Main Operations
+### 🎯 Main Operations
 
 <!-- - Add variable
     ```cs
@@ -152,7 +152,7 @@ public class TestComponent : YMonoBehaviour
     YIDsManager.Instance.AddGradient(gradient);
     ```
 
-### Main Triggers For Code Logic
+### 🧩 Main Triggers For Code Logic
 - ItemEdit
     ```cs
     new ItemEdit(9999, true, ItemEdit.Operation.Equals, 10);
@@ -252,6 +252,11 @@ And you can change color channels in the YProjectSettings in Assets/YObject/Reso
 
 ```cs
 YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0])
+```
+
+### 🎲 Random
+```cs
+new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0))
 ```
 
 ### ⏱️ Delta Time & Time Control

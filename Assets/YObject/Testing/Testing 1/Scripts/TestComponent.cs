@@ -19,7 +19,7 @@ public class TestComponent : YMonoBehaviour
 
         //triggers.Add(new ColorTrigger(1000, 1, Color.white));
 
-        triggers.Add(new SongTrigger(63, 0, 1, true, 0, 0, 0, 0));
+        //triggers.Add(new SongTrigger(63, 0, 1, true, 0, 0, 0, 0));
 
         return triggers.ToArray();
     }
@@ -60,6 +60,8 @@ public class TestComponent : YMonoBehaviour
 
         triggers.AddRange(GetComponent<YTransform>().SetState(1));
         triggers.AddRange(GetComponent<YTransform>().Rotate(1f,1f,0));
+
+        //triggers.Add(new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0)));
 
 
 

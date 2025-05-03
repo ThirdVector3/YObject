@@ -262,7 +262,19 @@ public class YGameManager : MonoBehaviour
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
-            if (yMono.GetComponent<YGameobjectGroup>() == null)
+            if (yMono.GetComponent<YGameobjectGroup>() == null && yMono is YTransform)
+            {
+                var a = yMono.Begin();
+                if (a != null)
+                    globalBeginTriggers.AddRange(a);
+                var b = yMono.Tick();
+                if (b != null)
+                    globalTickTriggers.AddRange(b);
+            }
+        }
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        {
+            if (yMono.GetComponent<YGameobjectGroup>() == null && !(yMono is YTransform))
             {
                 var a = yMono.Begin();
                 if (a != null)
@@ -285,7 +297,20 @@ public class YGameManager : MonoBehaviour
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
-            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && yMono is YTransform)
+            {
+                IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                var a = yMono.Begin();
+                if (a != null)
+                    groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(a);
+                var b = yMono.Tick();
+                if (b != null)
+                    groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(b);
+            }
+        }
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        {
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !(yMono is YTransform))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
                 var a = yMono.Begin();

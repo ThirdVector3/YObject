@@ -48,6 +48,7 @@ public class YGameManager : MonoBehaviour
     public string sampleLevelName = "SampleLevel";
     public LevelSavingType levelSavingType;
     public bool updateLevel;
+    public int lastID = 500;
 
     public enum LevelSavingType
     {
@@ -201,7 +202,7 @@ public class YGameManager : MonoBehaviour
         _instance = this;
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-        IDsManager = new YIDsManager();
+        IDsManager = new YIDsManager(lastID);
         GameobjectGroupsManager = new YGameobjectGroupsManager();
 
         globalInitGDObjects.Clear();

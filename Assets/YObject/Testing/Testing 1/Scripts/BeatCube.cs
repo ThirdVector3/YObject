@@ -15,6 +15,9 @@ public class BeatCube : YMonoBehaviour
     public override YTrigger[] Begin()
     {
         List<YTrigger> triggers = new List<YTrigger>();
+
+        triggers.Add(new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 0));
+
         float distance = time * SPEED - transform.position.z + 4;
         triggers.Add(new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, YIDsManager.Instance.GetIdByName("Time.time"), true, 0, true, ItemEdit.Operation.Add));
         triggers.Add(new ItemEdit(9999, true, ItemEdit.Operation.Multiply, -SPEED));
@@ -63,23 +66,46 @@ public class BeatCube : YMonoBehaviour
 
         List<YTrigger> triggers2 = new List<YTrigger>();
 
+        YTrigger[] triggers3 = new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), YCoroutines.StartCoroutine(hitCoroutine) }, new YTrigger[0]) };
+        YTrigger[] triggers4 = new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"),false, ItemEdit.Operation.Add, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) };
+
         if (left)
         {
             triggers2.Add(new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, YIDsManager.Instance.GetIdByName("Input.P1Left"), true, 0, true, ItemEdit.Operation.Add));
             triggers2.Add(new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, YIDsManager.Instance.GetIdByName("Input.P1Right"), true, 0, true, ItemEdit.Operation.Add));
             triggers2.Add(new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, YIDsManager.Instance.GetIdByName("Input.P1Up"), true, 0, true, ItemEdit.Operation.Add));
+
             if (rotation == -1)
                 triggers2.Add(new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals,
-                    new YTrigger[] { YInput.GetP1Left(new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), YCoroutines.StartCoroutine(hitCoroutine) }, new YTrigger[0]) }, new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) }) },
+                    new YTrigger[] { YInput.GetP1Left(triggers3, triggers4) },
                     new YTrigger[0])); //new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) }));
             else if (rotation == 0)
-                print("s");
+                triggers2.Add(new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals,
+                    new YTrigger[] { YInput.GetP1Up(triggers3, triggers4) },
+                    new YTrigger[0]));
             else
-                print("s");
+                triggers2.Add(new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals,
+                    new YTrigger[] { YInput.GetP1Right(triggers3, triggers4) },
+                    new YTrigger[0]));
         }
         else
         {
-        
+            triggers2.Add(new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, YIDsManager.Instance.GetIdByName("Input.P2Left"), true, 0, true, ItemEdit.Operation.Add));
+            triggers2.Add(new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, YIDsManager.Instance.GetIdByName("Input.P2Right"), true, 0, true, ItemEdit.Operation.Add));
+            triggers2.Add(new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, YIDsManager.Instance.GetIdByName("Input.P2Up"), true, 0, true, ItemEdit.Operation.Add));
+
+            if (rotation == -1)
+                triggers2.Add(new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals,
+                    new YTrigger[] { YInput.GetP2Left(triggers3, triggers4) },
+                    new YTrigger[0])); //new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) }));
+            else if (rotation == 0)
+                triggers2.Add(new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals,
+                    new YTrigger[] { YInput.GetP2Up(triggers3, triggers4) },
+                    new YTrigger[0]));
+            else
+                triggers2.Add(new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals,
+                    new YTrigger[] { YInput.GetP2Right(triggers3, triggers4) },
+                    new YTrigger[0]));
         }
         
 
@@ -87,8 +113,8 @@ public class BeatCube : YMonoBehaviour
         triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Equals, 2));
         triggers.Add(new ItemCompare(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.z"), 9999, true, true, 1, 1, ItemCompare.Operation.Less, 
             new YTrigger[] { new ItemCompare(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.z"), 9998, true, true, 1, 1, ItemCompare.Operation.More,
-            triggers2.ToArray(), new YTrigger[]{ new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone,false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) } )}, new YTrigger[0]));
-
+            triggers2.ToArray(), new YTrigger[]{ new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone,false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"), false, ItemEdit.Operation.Add, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) } )}, new YTrigger[0]));
+        
         return triggers.ToArray();
     }
 

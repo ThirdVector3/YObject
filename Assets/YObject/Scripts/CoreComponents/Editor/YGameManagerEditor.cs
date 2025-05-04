@@ -14,12 +14,14 @@ public class YGameManagerEditor : Editor
         SerializedProperty levelNameProperty = serializedObject.FindProperty("levelName");
         SerializedProperty sampleLevelNameProperty = serializedObject.FindProperty("sampleLevelName");
         SerializedProperty updateLevelProperty = serializedObject.FindProperty("updateLevel");
+        SerializedProperty lastIDProperty = serializedObject.FindProperty("lastID");
 
 
         EditorGUILayout.PropertyField(levelNameProperty, new GUIContent("Level Name"));
         EditorGUILayout.PropertyField(sampleLevelNameProperty, new GUIContent("Sample Level Name"));
         EditorGUILayout.PropertyField(levelSavingTypeProperty, new GUIContent("Level Saving Type"));
         EditorGUILayout.PropertyField(updateLevelProperty, new GUIContent("Update Level"));
+        EditorGUILayout.PropertyField(lastIDProperty, new GUIContent("Last ID"));
 
 
 

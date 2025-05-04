@@ -8,6 +8,7 @@ The core principles behind YObject:
 - Almost the same approach to game creation as in Unity
 - Group objects "see" global objects but global objects doesn't "see" group objects
 - All gameobjects must have different names
+- Gameobjects can't be parents of other gameobjects
 
 
 ## 🛠️ Quick Start
@@ -215,6 +216,12 @@ Reduce mesh detail based on camera distance.
 
 ![](imgs/2.png)
 
+### Triangle layer
+
+You can set layer (layer means triangles with one layer will be activated on one layer) and layer parent (layer parent means this triangle will be main triangle for layer calculations) of triangle
+
+![](imgs/6.png)
+
 ### 📦 Group Loading / Unloading
 To add group to an object you need to add YGameobjectGroup component to it
 
@@ -240,6 +247,11 @@ And you can add songs in the YProjectSettings in Assets/YObject/Resources/
 ### 🎨 Colors
 Built-in support for changing colors in color channels.
 
+You can set color channels and corrector colors in triangle object (child of gameobject)
+
+![](imgs/6.png)
+
+You can change color in color channel
 ```cs
 new ColorTrigger(3, 1, Color.white)
 ```

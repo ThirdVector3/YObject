@@ -51,9 +51,12 @@ public class YIDsManager
 
 
     private string currentGroupName = null;
-    public YIDsManager()
+    public YIDsManager(int lastID)
     {
         Instance = this;
+
+        lastFreeGroup = lastID;
+
         globalVariables = new Dictionary<string, (int, bool)>()
         {
             {"Camera.position.x", (1, true) },

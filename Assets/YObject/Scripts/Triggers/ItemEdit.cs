@@ -211,19 +211,19 @@ public class ItemEdit : YTrigger
                     break;
                 case Operation.Add:
                     var editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
-                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 + result));
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item1 + result));
                     break;
                 case Operation.Subtract:
                     editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
-                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 - result));
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item1 - result));
                     break;
                 case Operation.Multiply:
                     editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
-                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 * result));
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item1 * result));
                     break;
                 case Operation.Divide:
                     editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
-                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item2 / result));
+                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item1 / result));
                     break;
             }
         }

@@ -216,7 +216,7 @@ Reduce mesh detail based on camera distance.
 
 ![](imgs/2.png)
 
-### Triangle layer
+### ✎ Triangle layer
 
 You can set layer (layer means triangles with one layer will be activated on one layer) and layer parent (layer parent means this triangle will be main triangle for layer calculations) of triangle
 

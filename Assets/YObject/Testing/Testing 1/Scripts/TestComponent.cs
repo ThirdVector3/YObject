@@ -54,6 +54,18 @@ public class TestComponent : YMonoBehaviour
         List<YTrigger> triggers = new List<YTrigger>();
 
 
+        //YVariable yVar = new YFloat(10f) + new YFloat(11f) + new YFloat(66) * 2 / (1 - new YInt(30) + 2);
+        //triggers.AddRange(yVar.triggers);
+
+
+
+
+        //foreach (var trigger in yVar.triggers)
+        //{
+        //    var a = ((ItemEdit)trigger);
+        //    print($"{a.editID}, {a.operation}, {a.multiplier}, {a.setID1}");
+        //}
+
 
         //triggers.Add(new ItemEdit(5001, true, ItemEdit.Operation.Equals, 100));
         //triggers.AddRange(YMath.Sqrt(5001, 5000));

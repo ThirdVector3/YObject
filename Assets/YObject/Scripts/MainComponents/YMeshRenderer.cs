@@ -97,13 +97,13 @@ public class YMeshRenderer : YMonoBehaviour
         foreach (YVertex v in LOD.parent.GetComponentsInChildren<YVertex>())
         {
             int id1 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertices[{vertexId}].x", id1, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.GetInstanceID()}.{LOD.parent.name}.vertices[{vertexId}].x", id1, true);
             int id2 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertices[{vertexId}].y", id2, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.GetInstanceID()}.{LOD.parent.name}.vertices[{vertexId}].y", id2, true);
             int id3 = YGameManager.Instance.IDsManager.GetFreeIdFloat();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertices[{vertexId}].z", id3, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.GetInstanceID()}.{LOD.parent.name}.vertices[{vertexId}].z", id3, true);
             int id4 = YGameManager.Instance.IDsManager.GetFreeIdFloatAndGroup();
-            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.name}.{LOD.parent.name}.vertexObjects[{vertexId}]", id4, true);
+            YGameManager.Instance.IDsManager.AddVariable($"{gameObject.GetInstanceID()}.{LOD.parent.name}.vertexObjects[{vertexId}]", id4, true);
             YGameManager.Instance.IDsManager.AddGroup(id4);
 
             v.xId = id1;
@@ -129,19 +129,19 @@ public class YMeshRenderer : YMonoBehaviour
                     { 9994, id3 },
                     { 9993, id4 },
 
-                    { 9992, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.x") },
-                    { 9991, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.y") },
-                    { 9990, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.z") },
-                    { 9989, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.sin.x") },
-                    { 9988, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.sin.y") },
-                    { 9987, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.sin.z") },
-                    { 9986, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.cos.x") },
-                    { 9985, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.cos.y") },
-                    { 9984, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.rotation.cos.z") },
-                    { 9983, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.x") },
-                    { 9982, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.y") },
-                    { 9981, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.scale.z") },
-                    { 9980, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.state") },
+                    { 9992, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x") },
+                    { 9991, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y") },
+                    { 9990, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z") },
+                    { 9989, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.x") },
+                    { 9988, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.y") },
+                    { 9987, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.z") },
+                    { 9986, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.x") },
+                    { 9985, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.y") },
+                    { 9984, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.z") },
+                    { 9983, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.x") },
+                    { 9982, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.y") },
+                    { 9981, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.z") },
+                    { 9980, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state") },
                 });
             }
             else
@@ -227,7 +227,7 @@ public class YMeshRenderer : YMonoBehaviour
             {
                 int colliderGroup = YGameManager.Instance.IDsManager.GetFreeIdFloatAndGroup();
                 YGameManager.Instance.IDsManager.AddGroup(colliderGroup);
-                YGameManager.Instance.IDsManager.AddVariable(gameObject.name + "." + LOD.parent.name + ".meshRenderer.collider" + colliderGroup, colliderGroup, true);
+                YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + "." + LOD.parent.name + ".meshRenderer.collider" + colliderGroup, colliderGroup, true);
 
                 var spawn35 = new Spawn(35, false, 0, new Dictionary<int, int> {
                     { 9999, t.vertices[0].zId },
@@ -304,9 +304,9 @@ public class YMeshRenderer : YMonoBehaviour
 
             List<YTrigger> triggers1 = new List<YTrigger>()
             {
-                new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 1, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.x"), true, ItemEdit.Operation.Subtract),
-                new ItemEdit(9998, true, ItemEdit.Operation.Equals, 1, 2, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.y"), true, ItemEdit.Operation.Subtract),
-                new ItemEdit(9997, true, ItemEdit.Operation.Equals, 1, 3, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.name + ".transform.position.z"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 1, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9998, true, ItemEdit.Operation.Equals, 1, 2, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9997, true, ItemEdit.Operation.Equals, 1, 3, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Subtract),
 
                 new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 9999, true, 9999, true, ItemEdit.Operation.Multiply),
                 new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, 9998, true, 9998, true, ItemEdit.Operation.Multiply),

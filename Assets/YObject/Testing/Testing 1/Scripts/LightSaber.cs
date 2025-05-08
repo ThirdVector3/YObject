@@ -14,11 +14,11 @@ public class LightSaber : YMonoBehaviour
     public override YGDObject[] Init()
     {
         saberUpDoingId = YGameManager.Instance.IDsManager.GetFreeIdInt();
-        YGameManager.Instance.IDsManager.AddVariable(gameObject.name + ".LightSaber.saberUpDoing", saberUpDoingId, false);
+        YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".LightSaber.saberUpDoing", saberUpDoingId, false);
         saberLeftDoingId = YGameManager.Instance.IDsManager.GetFreeIdInt();
-        YGameManager.Instance.IDsManager.AddVariable(gameObject.name + ".LightSaber.saberLeftDoing", saberLeftDoingId, false);
+        YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".LightSaber.saberLeftDoing", saberLeftDoingId, false);
         saberRightDoingId = YGameManager.Instance.IDsManager.GetFreeIdInt();
-        YGameManager.Instance.IDsManager.AddVariable(gameObject.name + ".LightSaber.saberRightDoing", saberRightDoingId, false);
+        YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".LightSaber.saberRightDoing", saberRightDoingId, false);
 
         GetComponent<YTransform>().Init();
         SaberUp();

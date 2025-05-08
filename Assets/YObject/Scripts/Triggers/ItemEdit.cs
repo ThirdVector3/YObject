@@ -3,15 +3,15 @@ using UnityEditor;
 using UnityEngine;
 public class ItemEdit : YTrigger
 {
-    private int editID;
-    private Operation operation;
-    private int setID1;
+    public int editID;
+    public Operation operation;
+    public int setID1;
     private int setID2;
     private Operation operation2;
     private bool isEditFloat;
     private bool isSetFloat;
     private bool isSetFloat2;
-    private float multiplier;
+    public float multiplier;
     private Operation2 operation3;
     private Operation3 operation4;
     public enum Operation

@@ -24,7 +24,84 @@ public class ItemCompare : YTrigger
     private YTrigger[] trueTriggers;
     private YTrigger[] falseTriggers;
 
-
+    public ItemCompare(YInt var1, YInt var2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers)
+    {
+        this.id1 = var1.id;
+        this.id2 = var2.id;
+        this.is1float = false;
+        this.is2float = false;
+        this.multiplier1 = 1;
+        this.multiplier2 = 1;
+        this.operation = operation;
+        if (trueTriggers != null && trueTriggers.Length > 0)
+        {
+            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(trueId);
+        }
+        else
+            trueId = 0;
+        if (falseTriggers != null && falseTriggers.Length > 0)
+        {
+            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(falseId);
+        }
+        else
+            falseId = 0;
+        this.trueTriggers = trueTriggers;
+        this.falseTriggers = falseTriggers;
+    }
+    public ItemCompare(YFloat var1, YInt var2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers)
+    {
+        this.id1 = var1.id;
+        this.id2 = var2.id;
+        this.is1float = true;
+        this.is2float = false;
+        this.multiplier1 = 1;
+        this.multiplier2 = 1;
+        this.operation = operation;
+        if (trueTriggers != null && trueTriggers.Length > 0)
+        {
+            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(trueId);
+        }
+        else
+            trueId = 0;
+        if (falseTriggers != null && falseTriggers.Length > 0)
+        {
+            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(falseId);
+        }
+        else
+            falseId = 0;
+        this.trueTriggers = trueTriggers;
+        this.falseTriggers = falseTriggers;
+    }
+    public ItemCompare(YFloat var1, YFloat var2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers)
+    {
+        this.id1 = var1.id;
+        this.id2 = var2.id;
+        this.is1float = true;
+        this.is2float = true;
+        this.multiplier1 = 1;
+        this.multiplier2 = 1;
+        this.operation = operation;
+        if (trueTriggers != null && trueTriggers.Length > 0)
+        {
+            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(trueId);
+        }
+        else
+            trueId = 0;
+        if (falseTriggers != null && falseTriggers.Length > 0)
+        {
+            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(falseId);
+        }
+        else
+            falseId = 0;
+        this.trueTriggers = trueTriggers;
+        this.falseTriggers = falseTriggers;
+    }
     public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers)
     {
         this.id1 = id1;

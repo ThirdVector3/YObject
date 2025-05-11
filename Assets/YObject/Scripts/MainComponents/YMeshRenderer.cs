@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(YTransform))]
 public class YMeshRenderer : YMonoBehaviour
 {
+    private const bool UPDATE_LODS_IN_EDITOR = false;
+
     private static List<int> points = new List<int>();
     private static List<int> collisionBlocks = new List<int>();
 
@@ -29,6 +31,13 @@ public class YMeshRenderer : YMonoBehaviour
         float minDist = 0;
         foreach (var LOD in LODs)
         {
+
+            if (!Application.isPlaying && !UPDATE_LODS_IN_EDITOR)
+            {
+                LOD.parent.gameObject.SetActive(true);
+                break;
+            }
+
             float dist = Vector3.Distance(YMainCamera.Instance.transform.position, transform.position);
             if (dist >= minDist && dist < LOD.distance)
                 LOD.parent.gameObject.SetActive(true);

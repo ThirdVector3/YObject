@@ -22,6 +22,7 @@ public class BeatSaberGameManager : YMonoBehaviour
         CheckGameover();
     }
 
+
     public YTrigger[] CheckGameover()
     {
         YTrigger[] triggers = new YTrigger[] { new ItemCompare(misses, 0, false, false, 1, 1, ItemCompare.Operation.More, new YTrigger[] { new ItemCompare(gameover, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ColorTrigger(1000, 0, Color.white), new ItemEdit(gameover, false, ItemEdit.Operation.Equals, 1) }, new YTrigger[0]) }, new YTrigger[0]) };

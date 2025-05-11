@@ -427,9 +427,12 @@ public class YGameManager : MonoBehaviour
         }
         if (GameobjectGroupsManager.CurrentGroup != null)
         {
-            foreach (YTrigger trigger in groupsTickTriggers[GameobjectGroupsManager.CurrentGroup])
+            if (groupsTickTriggers.ContainsKey(GameobjectGroupsManager.CurrentGroup))
             {
-                trigger.Activate();
+                foreach (YTrigger trigger in groupsTickTriggers[GameobjectGroupsManager.CurrentGroup])
+                {
+                    trigger.Activate();
+                }
             }
         }
     }

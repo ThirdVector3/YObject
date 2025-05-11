@@ -20,14 +20,20 @@ public class GroupToggleOn : YTrigger
                 go.SetActive(false);
             }
         }
-        foreach (var go in YGameManager.Instance.groupsGameobject[groupName])
+        if (YGameManager.Instance.groupsGameobject.ContainsKey(groupName))
         {
-            go.SetActive(true);
+            foreach (var go in YGameManager.Instance.groupsGameobject[groupName])
+            {
+                go.SetActive(true);
+            }
         }
         YGameManager.Instance.GameobjectGroupsManager.CurrentGroup = groupName;
-        foreach (YTrigger trigger in YGameManager.Instance.groupsBeginTriggers[groupName])
+        if (YGameManager.Instance.groupsBeginTriggers.ContainsKey(groupName))
         {
-            trigger.Activate();
+            foreach (YTrigger trigger in YGameManager.Instance.groupsBeginTriggers[groupName])
+            {
+                trigger.Activate();
+            }
         }
     }
 

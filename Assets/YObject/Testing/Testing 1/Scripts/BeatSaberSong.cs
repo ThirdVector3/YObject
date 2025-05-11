@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class BeatSaberSong : YMonoBehaviour
 {
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
-        return new YTrigger[] { new SongTrigger(63, 0, 1, false, 0, 0, 0, 0) };
+        //return
+        new SongTrigger(63, 0, 1, false, 0, 0, 0, 0);
     }
 
-    public override YGDObject[] Init()
-    {
-        return null;
-    }
-
-    public override YTrigger[] Tick()
-    {
-        return null;
-    }
 }

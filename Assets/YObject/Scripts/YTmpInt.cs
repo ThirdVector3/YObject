@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-public class YInt : YVariable
+public class YTmpInt : YTmpVariable
 {
-    public YInt(int value)
+    public YTmpInt(int value)
     {
         id = GetNewId();
         triggers = new YTrigger[]
@@ -10,13 +10,13 @@ public class YInt : YVariable
             new ItemEdit(id, true, ItemEdit.Operation.Equals, value)
         };
     }
-    public YInt(int value, int id)
+    public YTmpInt(int value, int id)
     {
         this.id = id;
         triggers = new YTrigger[0];
     }
 
-    public static YInt operator +(YInt a, YInt b)
+    public static YTmpInt operator +(YTmpInt a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -25,7 +25,7 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YInt operator +(YInt a, float b)
+    public static YTmpInt operator +(YTmpInt a, float b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -33,7 +33,7 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YInt operator +(float a, YInt b)
+    public static YTmpInt operator +(float a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(b.triggers);
@@ -46,7 +46,7 @@ public class YInt : YVariable
 
 
 
-    public static YInt operator -(YInt a, YInt b)
+    public static YTmpInt operator -(YTmpInt a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -55,7 +55,7 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YInt operator -(YInt a, float b)
+    public static YTmpInt operator -(YTmpInt a, float b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -63,10 +63,10 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YFloat operator -(float a, YInt b)
+    public static YTmpFloat operator -(float a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
-        YFloat aF = new YFloat(a);
+        YTmpFloat aF = new YTmpFloat(a);
         list.AddRange(aF.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(aF.id, true, ItemEdit.Operation.Subtract, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
@@ -78,7 +78,7 @@ public class YInt : YVariable
 
 
 
-    public static YInt operator *(YInt a, YInt b)
+    public static YTmpInt operator *(YTmpInt a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -87,7 +87,7 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YInt operator *(YInt a, float b)
+    public static YTmpInt operator *(YTmpInt a, float b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -95,7 +95,7 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YInt operator *(float a, YInt b)
+    public static YTmpInt operator *(float a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(b.triggers);
@@ -108,7 +108,7 @@ public class YInt : YVariable
 
 
 
-    public static YInt operator /(YInt a, YInt b)
+    public static YTmpInt operator /(YTmpInt a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -117,7 +117,7 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YInt operator /(YInt a, float b)
+    public static YTmpInt operator /(YTmpInt a, float b)
     {
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
@@ -125,10 +125,10 @@ public class YInt : YVariable
         a.triggers = list.ToArray();
         return a;
     }
-    public static YFloat operator /(float a, YInt b)
+    public static YTmpFloat operator /(float a, YTmpInt b)
     {
         List<YTrigger> list = new List<YTrigger>();
-        YFloat aF = new YFloat(a);
+        YTmpFloat aF = new YTmpFloat(a);
         list.AddRange(aF.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(aF.id, true, ItemEdit.Operation.Divide, 1, b.id, false, 0, true, ItemEdit.Operation.Add));

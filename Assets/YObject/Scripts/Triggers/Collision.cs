@@ -8,7 +8,7 @@ public class Collision : YTrigger
     private bool isOnExit;
 
 
-    public Collision(int groupActivate, int collisionA, int collisionB, bool isOnExit)
+    public Collision(int groupActivate, int collisionA, int collisionB, bool isOnExit) : base()
     {
         this.groupActivate = groupActivate;
         this.collisionA = collisionA;

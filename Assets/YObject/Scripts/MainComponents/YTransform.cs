@@ -9,12 +9,12 @@ public class YTransform : YMonoBehaviour
 3 - changable position, rotation and scale")]
     [Range(0,3)] [SerializeField] private int state;
 
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
         if (gameObject.isStatic)
-            return triggers.ToArray();
+            return;// triggers.ToArray();
 
         triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Equals, transform.position.x));
         triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Equals, transform.position.y));
@@ -30,7 +30,7 @@ public class YTransform : YMonoBehaviour
 
         triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, state));
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 
     public override YGDObject[] Init()
@@ -70,12 +70,12 @@ public class YTransform : YMonoBehaviour
         return new YGDObject[0];
     }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
         if (gameObject.isStatic)
-            return triggers.ToArray();
+            return;// triggers.ToArray();
 
         triggers.AddRange(YMath.SinDeg(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.x"), YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.x")));
         triggers.AddRange(YMath.SinDeg(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.y"), YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.y")));
@@ -85,7 +85,7 @@ public class YTransform : YMonoBehaviour
         triggers.AddRange(YMath.CosDeg(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.y"), YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.y")));
         triggers.AddRange(YMath.CosDeg(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.z"), YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.z")));
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 
 

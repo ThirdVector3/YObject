@@ -14,7 +14,7 @@ public class SongTrigger : YTrigger
 
 
 
-    public SongTrigger(int id, int channel, float volume, bool loop, int startMs, int endMs, int fadeInMs, int fadeOutMs)
+    public SongTrigger(int id, int channel, float volume, bool loop, int startMs, int endMs, int fadeInMs, int fadeOutMs) : base()
     {
         this.id = id;
         this.channel = channel;

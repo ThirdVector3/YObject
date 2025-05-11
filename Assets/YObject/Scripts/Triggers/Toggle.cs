@@ -6,7 +6,7 @@ public class Toggle : YTrigger
     private int id;
     private bool on;
 
-    public Toggle(int id, bool on)
+    public Toggle(int id, bool on) : base()
     {
         this.id = id;
         this.on = on;

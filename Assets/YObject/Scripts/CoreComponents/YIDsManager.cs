@@ -136,11 +136,11 @@ public class YIDsManager
     {
         currentGroupName = groupName;
     }
-    public void AddVariable(string name, int id, bool isFloat)
+    public int AddVariable(string name, int id, bool isFloat)
     {
-        AddVariable(name, id, isFloat, currentGroupName);
+        return AddVariable(name, id, isFloat, currentGroupName);
     }
-    public void AddVariable(string name, int id, bool isFloat, string groupName)
+    public int AddVariable(string name, int id, bool isFloat, string groupName)
     {
         if (globalVariables.ContainsKey(name))
             throw new System.Exception("More than one variable with same name");
@@ -174,6 +174,7 @@ public class YIDsManager
             else
                 groupsFreeInts[groupName].Remove(id);
         }
+        return id;
     }
     public void RemoveVariable(string name)
     {

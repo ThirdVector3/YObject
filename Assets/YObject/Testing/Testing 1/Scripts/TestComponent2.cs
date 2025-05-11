@@ -9,17 +9,13 @@ public class TestComponent2 : YMonoBehaviour
         //print(YGameManager.Instance.GetMemoryValue(5000));
     }
 
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
-        return null;//new YTrigger[] { new SongTrigger(63, 0, 1, true, 0, 0, 0, 0) };
+        //return null;//new YTrigger[] { new SongTrigger(63, 0, 1, true, 0, 0, 0, 0) };
     }
 
-    public override YGDObject[] Init()
-    {
-        return new YGDObject[0];
-    }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
@@ -45,6 +41,6 @@ public class TestComponent2 : YMonoBehaviour
         //triggers.AddRange(GetComponent<YTransform>().SetPosition(9998, 23, 9995));
 
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 }

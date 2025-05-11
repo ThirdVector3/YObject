@@ -8,7 +8,7 @@ public class ColorTrigger : YTrigger
     private UnityEngine.Color color;
 
 
-    public ColorTrigger(int id, float duration, UnityEngine.Color color)
+    public ColorTrigger(int id, float duration, UnityEngine.Color color) : base()
     {
         this.id = id;
         this.duration = duration;

@@ -10,7 +10,7 @@ public class Coroutine : YTrigger
     private YTrigger[] triggers;
     public int group;
 
-    public Coroutine(YTrigger[] triggers)
+    public Coroutine(YTrigger[] triggers) : base()
     {
         this.triggers = triggers;
         group = YGameManager.Instance.IDsManager.GetFreeGroup();

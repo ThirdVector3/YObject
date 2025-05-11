@@ -25,7 +25,7 @@ public class Gradient : YTrigger
     }
     private Type type;
 
-    public Gradient(int bl, int br, int tl, int tr, int id, bool disable, int color1, int color2, Type type, int hue1 = 0, float sat1 = 0, float val1 = 1, int hue2 = 0, float sat2 = 0, float val2 = 1)
+    public Gradient(int bl, int br, int tl, int tr, int id, bool disable, int color1, int color2, Type type, int hue1 = 0, float sat1 = 0, float val1 = 1, int hue2 = 0, float sat2 = 0, float val2 = 1) : base()
     {
         blID = bl;
         brID = br;

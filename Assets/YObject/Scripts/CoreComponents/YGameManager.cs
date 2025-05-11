@@ -31,6 +31,9 @@ public class YGameManager : MonoBehaviour
 
 
 
+    public List<YTrigger> globalPool;
+
+
 
     private List<YTrigger> globalBeginTriggers = new List<YTrigger>();
     private List<YTrigger> globalTickTriggers = new List<YTrigger>();
@@ -205,6 +208,8 @@ public class YGameManager : MonoBehaviour
         IDsManager = new YIDsManager(lastID);
         GameobjectGroupsManager = new YGameobjectGroupsManager();
 
+        globalPool = new List<YTrigger>();
+
         globalInitGDObjects.Clear();
         globalBeginTriggers.Clear();
         globalTickTriggers.Clear();
@@ -265,24 +270,62 @@ public class YGameManager : MonoBehaviour
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null && yMono is YTransform)
             {
-                var a = yMono.Begin();
-                if (a != null)
-                    globalBeginTriggers.AddRange(a);
-                var b = yMono.Tick();
-                if (b != null)
-                    globalTickTriggers.AddRange(b);
+                globalPool.Clear();
+                //var a =
+                yMono.Begin();
+                //if (a != null)
+                //    globalBeginTriggers.AddRange(a);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        globalBeginTriggers.Add(trigger);
+                    }
+                }
+
+                globalPool.Clear();
+                //var b = 
+                yMono.Tick();
+                //if (b != null)
+                //    globalTickTriggers.AddRange(b);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        globalTickTriggers.Add(trigger);
+                    }
+                }
             }
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null && !(yMono is YTransform))
             {
-                var a = yMono.Begin();
-                if (a != null)
-                    globalBeginTriggers.AddRange(a);
-                var b = yMono.Tick();
-                if (b != null)
-                    globalTickTriggers.AddRange(b);
+                globalPool.Clear();
+                //var a =
+                yMono.Begin();
+                //if (a != null)
+                //    globalBeginTriggers.AddRange(a);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        globalBeginTriggers.Add(trigger);
+                    }
+                }
+
+                globalPool.Clear();
+                //var b =
+                yMono.Tick();
+                //if (b != null)
+                //    globalTickTriggers.AddRange(b);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        globalTickTriggers.Add(trigger);
+                    }
+                }
             }
         }
         IDsManager.InitGroups(groupsGroup.Keys.ToArray());
@@ -301,12 +344,31 @@ public class YGameManager : MonoBehaviour
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && yMono is YTransform)
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
-                var a = yMono.Begin();
-                if (a != null)
-                    groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(a);
-                var b = yMono.Tick();
-                if (b != null)
-                    groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(b);
+                globalPool.Clear();
+                //var a =
+                yMono.Begin();
+                //if (a != null)
+                //    groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(a);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        groupsBeginTriggers[yGameobjectGroup.GetName()].Add(trigger);
+                    }
+                }
+
+                globalPool.Clear();
+                //var b =
+                yMono.Tick();
+                //if (b != null)
+                //    groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(b);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        groupsTickTriggers[yGameobjectGroup.GetName()].Add(trigger);
+                    }
+                }
             }
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
@@ -314,12 +376,31 @@ public class YGameManager : MonoBehaviour
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !(yMono is YTransform))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
-                var a = yMono.Begin();
-                if (a != null)
-                    groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(a);
-                var b = yMono.Tick();
-                if (b != null)
-                    groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(b);
+                globalPool.Clear();
+                //var a =
+                yMono.Begin();
+                //if (a != null)
+                //    groupsBeginTriggers[yGameobjectGroup.GetName()].AddRange(a);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        groupsBeginTriggers[yGameobjectGroup.GetName()].Add(trigger);
+                    }
+                }
+
+                globalPool.Clear();
+                //var b =
+                yMono.Tick();
+                //if (b != null)
+                //    groupsTickTriggers[yGameobjectGroup.GetName()].AddRange(b);
+                foreach (YTrigger trigger in globalPool)
+                {
+                    if (trigger.isFirstLevel)
+                    {
+                        groupsTickTriggers[yGameobjectGroup.GetName()].Add(trigger);
+                    }
+                }
             }
         }
     }

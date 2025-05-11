@@ -6,10 +6,6 @@ public class LightSaber : YMonoBehaviour
 {
     [SerializeField] private bool left = true;
 
-    public override YTrigger[] Begin()
-    {
-        return null;
-    }
 
     public override YGDObject[] Init()
     {
@@ -27,70 +23,70 @@ public class LightSaber : YMonoBehaviour
         return new YGDObject[] { saberUp, saberLeft, saberRight };
     }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
         if (left)
         {
-            triggers.Add(new ItemCompare(saberUpDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+            new ItemCompare(saberUpDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP1Up(new YTrigger[] { YCoroutines.StartCoroutine(saberUp) }, new YTrigger[0]) },
                 new YTrigger[0]
-                ));
-            triggers.Add(new ItemCompare(saberUpDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
+                );
+            new ItemCompare(saberUpDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP1Up(new YTrigger[0], new YTrigger[] { new ItemEdit(saberUpDoingId, false, ItemEdit.Operation.Equals, 0) }) },
                 new YTrigger[0]
-                ));
+                );
 
-            triggers.Add(new ItemCompare(saberLeftDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+            new ItemCompare(saberLeftDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP1Left(new YTrigger[] { YCoroutines.StartCoroutine(saberLeft) }, new YTrigger[0]) },
                 new YTrigger[0]
-                ));
-            triggers.Add(new ItemCompare(saberLeftDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
+                );
+            new ItemCompare(saberLeftDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP1Left(new YTrigger[0], new YTrigger[] { new ItemEdit(saberLeftDoingId, false, ItemEdit.Operation.Equals, 0) }) },
                 new YTrigger[0]
-                ));
+                );
 
-            triggers.Add(new ItemCompare(saberRightDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+            new ItemCompare(saberRightDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP1Right(new YTrigger[] { YCoroutines.StartCoroutine(saberRight) }, new YTrigger[0]) },
                 new YTrigger[0]
-                ));
-            triggers.Add(new ItemCompare(saberRightDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
+                );
+            new ItemCompare(saberRightDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP1Right(new YTrigger[0], new YTrigger[] { new ItemEdit(saberRightDoingId, false, ItemEdit.Operation.Equals, 0) }) },
                 new YTrigger[0]
-                ));
+                );
         }
         else
         {
-            triggers.Add(new ItemCompare(saberUpDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+            new ItemCompare(saberUpDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP2Up(new YTrigger[] { YCoroutines.StartCoroutine(saberUp) }, new YTrigger[0]) },
                 new YTrigger[0]
-                ));
-            triggers.Add(new ItemCompare(saberUpDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
+                );
+            new ItemCompare(saberUpDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP2Up(new YTrigger[0], new YTrigger[] { new ItemEdit(saberUpDoingId, false, ItemEdit.Operation.Equals, 0) }) },
                 new YTrigger[0]
-                ));
+                );
 
-            triggers.Add(new ItemCompare(saberLeftDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+            new ItemCompare(saberLeftDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP2Left(new YTrigger[] { YCoroutines.StartCoroutine(saberLeft) }, new YTrigger[0]) },
                 new YTrigger[0]
-                ));
-            triggers.Add(new ItemCompare(saberLeftDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
+                );
+            new ItemCompare(saberLeftDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP2Left(new YTrigger[0], new YTrigger[] { new ItemEdit(saberLeftDoingId, false, ItemEdit.Operation.Equals, 0) }) },
                 new YTrigger[0]
-                ));
+                );
 
-            triggers.Add(new ItemCompare(saberRightDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+            new ItemCompare(saberRightDoingId, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP2Right(new YTrigger[] { YCoroutines.StartCoroutine(saberRight) }, new YTrigger[0]) },
                 new YTrigger[0]
-                ));
-            triggers.Add(new ItemCompare(saberRightDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
+                );
+            new ItemCompare(saberRightDoingId, 0, false, false, 1, 2, ItemCompare.Operation.Equals,
                 new YTrigger[] { YInput.GetP2Right(new YTrigger[0], new YTrigger[] { new ItemEdit(saberRightDoingId, false, ItemEdit.Operation.Equals, 0) }) },
                 new YTrigger[0]
-                ));
+                );
         }
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 
     private int saberUpDoingId;

@@ -3,15 +3,15 @@ using UnityEditor;
 using UnityEngine;
 public class ItemEdit : YTrigger
 {
-    public int editID;
-    public Operation operation;
-    public int setID1;
+    private int editID;
+    private Operation operation;
+    private int setID1;
     private int setID2;
     private Operation operation2;
     private bool isEditFloat;
     private bool isSetFloat;
     private bool isSetFloat2;
-    public float multiplier;
+    private float multiplier;
     private Operation2 operation3;
     private Operation3 operation4;
     public enum Operation
@@ -36,7 +36,7 @@ public class ItemEdit : YTrigger
         Negative
     }
 
-    public ItemEdit(int editID, bool isEditFloat, Operation operation, float number)
+    public ItemEdit(int editID, bool isEditFloat, Operation operation, float number) : base()
     {
 
         this.editID = editID;
@@ -51,7 +51,7 @@ public class ItemEdit : YTrigger
         this.operation3 = 0;
         this.operation4 = 0;
     }
-    public ItemEdit(int editID, bool isEditFloat, Operation operation, float multiplier, int setID1, bool isSetFloat, int setID2, bool isSetFloat2, Operation operation2)
+    public ItemEdit(int editID, bool isEditFloat, Operation operation, float multiplier, int setID1, bool isSetFloat, int setID2, bool isSetFloat2, Operation operation2) : base()
     {
         if (operation2 == Operation.Equals)
             operation2 = Operation.Add;
@@ -70,7 +70,7 @@ public class ItemEdit : YTrigger
 
     }
 
-    public ItemEdit(int editID, bool isEditFloat, Operation operation, float multiplier, int setID1, bool isSetFloat, int setID2, bool isSetFloat2, Operation operation2, Operation2 operation3, Operation3 operation4)
+    public ItemEdit(int editID, bool isEditFloat, Operation operation, float multiplier, int setID1, bool isSetFloat, int setID2, bool isSetFloat2, Operation operation2, Operation2 operation3, Operation3 operation4) : base()
     {
         if (operation2 == Operation.Equals)
             operation2 = Operation.Add;

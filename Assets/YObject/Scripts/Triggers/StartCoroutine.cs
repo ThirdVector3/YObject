@@ -6,7 +6,7 @@ public class StartCoroutine : YTrigger
 {
     private int group;
     private Coroutine coroutine;
-    public StartCoroutine(Coroutine coroutine)
+    public StartCoroutine(Coroutine coroutine) : base()
     {
         group = coroutine.group;
         this.coroutine = coroutine;

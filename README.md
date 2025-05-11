@@ -7,7 +7,6 @@ The core principles behind YObject:
 
 - Almost the same approach to game creation as in Unity
 - Group objects "see" global objects but global objects doesn't "see" group objects
-- All gameobjects must have different names
 - Gameobjects can't be parents of other gameobjects
 
 
@@ -27,17 +26,13 @@ Then you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your co
 ```cs
 public class FlyCamera : YMonoBehaviour
 {
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
+        YCoroutines.StartCoroutine(yCoroutine);
 
-        triggers.Add(YCoroutines.StartCoroutine(yCoroutine));
+        new ColorTrigger(1000, 1, Color.white);
 
-        triggers.Add(new ColorTrigger(1000, 1, Color.white));
-
-        triggers.Add(new SongTrigger(63, 0, 1, true, 0, 0, 0, 0));
-
-        return triggers.ToArray();
+        new SongTrigger(63, 0, 1, true, 0, 0, 0, 0);
     }
     private Coroutine yCoroutine;
     public override YGDObject[] Init()
@@ -62,24 +57,22 @@ public class FlyCamera : YMonoBehaviour
         return new YGDObject[]{ yCoroutine };
     }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
-        triggers.AddRange(YMainCamera.Instance.GetSin(9999,9998,9997));
-        triggers.AddRange(YMainCamera.Instance.GetCos(9996,9995,9994));
-        triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Divide, 30));
-        triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Divide, -30));
-        triggers.Add(new ItemEdit(9999, true, ItemEdit.Operation.Divide, 30));
-        triggers.Add(new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add));
-        triggers.Add(new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add));
-        triggers.Add(new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add));
-        triggers.Add(YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]));
-        triggers.Add(YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]));
-        triggers.Add(YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]));
-        triggers.Add(YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]));
-        triggers.Add(YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]));
-        triggers.Add(YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]));
-        return triggers.ToArray();
+        YMainCamera.Instance.GetSin(9999,9998,9997);
+        YMainCamera.Instance.GetCos(9996,9995,9994);
+        new ItemEdit(9998, true, ItemEdit.Operation.Divide, 30);
+        new ItemEdit(9995, true, ItemEdit.Operation.Divide, -30);
+        new ItemEdit(9999, true, ItemEdit.Operation.Divide, 30);
+        new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add);
+        YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]);
+        YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]);
+        YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]);
+        YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]);
+        YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]);
+        YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]);
     }
 }
 ```
@@ -101,9 +94,9 @@ public class FlyCamera : YMonoBehaviour
 public class TestComponent : YMonoBehaviour
 {
 
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
-        return null;
+
     }
 
     public override YGDObject[] Init()
@@ -111,14 +104,10 @@ public class TestComponent : YMonoBehaviour
         return null;
     }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
-
-        triggers.AddRange(GetComponent<YTransform>().SetState(1));
-        triggers.AddRange(GetComponent<YTransform>().Rotate(1f,1f,0));
-
-        return triggers.ToArray();
+        GetComponent<YTransform>().SetState(1);
+        GetComponent<YTransform>().Rotate(1f,1f,0);
     }
 }
 ```
@@ -144,9 +133,9 @@ public class TestComponent : YMonoBehaviour
     ```
 - Add (Take place in memory) ids, groups or gradients
     ```cs
-    YIDsManager.Instance.AddVariable($"varName", id, true);
+    YIDsManager.Instance.AddVariable("varName", id, true);
 
-    YIDsManager.Instance.AddVariable($"varName", id, false);
+    YIDsManager.Instance.AddVariable("varName", id, false);
 
     YIDsManager.Instance.AddGroup(group);
 
@@ -177,13 +166,9 @@ public class TestComponent : YMonoBehaviour
 ### 🔁 Coroutines
 
 ```cs
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
-
-        triggers.Add(YCoroutines.StartCoroutine(yCoroutine));
-
-        return triggers.ToArray();
+        YCoroutines.StartCoroutine(yCoroutine);
     }
 
     private Coroutine yCoroutine;
@@ -276,7 +261,8 @@ new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComp
 - Use variable Time.deltaTime to get Delta time
 
 ```cs
-GetComponent<YTransform>().Rotate(23, YGameManager.Instance.IDsManager.GetIdByName("Time.time"), 23);
+GetComponent<YTransform>().Rotate(23, YIDsManager.Instance.GetIdByName("Time.time"), 23);
+// 23 - zero variable
 ```
 
 ## How to use

@@ -45,10 +45,6 @@ public class YMeshRenderer : YMonoBehaviour
         points = new List<int>();
     }
 
-    public override YTrigger[] Begin()
-    {
-        return new YTrigger[0];
-    }
 
     public override YGDObject[] Init()
     {
@@ -339,11 +335,6 @@ public class YMeshRenderer : YMonoBehaviour
         }
 
         return objects.ToArray();
-    }
-
-    public override YTrigger[] Tick()
-    {
-        return new YTrigger[0];
     }
 
     public void CreateMesh()

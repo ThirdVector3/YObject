@@ -6,10 +6,6 @@ public class BeatSaberGameManager : YMonoBehaviour
 {
     private int misses;
     private int gameover;
-    public override YTrigger[] Begin()
-    {
-        return null;
-    }
 
     public override YGDObject[] Init()
     {
@@ -20,9 +16,10 @@ public class BeatSaberGameManager : YMonoBehaviour
         return null;
     }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
-        return CheckGameover();
+        //return
+        CheckGameover();
     }
 
     public YTrigger[] CheckGameover()

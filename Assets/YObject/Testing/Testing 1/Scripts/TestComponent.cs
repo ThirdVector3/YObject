@@ -8,7 +8,7 @@ public class TestComponent : YMonoBehaviour
         //print(YGameManager.Instance.GetMemoryValue(5000));
     }
 
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
 
 
@@ -21,7 +21,7 @@ public class TestComponent : YMonoBehaviour
 
         //triggers.Add(new SongTrigger(63, 0, 1, true, 0, 0, 0, 0));
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 
     private Coroutine yCoroutine;
@@ -49,12 +49,17 @@ public class TestComponent : YMonoBehaviour
         };
     }
 
-    public override YTrigger[] Tick()
+    public override void Tick()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
+        //List<YTrigger> triggers = new List<YTrigger>();
 
 
-        //YVariable yVar = new YFloat(10f) + new YFloat(11f) + new YFloat(66) * 2 / (1 - new YInt(30) + 2);
+        //YTmpVariable yVar = new YTmpFloat(10f) + new YTmpFloat(11f) + new YTmpFloat(66) * 2 / (1 - new YTmpInt(30) + 2);
+        //foreach (var trig in yVar.triggers)
+        //{
+        //    ItemEdit itemEdit = (ItemEdit)trig;
+        //    print($"{itemEdit.editID}, {itemEdit.operation}, {itemEdit.multiplier}, {itemEdit.setID1}");
+        //}
         //triggers.AddRange(yVar.triggers);
 
 
@@ -70,8 +75,8 @@ public class TestComponent : YMonoBehaviour
         //triggers.Add(new ItemEdit(5001, true, ItemEdit.Operation.Equals, 100));
         //triggers.AddRange(YMath.Sqrt(5001, 5000));
 
-        triggers.AddRange(GetComponent<YTransform>().SetState(1));
-        triggers.AddRange(GetComponent<YTransform>().Rotate(1f,1f,0));
+        GetComponent<YTransform>().SetState(1);
+        GetComponent<YTransform>().Rotate(1f,1f,0);
 
         //triggers.Add(new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0)));
 
@@ -81,6 +86,6 @@ public class TestComponent : YMonoBehaviour
         //triggers.Add(YInput.GetP1Right(YGameManager.Instance.GameobjectGroupsManager.SetCurrentGroup("1"), new YTrigger[0]));
 
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 }

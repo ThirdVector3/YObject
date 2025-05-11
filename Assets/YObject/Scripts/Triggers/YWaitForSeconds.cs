@@ -4,7 +4,7 @@ public class YWaitForSeconds : YTrigger
 {
     public float seconds;
 
-    public YWaitForSeconds(float seconds)
+    public YWaitForSeconds(float seconds) : base()
     { 
         this.seconds = seconds;
     }

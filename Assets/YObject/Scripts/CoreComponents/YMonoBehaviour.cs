@@ -8,7 +8,7 @@ public abstract class YMonoBehaviour : MonoBehaviour
     {
         initialised = false;
     }
-    public abstract YGDObject[] Init();
-    public abstract YTrigger[] Begin();
-    public abstract YTrigger[] Tick();
+    public virtual YGDObject[] Init() { return null; }
+    public virtual void Begin() {  }
+    public virtual void Tick() {  }
 }

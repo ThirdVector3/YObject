@@ -10,12 +10,14 @@ public class RandomTrigger : YTrigger
     private YTrigger[] triggers1;
     private YTrigger[] triggers2;
 
-    public RandomTrigger(float percentage, YTrigger[] triggers1, YTrigger[] triggers2)
+    public RandomTrigger(float percentage, YTrigger[] triggers1, YTrigger[] triggers2) : base()
     {
         this.percentage = percentage;
 
         if (triggers1 != null && triggers1.Length > 0)
         {
+            foreach (var trig in triggers1)
+                trig.isFirstLevel = false;
             id1 = YGameManager.Instance.IDsManager.GetFreeGroup();
             YGameManager.Instance.IDsManager.AddGroup(id1);
         }
@@ -23,6 +25,8 @@ public class RandomTrigger : YTrigger
             id1 = 0;
         if (triggers2 != null && triggers2.Length > 0)
         {
+            foreach (var trig in triggers2)
+                trig.isFirstLevel = false;
             id2 = YGameManager.Instance.IDsManager.GetFreeGroup();
             YGameManager.Instance.IDsManager.AddGroup(id2);
         }
@@ -32,13 +36,20 @@ public class RandomTrigger : YTrigger
         this.triggers1 = triggers1;
         this.triggers2 = triggers2;
     }
-    public RandomTrigger(float percentage, int id1, int id2, YTrigger[] triggers1, YTrigger[] triggers2)
+    public RandomTrigger(float percentage, int id1, int id2, YTrigger[] triggers1, YTrigger[] triggers2) : base()
     {
         this.percentage = percentage;
         this.id1 = id1;
         this.id2 = id2;
         this.triggers1 = triggers1;
         this.triggers2 = triggers2;
+
+        if (triggers1 != null)
+            foreach (var trig in triggers1)
+                trig.isFirstLevel = false;
+        if (triggers2 != null)
+            foreach (var trig in triggers2)
+                trig.isFirstLevel = false;
     }
 
     public override void Activate()

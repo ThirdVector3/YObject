@@ -175,9 +175,9 @@ public static class YMath
         List<YTrigger> triggers = new List<YTrigger>();
 
         var trigger1 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1.01f);
-        var trigger10 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 10.01f);
-        var trigger100 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 100.01f);
-        var trigger1000 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1000.01f);
+        //var trigger10 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 10.01f);
+        //var trigger100 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 100.01f);
+        //var trigger1000 = new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1000.01f);
 
         //triggers.Add(new ItemCompare(idIn, 0, true, true, 1, 100, ItemCompare.Operation.Less));
         triggers.Add(trigger1);

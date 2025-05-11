@@ -6,7 +6,7 @@ public class GroupToggleOn : YTrigger
 {
     private string groupName;
 
-    public GroupToggleOn(string groupName)
+    public GroupToggleOn(string groupName) : base()
     {
         this.groupName = groupName;
     }

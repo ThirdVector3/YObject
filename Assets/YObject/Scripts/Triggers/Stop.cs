@@ -4,7 +4,7 @@ public class Stop : YTrigger
 {
     private int id;
 
-    public Stop(int id)
+    public Stop(int id) : base()
     {
         this.id = id;
     }

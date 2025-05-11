@@ -47,13 +47,7 @@ public class YMainCamera : YMonoBehaviour
         YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.z", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
     }
 
-
-    public override YGDObject[] Init()
-    {
-        return null;
-    }
-
-    public override YTrigger[] Begin()
+    public override void Begin()
     {
         List<YTrigger> triggers = new List<YTrigger>()
         {
@@ -66,13 +60,9 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.z),
         };
 
-        return triggers.ToArray();
+        //return triggers.ToArray();
     }
 
-    public override YTrigger[] Tick()
-    {
-        return null;
-    }
 
 
     public YTrigger SetFocalLen(float focalLen)

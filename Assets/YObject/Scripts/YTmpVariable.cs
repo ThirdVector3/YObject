@@ -1,4 +1,4 @@
-﻿public class YVariable
+﻿public class YTmpVariable
 {
     private static int lastId = 9999;
     protected static int GetNewId()

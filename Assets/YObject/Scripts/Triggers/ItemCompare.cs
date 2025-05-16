@@ -24,16 +24,17 @@ public class ItemCompare : YTrigger
     private YTrigger[] trueTriggers;
     private YTrigger[] falseTriggers;
 
-    public ItemCompare(YTmpInt var1, YTmpInt var2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers) : base()
+
+    public ItemCompare(YTmpVariable var1, YTmpVariable var2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
     {
         this.id1 = var1.id;
         this.id2 = var2.id;
-        this.is1float = false;
-        this.is2float = false;
+        this.is1float = var1 is YTmpFloat;
+        this.is2float = var2 is YTmpFloat;
         this.multiplier1 = 1;
         this.multiplier2 = 1;
         this.operation = operation;
-        if (trueTriggers != null && trueTriggers.Length > 0)
+        if (trueTriggers != null && trueTriggers.Count() > 0)
         {
             foreach (var trig in trueTriggers)
                 trig.isFirstLevel = false;
@@ -42,7 +43,7 @@ public class ItemCompare : YTrigger
         }
         else
             trueId = 0;
-        if (falseTriggers != null && falseTriggers.Length > 0)
+        if (falseTriggers != null && falseTriggers.Count() > 0)
         {
             foreach (var trig in falseTriggers)
                 trig.isFirstLevel = false;
@@ -51,70 +52,12 @@ public class ItemCompare : YTrigger
         }
         else
             falseId = 0;
-        this.trueTriggers = trueTriggers;
-        this.falseTriggers = falseTriggers;
+        this.trueTriggers = trueTriggers.ToArray();
+        this.falseTriggers = falseTriggers.ToArray();
+
+        ChangeChildrenFromFirstLayer();
     }
-    public ItemCompare(YTmpFloat var1, YTmpInt var2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers) : base()
-    {
-        this.id1 = var1.id;
-        this.id2 = var2.id;
-        this.is1float = true;
-        this.is2float = false;
-        this.multiplier1 = 1;
-        this.multiplier2 = 1;
-        this.operation = operation;
-        if (trueTriggers != null && trueTriggers.Length > 0)
-        {
-            foreach (var trig in trueTriggers)
-                trig.isFirstLevel = false;
-            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
-            YGameManager.Instance.IDsManager.AddGroup(trueId);
-        }
-        else
-            trueId = 0;
-        if (falseTriggers != null && falseTriggers.Length > 0)
-        {
-            foreach (var trig in falseTriggers)
-                trig.isFirstLevel = false;
-            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
-            YGameManager.Instance.IDsManager.AddGroup(falseId);
-        }
-        else
-            falseId = 0;
-        this.trueTriggers = trueTriggers;
-        this.falseTriggers = falseTriggers;
-    }
-    public ItemCompare(YTmpFloat var1, YTmpFloat var2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers) : base()
-    {
-        this.id1 = var1.id;
-        this.id2 = var2.id;
-        this.is1float = true;
-        this.is2float = true;
-        this.multiplier1 = 1;
-        this.multiplier2 = 1;
-        this.operation = operation;
-        if (trueTriggers != null && trueTriggers.Length > 0)
-        {
-            foreach (var trig in trueTriggers)
-                trig.isFirstLevel = false;
-            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
-            YGameManager.Instance.IDsManager.AddGroup(trueId);
-        }
-        else
-            trueId = 0;
-        if (falseTriggers != null && falseTriggers.Length > 0)
-        {
-            foreach (var trig in falseTriggers)
-                trig.isFirstLevel = false;
-            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
-            YGameManager.Instance.IDsManager.AddGroup(falseId);
-        }
-        else
-            falseId = 0;
-        this.trueTriggers = trueTriggers;
-        this.falseTriggers = falseTriggers;
-    }
-    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers) : base()
+    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
     {
         this.id1 = id1;
         this.id2 = id2;
@@ -123,7 +66,7 @@ public class ItemCompare : YTrigger
         this.multiplier1 = multiplier1;
         this.multiplier2 = multiplier2;
         this.operation = operation;
-        if (trueTriggers != null && trueTriggers.Length > 0) 
+        if (trueTriggers != null && trueTriggers.Count() > 0) 
         {
             foreach (var trig in trueTriggers)
                 trig.isFirstLevel = false;
@@ -132,7 +75,7 @@ public class ItemCompare : YTrigger
         }
         else
             trueId = 0;
-        if (falseTriggers != null && falseTriggers.Length > 0)
+        if (falseTriggers != null && falseTriggers.Count() > 0)
         {
             foreach (var trig in falseTriggers)
                 trig.isFirstLevel = false;
@@ -141,10 +84,12 @@ public class ItemCompare : YTrigger
         }
         else
             falseId = 0;
-        this.trueTriggers = trueTriggers;
-        this.falseTriggers = falseTriggers;
+        this.trueTriggers = trueTriggers.ToArray();
+        this.falseTriggers = falseTriggers.ToArray();
+
+        ChangeChildrenFromFirstLayer();
     }
-    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, YTrigger[] trueTriggers, YTrigger[] falseTriggers, int trueId, int falseId) : base()
+    public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers, int trueId, int falseId) : base()
     {
         this.id1 = id1;
         this.id2 = id2;
@@ -155,8 +100,8 @@ public class ItemCompare : YTrigger
         this.operation = operation;
         this.trueId = trueId;
         this.falseId = falseId;
-        this.trueTriggers = trueTriggers;
-        this.falseTriggers = falseTriggers;
+        this.trueTriggers = trueTriggers.ToArray();
+        this.falseTriggers = falseTriggers.ToArray();
 
         if (trueTriggers != null)
             foreach (var trig in trueTriggers)
@@ -165,9 +110,30 @@ public class ItemCompare : YTrigger
             foreach (var trig in falseTriggers)
                 trig.isFirstLevel = false;
 
+        ChangeChildrenFromFirstLayer();
     }
 
-
+    public void ChangeChildrenFromFirstLayer()
+    {
+        if (trueTriggers != null)
+        {
+            foreach (var trig in trueTriggers)
+            {
+                trig.isFirstLevel = false;
+                if (trig is ItemCompare)
+                    ((ItemCompare)trig).ChangeChildrenFromFirstLayer();
+            }
+        }
+        if (falseTriggers != null)
+        {
+            foreach (var trig in falseTriggers)
+            {
+                trig.isFirstLevel = false;
+                if (trig is ItemCompare)
+                    ((ItemCompare)trig).ChangeChildrenFromFirstLayer();
+            }
+        }
+    }
     public override void Activate()
     {
         float a = is1float ? YGameManager.Instance.IDsManager.GetMemoryValue(id1).Item2 : YGameManager.Instance.IDsManager.GetMemoryValue(id1).Item1;

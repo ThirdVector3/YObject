@@ -20,7 +20,7 @@ public class GroupToggleOn : YTrigger
                 go.SetActive(false);
             }
         }
-        if (YGameManager.Instance.groupsGameobject.ContainsKey(groupName))
+        if (groupName != null && YGameManager.Instance.groupsGameobject.ContainsKey(groupName))
         {
             foreach (var go in YGameManager.Instance.groupsGameobject[groupName])
             {
@@ -28,7 +28,7 @@ public class GroupToggleOn : YTrigger
             }
         }
         YGameManager.Instance.GameobjectGroupsManager.CurrentGroup = groupName;
-        if (YGameManager.Instance.groupsBeginTriggers.ContainsKey(groupName))
+        if (groupName != null && YGameManager.Instance.groupsBeginTriggers.ContainsKey(groupName))
         {
             foreach (YTrigger trigger in YGameManager.Instance.groupsBeginTriggers[groupName])
             {
@@ -51,13 +51,16 @@ public class GroupToggleOn : YTrigger
             ret += toggle.GetString(pos);
             pos += new Vector2(2, 0);
         }
-        var toggle2 = new Toggle(YGameManager.Instance.groupsGroup[groupName], true);
-        toggle2.AddGroups(this.groups);
-        var spawn = new Spawn(YGameManager.Instance.groupsGroup[groupName], false, 0, new Dictionary<int, int>());
-        spawn.AddGroups(this.groups);
-        ret += toggle2.GetString(pos);
-        pos += new Vector2(2, 0);
-        ret += spawn.GetString(pos);
+        if (groupName != null && YGameManager.Instance.groupsGroup.ContainsKey(groupName))
+        {
+            var toggle2 = new Toggle(YGameManager.Instance.groupsGroup[groupName], true);
+            toggle2.AddGroups(this.groups);
+            var spawn = new Spawn(YGameManager.Instance.groupsBeginGroup[groupName], false, 0, new Dictionary<int, int>());
+            spawn.AddGroups(this.groups);
+            ret += toggle2.GetString(pos);
+            pos += new Vector2(2, 0);
+            ret += spawn.GetString(pos);
+        }
         return ret;
     }
 }

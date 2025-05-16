@@ -253,6 +253,7 @@ MonoBehaviour:
   sampleLevelName: SampleLevel
   levelSavingType: 0
   updateLevel: 0
+  lastID: 500
 --- !u!4 &1056304442
 Transform:
   m_ObjectHideFlags: 0

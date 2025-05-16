@@ -20,12 +20,17 @@ public class BeatSaberGameManager : YMonoBehaviour
     {
         //return
         CheckGameover();
+        //YInput.GetP1Up(YGameobjectGroupsManager.Instance.SetCurrentGroup(null), YGameobjectGroupsManager.Instance.SetCurrentGroup("2"));
     }
 
+    public override void Begin()
+    {
+        YGameobjectGroupsManager.Instance.SetCurrentGroup("2");
+    }
 
     public YTrigger[] CheckGameover()
     {
-        YTrigger[] triggers = new YTrigger[] { new ItemCompare(misses, 0, false, false, 1, 1, ItemCompare.Operation.More, new YTrigger[] { new ItemCompare(gameover, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ColorTrigger(1000, 0, Color.white), new ItemEdit(gameover, false, ItemEdit.Operation.Equals, 1) }, new YTrigger[0]) }, new YTrigger[0]) };
+        YTrigger[] triggers = new YTrigger[] { new ItemCompare(misses, 0, false, false, 1, 2, ItemCompare.Operation.More, new YTrigger[] { new ItemCompare(gameover, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ColorTrigger(1, 0, Color.white), new ItemEdit(gameover, false, ItemEdit.Operation.Equals, 1) }, new YTrigger[0]) }, new YTrigger[0]) };
 
         return triggers;
     }

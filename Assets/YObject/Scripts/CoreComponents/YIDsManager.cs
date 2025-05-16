@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine;
+
 public class YIDsManager
 {
     public static YIDsManager Instance { get; private set; }
@@ -135,6 +137,10 @@ public class YIDsManager
     public void SetCurrentGroupName(string groupName)
     {
         currentGroupName = groupName;
+    }
+    public string GetCurrentGroupName()
+    {
+        return currentGroupName;
     }
     public int AddVariable(string name, int id, bool isFloat)
     {
@@ -509,6 +515,11 @@ public class YIDsManager
             allIdsGroup = new List<int>(globalFreeGroups);
             allIdsFloat = new List<int>(globalFreeFloats);
         }
+        else
+        {
+            allIdsGroup = new List<int>(groupsFreeGroups[groupName]);
+            allIdsFloat = new List<int>(groupsFreeFloats[groupName]);
+        }
 
 
         while (allIdsGroup.Count > 0)
@@ -527,45 +538,56 @@ public class YIDsManager
     public int GetFreeIdIntAndGroup(string groupName)
     {
         List<int> allIdsGroup = new List<int>();
-        for (int i = lastFreeGroup; i < 10000; i++)
-        {
-            allIdsGroup.Add(i);
-        }
-        foreach (var group in globalPickedGroups)
-        {
-            if (allIdsGroup.Contains(group))
-                allIdsGroup.Remove(group);
-        }
-        if (groupName != null)
-        {
-            foreach (var group in groupsPickedGroups[groupName])
-            {
-                if (allIdsGroup.Contains(group))
-                    allIdsGroup.Remove(group);
-            }
-        }
+        //for (int i = lastFreeGroup; i < 10000; i++)
+        //{
+        //    allIdsGroup.Add(i);
+        //}
+        //foreach (var group in globalPickedGroups)
+        //{
+        //    if (allIdsGroup.Contains(group))
+        //        allIdsGroup.Remove(group);
+        //}
+        //if (groupName != null)
+        //{
+        //    foreach (var group in groupsPickedGroups[groupName])
+        //    {
+        //        if (allIdsGroup.Contains(group))
+        //            allIdsGroup.Remove(group);
+        //    }
+        //}
 
         List<int> allIdsInt = new List<int>();
-        for (int i = lastFreeGroup; i < 10000; i++)
+        //for (int i = lastFreeGroup; i < 10000; i++)
+        //{
+        //    allIdsInt.Add(i);
+        //}
+        //foreach (var variable in globalVariables.Values)
+        //{
+        //    if (variable.Item2 == false && allIdsInt.Contains(variable.Item1))
+        //    {
+        //        allIdsInt.Remove(variable.Item1);
+        //    }
+        //}
+        //if (groupName != null)
+        //{
+        //    foreach (var variable in groupsVariables[groupName].Values)
+        //    {
+        //        if (variable.Item2 == false && allIdsInt.Contains(variable.Item1))
+        //        {
+        //            allIdsInt.Remove(variable.Item1);
+        //        }
+        //    }
+        //}
+
+        if (groupName == null)
         {
-            allIdsInt.Add(i);
+            allIdsGroup = new List<int>(globalFreeGroups);
+            allIdsInt = new List<int>(globalFreeInts);
         }
-        foreach (var variable in globalVariables.Values)
+        else
         {
-            if (variable.Item2 == false && allIdsInt.Contains(variable.Item1))
-            {
-                allIdsInt.Remove(variable.Item1);
-            }
-        }
-        if (groupName != null)
-        {
-            foreach (var variable in groupsVariables[groupName].Values)
-            {
-                if (variable.Item2 == false && allIdsInt.Contains(variable.Item1))
-                {
-                    allIdsInt.Remove(variable.Item1);
-                }
-            }
+            allIdsGroup = new List<int>(groupsFreeGroups[groupName]);
+            allIdsInt = new List<int>(groupsFreeInts[groupName]);
         }
 
 

@@ -162,7 +162,7 @@ public class YTriangle : MonoBehaviour
         UnityEngine.Color.RGBToHSV(color1Corrector, out float _, out float _, out float v1);
         UnityEngine.Color.RGBToHSV(color2Corrector, out float _, out float _, out float v2);
         UnityEngine.Color.RGBToHSV(color3Corrector, out float _, out float _, out float v3);
-        return (v1 * 2, v2 * 2, v3 * 2);
+        return (v1 * 2 - 1, v2 * 2 - 1, v3 * 2 - 1);
     }
 
     private void ValidateLayerParent()

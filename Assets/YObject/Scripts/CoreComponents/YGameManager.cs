@@ -199,6 +199,7 @@ public class YGameManager : MonoBehaviour
         IDsManager.SetMemoryValueByName("Input.P2Up", Input.GetKey(KeyCode.UpArrow) ? 1f : 0f);
         IDsManager.SetMemoryValueByName("Time.deltaTime", Time.fixedDeltaTime);
         IDsManager.SetMemoryValueByName("Time.time", Time.time);
+        IDsManager.SetMemoryValueByName("PI", 3.1415926535f);
     }
     private void InitAll()
     {

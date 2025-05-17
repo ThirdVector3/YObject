@@ -2,6 +2,7 @@
 using GeometryDashAPI.Levels.GameObjects.Default;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,7 +20,22 @@ public class Coroutine : YTrigger
 
     public override void Activate()
     {
-        YGameManager.Instance.StartCoroutine(IECoroutine());
+        AsyncCoroutine();
+        //YGameManager.Instance.StartCoroutine(IECoroutine());
+    }
+    private async void AsyncCoroutine()
+    {
+        foreach (var trigger in triggers)
+        {
+            if (trigger == null) continue;
+            if (trigger is YWaitForSeconds)
+            {
+                //yield return new WaitForSeconds(((YWaitForSeconds)trigger).seconds);
+                await Task.Delay(Mathf.RoundToInt(((YWaitForSeconds)trigger).seconds * 1000));
+                continue;
+            }
+            trigger.Activate();
+        }
     }
     private IEnumerator IECoroutine()
     {

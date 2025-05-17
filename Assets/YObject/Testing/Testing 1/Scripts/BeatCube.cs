@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BeatCube : YMonoBehaviour
 {
-    private const bool gd = true;
     private const float SPEED = 13f;
 
     [SerializeField] public float time;
@@ -27,24 +26,26 @@ public class BeatCube : YMonoBehaviour
         new ItemEdit(9999, true, ItemEdit.Operation.Add, distance);
         GetComponent<YTransform>().Translate(23,23,9999);
 
-        if (gd)
-        {
-            if (rotation == 0)
-                GetComponent<YTransform>().SetRotation(0, -90f, -90);
-            else if (rotation == 1)
-                GetComponent<YTransform>().SetRotation(0, -90f, -180);
-            else
-                GetComponent<YTransform>().SetRotation(0, -90f, 0);
-        }
+        //if (gd)
+        //{
+        //    if (rotation == 0)
+        //        GetComponent<YTransform>().SetRotation(0, -90f, -90);
+        //    else if (rotation == 1)
+        //        GetComponent<YTransform>().SetRotation(0, -90f, -180);
+        //    else
+        //        GetComponent<YTransform>().SetRotation(0, -90f, 0);
+        //}
+        //else
+        //{
+        //
+        //}
+
+        if (rotation == 0)
+            GetComponent<YTransform>().SetRotation(-90f, 0, -90);
+        else if (rotation == 1)
+            GetComponent<YTransform>().SetRotation(0, 90f, -180);
         else
-        {
-            if (rotation == 0)
-                GetComponent<YTransform>().SetRotation(-90f, 0, -90);
-            else if (rotation == 1)
-                GetComponent<YTransform>().SetRotation(0, 90f, -180);
-            else
-                GetComponent<YTransform>().SetRotation(0, -90f, 0);
-        }
+            GetComponent<YTransform>().SetRotation(0, -90f, 0);
 
         //return triggers.ToArray();
     }
@@ -73,8 +74,8 @@ public class BeatCube : YMonoBehaviour
 
         //triggers2.Add(new ColorTrigger(1, 0, Color.black));
 
-        YTrigger[] triggers3 = new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), YCoroutines.StartCoroutine(hitCoroutine) }, new YTrigger[0]) };
-        YTrigger[] triggers4 = new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"),false, ItemEdit.Operation.Add, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) };
+        YTrigger[] triggers3 = new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), YCoroutines.StartCoroutine(hitCoroutine), new Spawn(434, false, 0, new Dictionary<int, int>()) }, new YTrigger[0]) };
+        YTrigger[] triggers4 = new YTrigger[] { new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"),false, ItemEdit.Operation.Add, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Add, 0), new Spawn(433, false, 0, new Dictionary<int, int>()) }, new YTrigger[0]) };
 
 
         if (left)
@@ -135,7 +136,7 @@ public class BeatCube : YMonoBehaviour
         new ItemEdit(9998, true, ItemEdit.Operation.Equals, 2);
         new ItemCompare(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), 9999, true, true, 1, 1, ItemCompare.Operation.Less,
             new YTrigger[] { new ItemCompare(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), 9998, true, true, 1, 1, ItemCompare.Operation.More,
-            /*new YTrigger[]{ new ItemEdit(5000, true, ItemEdit.Operation.Add, 1) }*/  triggers2 , new YTrigger[]{ new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone,false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"), false, ItemEdit.Operation.Add, 10), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Add, 10) }, new YTrigger[0]) } )}, new YTrigger[0]);
+            /*new YTrigger[]{ new ItemEdit(5000, true, ItemEdit.Operation.Add, 1) }*/  triggers2 , new YTrigger[]{ new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone,false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"), false, ItemEdit.Operation.Add, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Add, 0), new Spawn(433, false, 0, new Dictionary<int, int>()) }, new YTrigger[0]) } )}, new YTrigger[0]);
 
 
         //return triggers.ToArray();

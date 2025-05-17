@@ -32,6 +32,7 @@ public class YGameManager : MonoBehaviour
 
 
     public List<YTrigger> globalPool;
+    public bool transportingToGd = false;
 
 
 
@@ -60,6 +61,7 @@ public class YGameManager : MonoBehaviour
     }
     public void SaveLevel()
     {
+        transportingToGd = true;
         InitAll();
 
         string objs = "";
@@ -148,6 +150,8 @@ public class YGameManager : MonoBehaviour
 
         //PrintLevelStringAsync("t");
 
+
+        transportingToGd = false;
 
         SoundManager = new YSoundManager();
         SoundManager.Init();

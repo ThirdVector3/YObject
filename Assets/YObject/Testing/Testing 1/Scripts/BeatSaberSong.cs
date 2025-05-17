@@ -7,7 +7,7 @@ public class BeatSaberSong : YMonoBehaviour
     public override void Begin()
     {
         //return
-        new SongTrigger(10012530, 0, 1, false, 0, 0, 1000, 0);
+        new SongTrigger(778356, 0, 1, false, 0, 0, 1000, 0);
     }
 
 }

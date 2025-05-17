@@ -71,6 +71,9 @@ public class YMeshRenderer : YMonoBehaviour
             }
         }
 
+        if (!YGameManager.Instance.transportingToGd)
+            return null;
+
         GetComponent<YTransform>().Init();
         float minDist = 0;
         if (LODSystemEnabled)

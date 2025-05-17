@@ -19,6 +19,8 @@ MonoBehaviour:
     _serializedList:
     - Key: 63
       Value: {fileID: 8300000, guid: 6a385eedf339d3d45b1ba5a8ec7d59cf, type: 3}
+    - Key: 778356
+      Value: {fileID: 8300000, guid: bef24ccc40255f848861f162bb59b7ef, type: 3}
     - Key: 10012530
       Value: {fileID: 8300000, guid: 9e7176bd431809945a5955ce426a339e, type: 3}
   colorChannels:

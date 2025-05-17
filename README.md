@@ -24,7 +24,7 @@ Then you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your co
 - In Begin you can create triggers that will activate at start of game (or when group is loaded if gameobject has a group)
 - In Tick you can create triggers that will activate every tick
 ```cs
-public class FlyCamera : YMonoBehaviour
+public class MyComponent : YMonoBehaviour
 {
     public override void Begin()
     {
@@ -37,7 +37,7 @@ public class FlyCamera : YMonoBehaviour
     private Coroutine yCoroutine;
     public override YGDObject[] Init()
     {
-        YIDsManager.Instance.AddVariable(gameObject.name + ".variable", YIDsManager.Instance.GetFreeIdFloat(), true);
+        YIDsManager.Instance.AddVariable(gameObject.GetInstanceID() + ".variable", YIDsManager.Instance.GetFreeIdFloat(), true);
 
 
         List<YTrigger> triggers = new List<YTrigger>();
@@ -53,12 +53,14 @@ public class FlyCamera : YMonoBehaviour
         triggers.Add(new YWaitForSeconds(1));
         triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
 
-        yCoroutine = YCoroutines.GetCoroutine(new Vector2(300, 300), triggers.ToArray());
+        yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray());
         return new YGDObject[]{ yCoroutine };
     }
 
     public override void Tick()
     {
+        // free fly camera
+        
         YMainCamera.Instance.GetSin(9999,9998,9997);
         YMainCamera.Instance.GetCos(9996,9995,9994);
         new ItemEdit(9998, true, ItemEdit.Operation.Divide, 30);
@@ -187,7 +189,7 @@ public class TestComponent : YMonoBehaviour
         triggers.Add(new YWaitForSeconds(1));
         triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
 
-        yCoroutine = YCoroutines.GetCoroutine(new Vector2(300, 300), triggers.ToArray());
+        yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray());
 
         return new YGDObject[]
         {
@@ -270,3 +272,10 @@ GetComponent<YTransform>().Rotate(23, YIDsManager.Instance.GetIdByName("Time.tim
 - add this files as project (Add project button)
 - open project
 - create game of your dreams
+
+## Community
+
+- discord server: https://discord.gg/FzWNBcQA57
+- telegram channel: https://t.me/yaylab
+- youtube channel: https://www.youtube.com/@YaYmsc
+(here you can find tutorials)

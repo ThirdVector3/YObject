@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class BeatCube : YMonoBehaviour
 {
-    private const bool gd = false;
-    private const float SPEED = 10f;
+    private const bool gd = true;
+    private const float SPEED = 13f;
 
-    [SerializeField] private float time;
+    [SerializeField] public float time;
     [SerializeField] private bool left;
     [Range(-1,1)]
-    [SerializeField] private int rotation;
+    [SerializeField] public int rotation;
 
     public override void Begin()
     {
@@ -158,7 +158,7 @@ public class BeatCube : YMonoBehaviour
             triggers.Add(new YWaitForSeconds(0.015f));
             adder += 1;
         }
-        Coroutine coroutine = YCoroutines.GetCoroutine(new Vector2(500, 300), triggers.ToArray());
+        Coroutine coroutine = YCoroutines.GetCoroutine(triggers.ToArray());
         hitCoroutine = coroutine;
     }
 }

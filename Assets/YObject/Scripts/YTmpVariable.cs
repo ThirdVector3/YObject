@@ -1,4 +1,6 @@
-﻿public class YTmpVariable
+﻿using System.Collections.Generic;
+
+public class YTmpVariable
 {
     private static int lastId = 9999;
     protected static int GetNewId()
@@ -9,5 +11,5 @@
     }
 
     public int id;
-    public YTrigger[] triggers;
+    public List<YTrigger> triggers = new List<YTrigger>();
 }

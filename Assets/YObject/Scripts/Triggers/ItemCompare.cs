@@ -25,38 +25,7 @@ public class ItemCompare : YTrigger
     private YTrigger[] falseTriggers;
 
 
-    public ItemCompare(YTmpVariable var1, YTmpVariable var2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
-    {
-        this.id1 = var1.id;
-        this.id2 = var2.id;
-        this.is1float = var1 is YTmpFloat;
-        this.is2float = var2 is YTmpFloat;
-        this.multiplier1 = 1;
-        this.multiplier2 = 1;
-        this.operation = operation;
-        if (trueTriggers != null && trueTriggers.Count() > 0)
-        {
-            foreach (var trig in trueTriggers)
-                trig.isFirstLevel = false;
-            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
-            YGameManager.Instance.IDsManager.AddGroup(trueId);
-        }
-        else
-            trueId = 0;
-        if (falseTriggers != null && falseTriggers.Count() > 0)
-        {
-            foreach (var trig in falseTriggers)
-                trig.isFirstLevel = false;
-            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
-            YGameManager.Instance.IDsManager.AddGroup(falseId);
-        }
-        else
-            falseId = 0;
-        this.trueTriggers = trueTriggers.ToArray();
-        this.falseTriggers = falseTriggers.ToArray();
 
-        ChangeChildrenFromFirstLayer();
-    }
     public ItemCompare(int id1, int id2, bool is1float, bool is2float, float multiplier1, float multiplier2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
     {
         this.id1 = id1;
@@ -112,6 +81,39 @@ public class ItemCompare : YTrigger
 
         ChangeChildrenFromFirstLayer();
     }
+    public ItemCompare(YTmpVariable var1, YTmpVariable var2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
+    {
+        this.id1 = var1.id;
+        this.id2 = var2.id;
+        this.is1float = var1 is YTmpFloat;
+        this.is2float = var2 is YTmpFloat;
+        this.multiplier1 = 1;
+        this.multiplier2 = 1;
+        this.operation = operation;
+        if (trueTriggers != null && trueTriggers.Count() > 0)
+        {
+            foreach (var trig in trueTriggers)
+                trig.isFirstLevel = false;
+            trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(trueId);
+        }
+        else
+            trueId = 0;
+        if (falseTriggers != null && falseTriggers.Count() > 0)
+        {
+            foreach (var trig in falseTriggers)
+                trig.isFirstLevel = false;
+            falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
+            YGameManager.Instance.IDsManager.AddGroup(falseId);
+        }
+        else
+            falseId = 0;
+        this.trueTriggers = trueTriggers.ToArray();
+        this.falseTriggers = falseTriggers.ToArray();
+
+        ChangeChildrenFromFirstLayer();
+    }
+
 
     public void ChangeChildrenFromFirstLayer()
     {

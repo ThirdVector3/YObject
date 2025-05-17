@@ -4,13 +4,20 @@ using UnityEngine;
 
 public static class YCoroutines
 {
-    public static Coroutine GetCoroutine(Vector2 pos, YTrigger[] triggers)
+    private static Vector2 pos = Vector2.zero;
+    public static void Init()
     {
-        if (pos == Vector2.zero)
-            pos = new Vector2(1, 0);
+        pos = new Vector2(300, 300);
+    }
+    public static Coroutine GetCoroutine(YTrigger[] triggers)
+    {
+        //if (pos == Vector2.zero)
+        //    pos = new Vector2(1, 0);
 
         var yCoroutine = new Coroutine(triggers.ToArray());
         yCoroutine.pos = pos;
+
+        pos += new Vector2(0, 10);
 
         return yCoroutine;
     } 

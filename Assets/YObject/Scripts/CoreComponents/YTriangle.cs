@@ -99,7 +99,7 @@ public class YTriangle : MonoBehaviour
         color3 = color3 == 0 ? 1 : color3;
 
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = new Material(Resources.Load<YProjectSettings>("YProjectSettings").triangleShader);
+        meshRenderer.sharedMaterial = new Material(Shader.Find("Shader Graphs/Triangle"));//Resources.Load<YProjectSettings>("YProjectSettings").triangleShader);
 
         UnityEngine.Color c1 = YColorManager.GetColors()[color1];
         UnityEngine.Color c2 = YColorManager.GetColors()[color2];

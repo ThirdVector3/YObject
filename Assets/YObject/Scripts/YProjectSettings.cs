@@ -39,9 +39,15 @@ public class YProjectSettings : ScriptableObject
         colorChannels[0].a = 0;
         colorChannels[2] = UnityEngine.Color.black;
 
+
+        YColorManager.InitColors();
+
+
         foreach (var triangle in FindObjectsByType<YTriangle>(FindObjectsSortMode.None))
         {
             triangle.SetTriangleColors();
         }
+
+
     }
 }

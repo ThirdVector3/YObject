@@ -51,7 +51,7 @@ public class YGameManager : MonoBehaviour
     public string sampleLevelName = "SampleLevel";
     public LevelSavingType levelSavingType;
     public bool updateLevel;
-    public int lastID = 500;
+    public int firstFreeID = 500;
 
     public enum LevelSavingType
     {
@@ -206,7 +206,7 @@ public class YGameManager : MonoBehaviour
         _instance = this;
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-        IDsManager = new YIDsManager(lastID);
+        IDsManager = new YIDsManager(firstFreeID);
         GameobjectGroupsManager = new YGameobjectGroupsManager();
 
         globalPool = new List<YTrigger>();
@@ -224,6 +224,8 @@ public class YGameManager : MonoBehaviour
 
         IDsManager.SetCurrentGroupName(null);
         YColorManager.InitColors();
+
+        YCoroutines.Init();
 
         InitGameobjects();
     }
@@ -258,7 +260,7 @@ public class YGameManager : MonoBehaviour
             }
         }
 
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null)
             {
@@ -267,7 +269,7 @@ public class YGameManager : MonoBehaviour
                     globalInitGDObjects.AddRange(a);
             }
         }
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null && yMono is YTransform)
             {
@@ -298,7 +300,7 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null && !(yMono is YTransform))
             {
@@ -330,7 +332,7 @@ public class YGameManager : MonoBehaviour
             }
         }
         IDsManager.InitGroups(groupsGroup.Keys.ToArray());
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
             {
@@ -340,7 +342,7 @@ public class YGameManager : MonoBehaviour
                     groupsInitGDObjects[yGameobjectGroup.GetName()].AddRange(a);
             }
         }
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && yMono is YTransform)
             {
@@ -372,7 +374,7 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !(yMono is YTransform))
             {

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 public class YTransform : YMonoBehaviour
 {
-    [Header(@"0 - changable position
+    /* [Header(@"0 - changable position
 1 - changable position and rotation
 2 - changable position and scale
 3 - changable position, rotation and scale")]
-    [Range(0,3)] [SerializeField] private int state;
+    [Range(0,3)] [SerializeField] private int state; */
+
+    [SerializeField] private bool canRotate;
+    [SerializeField] private bool canScale;
 
     public override void Begin()
     {
@@ -16,19 +19,26 @@ public class YTransform : YMonoBehaviour
         if (gameObject.isStatic)
             return;// triggers.ToArray();
 
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Equals, transform.position.x));
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Equals, transform.position.y));
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Equals, transform.position.z));
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Equals, transform.position.x);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Equals, transform.position.y);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Equals, transform.position.z);
 
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.x"), true, ItemEdit.Operation.Equals, transform.eulerAngles.x));
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.y"), true, ItemEdit.Operation.Equals, transform.eulerAngles.y));
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.z"), true, ItemEdit.Operation.Equals, transform.eulerAngles.z));
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.x"), true, ItemEdit.Operation.Equals, transform.eulerAngles.x);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.y"), true, ItemEdit.Operation.Equals, transform.eulerAngles.y);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.z"), true, ItemEdit.Operation.Equals, transform.eulerAngles.z);
 
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.x"), true, ItemEdit.Operation.Equals, transform.localScale.x));
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.y"), true, ItemEdit.Operation.Equals, transform.localScale.y));
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.z"), true, ItemEdit.Operation.Equals, transform.localScale.z));
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.x"), true, ItemEdit.Operation.Equals, transform.localScale.x);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.y"), true, ItemEdit.Operation.Equals, transform.localScale.y);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.z"), true, ItemEdit.Operation.Equals, transform.localScale.z);
 
-        triggers.Add(new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, state));
+        if (!canRotate && !canScale)
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 0);
+        else if (canRotate && !canScale)
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 1);
+        else if(!canRotate && canScale)
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 2);
+        else if(canRotate && canScale)
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 3);
 
         //return triggers.ToArray();
     }
@@ -242,12 +252,20 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] SetState(int state)
+    public YTrigger[] SetState(bool canRotate, bool canScale)
     {
-        YTrigger[] result = new YTrigger[]
-        {
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, state),
-        };
+        YTrigger[] result;// = new YTrigger[]
+        //{
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, state),
+        //};
+        if (!canRotate && !canScale)
+            result = new YTrigger[] { new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 0) };
+        else if (canRotate && !canScale)
+            result = new YTrigger[] { new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 1) };
+        else if (!canRotate && canScale)
+            result = new YTrigger[] { new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 2) };
+        else
+            result = new YTrigger[] { new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 3) };
         return result;
     }
     public YTrigger[] GetState(int idOut)
@@ -285,8 +303,10 @@ public class YTransform : YMonoBehaviour
             {
                 transform.eulerAngles = Vector3.zero;
             }
+
             if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 2 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
             {
+
                 transform.localScale = new Vector3(
                     YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.x", group != null ? group.GetName() : null).Item2,
                     YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.y", group != null ? group.GetName() : null).Item2,

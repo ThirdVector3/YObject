@@ -5,7 +5,7 @@ public class YTmpInt : YTmpVariable
     public YTmpInt(int value)
     {
         id = GetNewId();
-        triggers = new YTrigger[]
+        triggers = new List<YTrigger>()
         {
             new ItemEdit(id, true, ItemEdit.Operation.Equals, value)
         };
@@ -13,7 +13,7 @@ public class YTmpInt : YTmpVariable
     public YTmpInt(int value, int id)
     {
         this.id = id;
-        triggers = new YTrigger[0];
+        triggers = new List<YTrigger>();
     }
 
     public static YTmpInt operator +(YTmpInt a, YTmpInt b)
@@ -22,7 +22,7 @@ public class YTmpInt : YTmpVariable
         list.AddRange(a.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Add, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpInt operator +(YTmpInt a, float b)
@@ -30,7 +30,7 @@ public class YTmpInt : YTmpVariable
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Add, b));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpInt operator +(float a, YTmpInt b)
@@ -38,7 +38,7 @@ public class YTmpInt : YTmpVariable
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(b.id, false, ItemEdit.Operation.Add, a));
-        b.triggers = list.ToArray();
+        b.triggers = list;
         return b;
     }
 
@@ -52,7 +52,7 @@ public class YTmpInt : YTmpVariable
         list.AddRange(a.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Subtract, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpInt operator -(YTmpInt a, float b)
@@ -60,7 +60,7 @@ public class YTmpInt : YTmpVariable
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Subtract, b));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpFloat operator -(float a, YTmpInt b)
@@ -70,7 +70,7 @@ public class YTmpInt : YTmpVariable
         list.AddRange(aF.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(aF.id, true, ItemEdit.Operation.Subtract, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
-        aF.triggers = list.ToArray();
+        aF.triggers = list;
         return aF;
     }
 
@@ -84,7 +84,7 @@ public class YTmpInt : YTmpVariable
         list.AddRange(a.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Multiply, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpInt operator *(YTmpInt a, float b)
@@ -92,7 +92,7 @@ public class YTmpInt : YTmpVariable
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Multiply, b));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpInt operator *(float a, YTmpInt b)
@@ -100,7 +100,7 @@ public class YTmpInt : YTmpVariable
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(b.id, false, ItemEdit.Operation.Multiply, a));
-        b.triggers = list.ToArray();
+        b.triggers = list;
         return b;
     }
 
@@ -114,7 +114,7 @@ public class YTmpInt : YTmpVariable
         list.AddRange(a.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Divide, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpInt operator /(YTmpInt a, float b)
@@ -122,7 +122,7 @@ public class YTmpInt : YTmpVariable
         List<YTrigger> list = new List<YTrigger>();
         list.AddRange(a.triggers);
         list.Add(new ItemEdit(a.id, false, ItemEdit.Operation.Divide, b));
-        a.triggers = list.ToArray();
+        a.triggers = list;
         return a;
     }
     public static YTmpFloat operator /(float a, YTmpInt b)
@@ -132,7 +132,7 @@ public class YTmpInt : YTmpVariable
         list.AddRange(aF.triggers);
         list.AddRange(b.triggers);
         list.Add(new ItemEdit(aF.id, true, ItemEdit.Operation.Divide, 1, b.id, false, 0, true, ItemEdit.Operation.Add));
-        aF.triggers = list.ToArray();
+        aF.triggers = list;
         return aF;
     }
 }

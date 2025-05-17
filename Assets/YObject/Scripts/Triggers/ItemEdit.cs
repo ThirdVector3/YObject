@@ -36,6 +36,7 @@ public class ItemEdit : YTrigger
         Negative
     }
 
+
     public ItemEdit(int editID, bool isEditFloat, Operation operation, float number) : base()
     {
 
@@ -86,6 +87,23 @@ public class ItemEdit : YTrigger
         this.operation3 = operation3;
         this.operation4 = operation4;
     }
+    public ItemEdit(YTmpVariable edit, Operation operation, float multiplier, YTmpVariable set1, YTmpVariable set2, Operation operation2, Operation2 operation3 = 0, Operation3 operation4 = 0) : base()
+    {
+        if (operation2 == Operation.Equals)
+            operation2 = Operation.Add;
+        this.editID = edit.id;
+        this.operation = operation;
+        this.setID1 = set1.id;
+        this.setID2 = set2.id;
+        this.operation2 = operation2;
+        this.isEditFloat = edit is YTmpFloat;
+        this.isSetFloat = set1 is YTmpFloat;
+        this.isSetFloat2 = set2 is YTmpFloat;
+        this.multiplier = multiplier;
+        this.operation3 = operation3;
+        this.operation4 = operation4;
+    }
+
 
     public override void Activate()
     {

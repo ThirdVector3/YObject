@@ -41,7 +41,7 @@ public class TestComponent : YMonoBehaviour
         triggers.Add(new YWaitForSeconds(1));
         triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
 
-        yCoroutine = YCoroutines.GetCoroutine(new Vector2(300, 300), triggers.ToArray()); //new YCoroutine(triggers.ToArray());
+        yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray()); //new YCoroutine(triggers.ToArray());
 
         return new YGDObject[]
         {
@@ -75,8 +75,7 @@ public class TestComponent : YMonoBehaviour
         //triggers.Add(new ItemEdit(5001, true, ItemEdit.Operation.Equals, 100));
         //triggers.AddRange(YMath.Sqrt(5001, 5000));
 
-        GetComponent<YTransform>().SetState(1);
-        GetComponent<YTransform>().Rotate(1f,1f,0);
+        GetComponent<YTransform>().Rotate(0.2f, 0.2f, 0);
 
         //triggers.Add(new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0)));
 

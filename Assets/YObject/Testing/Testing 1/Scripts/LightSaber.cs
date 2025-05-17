@@ -128,7 +128,7 @@ public class LightSaber : YMonoBehaviour
             triggers.Add(YInput.GetP2Up(new YTrigger[] { new ItemEdit(saberUpDoingId, false, ItemEdit.Operation.Equals, 2) },
     new YTrigger[] { new ItemEdit(saberUpDoingId, false, ItemEdit.Operation.Equals, 0) }));
         }
-        Coroutine coroutine = YCoroutines.GetCoroutine(new Vector2(300, 300), triggers.ToArray()); //new YCoroutine(triggers.ToArray());
+        Coroutine coroutine = YCoroutines.GetCoroutine(triggers.ToArray()); //new YCoroutine(triggers.ToArray());
         saberUp = coroutine;
     }
     private int saberLeftDoingId;
@@ -173,7 +173,7 @@ public class LightSaber : YMonoBehaviour
     new YTrigger[] { new ItemEdit(saberLeftDoingId, false, ItemEdit.Operation.Equals, 0) }));
         }
 
-        Coroutine coroutine = YCoroutines.GetCoroutine(new Vector2(300, 400), triggers.ToArray()); //new YCoroutine(triggers.ToArray());
+        Coroutine coroutine = YCoroutines.GetCoroutine(triggers.ToArray()); //new YCoroutine(triggers.ToArray());
         saberLeft = coroutine;
     }
     private int saberRightDoingId;
@@ -218,7 +218,7 @@ public class LightSaber : YMonoBehaviour
     new YTrigger[] { new ItemEdit(saberRightDoingId, false, ItemEdit.Operation.Equals, 0) }));
         }
 
-        Coroutine coroutine = YCoroutines.GetCoroutine(new Vector2(300, 500), triggers.ToArray()); //new YCoroutine(triggers.ToArray());
+        Coroutine coroutine = YCoroutines.GetCoroutine(triggers.ToArray()); //new YCoroutine(triggers.ToArray());
         saberRight = coroutine;
     }
 }

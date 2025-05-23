@@ -104,7 +104,11 @@ public class YGameManager : MonoBehaviour
 
             foreach (var yGDObject in groupsInitGDObjects[gr.Key])
             {
-                yGDObject.AddGroup(groupOfGroup, true);
+                if (yGDObject.useGroupsGroup)
+                    yGDObject.AddGroup(groupOfGroup, true);
+
+
+
                 if (yGDObject.pos != Vector2.zero)
                     objs += yGDObject.GetString(yGDObject.pos);
                 else
@@ -236,7 +240,8 @@ public class YGameManager : MonoBehaviour
 
     private void InitGameobjects()
     {
-        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(true))
+        IDsManager.SetCurrentGroupName(null);
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             yMono.Uninit();
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !groupsBeginTriggers.ContainsKey(yGameobjectGroup.GetName()))

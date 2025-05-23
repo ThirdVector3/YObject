@@ -8,6 +8,7 @@ public abstract class YGDObject
     protected int[] groups = new int[0];
     protected int[] groupsParent = new int[0];
     public Vector2 pos = Vector2.zero;
+    public bool useGroupsGroup = true;
     public abstract string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null);
 
     public virtual void AddGroup(int group, bool toChildren = false)

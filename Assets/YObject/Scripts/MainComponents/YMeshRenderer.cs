@@ -1,9 +1,11 @@
 ﻿
+using GeometryDashAPI.Levels.GameObjects.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [SelectionBase]
 [ExecuteInEditMode]
@@ -23,6 +25,8 @@ public class YMeshRenderer : YMonoBehaviour
 
     public float cullDistance = 10;
 
+
+    private int isLODActiveID = 0;
 
     private void Update()
     {
@@ -52,12 +56,16 @@ public class YMeshRenderer : YMonoBehaviour
     {
         base.Uninit();
         points = new List<int>();
+        collisionBlocks = new List<int>();
     }
 
 
     public override YGDObject[] Init()
     {
         List<YGDObject> objects = new List<YGDObject>();
+
+        isLODActiveID = YIDsManager.Instance.AddVariable($"{gameObject.GetInstanceID()}.MeshRenderer.isLODActive", YIDsManager.Instance.GetFreeIdInt(), false);
+
 
         for (int i = 0; i < LODs.Length; i++)
         {
@@ -187,7 +195,24 @@ public class YMeshRenderer : YMonoBehaviour
             zItemEdit.AddGroups(perfomanceUpdate, LODGroupId);// = new int[] { 1000 };
             spawn136.AddGroups(perfomanceUpdate, LODGroupId);// = new int[] { 1000 };
             vertexObject.AddGroup(id4);// = new int[] { id4 };
+            vertexObject.AddGroupParent(id4);// = new int[] { id4 };
+            vertexObject.useGroupsGroup = false;
 
+
+            if (YIDsManager.Instance.GetCurrentGroupName() == null)
+            {
+                xItemEdit.AddGroup(1001);
+                yItemEdit.AddGroup(1001);
+                zItemEdit.AddGroup(1001);
+                spawn136.AddGroup(1001);
+            }
+            else
+            {
+                xItemEdit.AddGroup(YGameManager.Instance.groupsBeginGroup[YIDsManager.Instance.GetCurrentGroupName()]);
+                yItemEdit.AddGroup(YGameManager.Instance.groupsBeginGroup[YIDsManager.Instance.GetCurrentGroupName()]);
+                zItemEdit.AddGroup(YGameManager.Instance.groupsBeginGroup[YIDsManager.Instance.GetCurrentGroupName()]);
+                spawn136.AddGroup(YGameManager.Instance.groupsBeginGroup[YIDsManager.Instance.GetCurrentGroupName()]);
+            }
 
             objects.Add(xItemEdit);
             objects.Add(yItemEdit);
@@ -246,19 +271,26 @@ public class YMeshRenderer : YMonoBehaviour
                 spawn35.AddGroups(1003, LODGroupId);// = new int[] { 1003 };
 
                 var collisionTrigger = new Collision(layersIds[t.layer], 1, gradientOffGroup, false);
-                collisionTrigger.AddGroup(1001);// = new int[] { 1001 };
+
+                if (YIDsManager.Instance.GetCurrentGroupName() == null)
+                    collisionTrigger.AddGroup(1001);
+                else
+                    collisionTrigger.AddGroup(YGameManager.Instance.groupsBeginGroup[YIDsManager.Instance.GetCurrentGroupName()]);
 
                 objects.Add(spawn35);
                 objects.Add(collisionTrigger);
 
 
 
-                if (!points.Contains(colliderGroup))
+                if (!collisionBlocks.Contains(colliderGroup))
                 {
                     var collisionObject = new CollisionObject(gradientOffGroup, false);
                     collisionObject.AddGroup(colliderGroup);// = new int[] { colliderGroup };
                     collisionObject.AddGroupParent(colliderGroup);// = new int[] { colliderGroup };
+                    collisionObject.useGroupsGroup = false;
                     objects.Add(collisionObject);
+                    collisionBlocks.Add(colliderGroup);
+                    //points.Add(colliderGroup);
                 }
 
 
@@ -326,13 +358,21 @@ public class YMeshRenderer : YMonoBehaviour
             List<YTrigger> triggers2 = new List<YTrigger>()
             {
                 new Stop(LODGroupId),
-                new Toggle(LODGroupId, false)
+                new Toggle(LODGroupId, false),
+                new ItemEdit(isLODActiveID, false, ItemEdit.Operation.Equals, 0)
             };
 
             List<YTrigger> triggers3 = new List<YTrigger>()
             {
                 new Toggle(LODGroupId, true),
                 //new Spawn(LODGroupId, false, 0, new Dictionary<int, int>())
+                new ItemCompare(isLODActiveID, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
+                new YTrigger[]
+                {
+                    new Spawn(LODGroupId, false, 0, new Dictionary<int, int>()),
+                    new ItemEdit(isLODActiveID, false, ItemEdit.Operation.Equals, 1)
+                },
+                new YTrigger[0]),
             };
 
             var trig = new ItemCompare(9999, 0, true, true, 1, minDist * minDist, ItemCompare.Operation.More, triggers3.ToArray(), triggers2.ToArray());

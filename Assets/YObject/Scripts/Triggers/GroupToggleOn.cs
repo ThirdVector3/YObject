@@ -42,14 +42,16 @@ public class GroupToggleOn : YTrigger
         string ret = "";
         foreach (var gr in YGameManager.Instance.groupsGroup)
         {
-            var toggle = new Toggle(gr.Value, false);
-            toggle.AddGroups(this.groups);
+            if (gr.Key == groupName)
+                continue;
             var stop = new Stop(gr.Value);
             stop.AddGroups(this.groups);
+            var toggle = new Toggle(gr.Value, false);
+            toggle.AddGroups(this.groups);
             ret += stop.GetString(pos);
-            pos += new Vector2(2, 0);
+            pos += new Vector2(1, 0);
             ret += toggle.GetString(pos);
-            pos += new Vector2(2, 0);
+            pos += new Vector2(1, 0);
         }
         if (groupName != null && YGameManager.Instance.groupsGroup.ContainsKey(groupName))
         {
@@ -58,7 +60,7 @@ public class GroupToggleOn : YTrigger
             var spawn = new Spawn(YGameManager.Instance.groupsBeginGroup[groupName], false, 0, new Dictionary<int, int>());
             spawn.AddGroups(this.groups);
             ret += toggle2.GetString(pos);
-            pos += new Vector2(2, 0);
+            pos += new Vector2(1, 0);
             ret += spawn.GetString(pos);
         }
         return ret;

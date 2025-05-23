@@ -17,8 +17,8 @@
     {
         Instance = this;
     }
-    public YTrigger[] SetCurrentGroup(string group)
+    public YTrigger SetCurrentGroup(string group)
     {
-        return new YTrigger[] { new GroupToggleOn(group) };
+        return new GroupToggleOn(group);
     }
 }

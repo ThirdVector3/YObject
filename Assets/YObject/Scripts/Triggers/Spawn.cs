@@ -24,21 +24,23 @@ public class Spawn : YTrigger
 
     public override string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null)
     {
+        string remapString = "";
 
-
-
-        string remapString = remap.Count == 0 ? "" : ",442,";
-
-        foreach(var r in remap)
+        if (remap != null)
         {
-            remapString += r.Key + "." + r.Value + ".";
-        }
 
-        if (remap.Count != 0)
-        {
-            remapString = remapString.Substring(0, remapString.Length - 1);
-        }
+            remapString = remap.Count == 0 ? "" : ",442,";
 
+            foreach (var r in remap)
+            {
+                remapString += r.Key + "." + r.Value + ".";
+            }
+
+            if (remap.Count != 0)
+            {
+                remapString = remapString.Substring(0, remapString.Length - 1);
+            }
+        }
 
         return $"1,1268,2,{pos.Value.x},3,{pos.Value.y}{GetGroupsString(groups, groupsParent)},155,1,62,1,87,1,36,1,51,{spawnID},63,{delay.ToString(CultureInfo.InvariantCulture)},441,{(spawnOrdered ? 1 : 0)}{remapString};";
     }

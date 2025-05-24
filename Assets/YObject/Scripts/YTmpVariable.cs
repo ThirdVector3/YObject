@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class YTmpVariable
+public abstract class YTmpVariable
 {
     private static int lastId = 9999;
     protected static int GetNewId()

@@ -249,11 +249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf824e3c69c3a8d4ba2b0d6894f4c26a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transportingToGd: 0
   levelName: Game
   sampleLevelName: SampleLevel
   levelSavingType: 0
   updateLevel: 0
-  lastID: 500
+  firstFreeID: 500
 --- !u!4 &1056304442
 Transform:
   m_ObjectHideFlags: 0

@@ -279,3 +279,7 @@ GetComponent<YTransform>().Rotate(23, YIDsManager.Instance.GetIdByName("Time.tim
 - telegram channel: https://t.me/yaylab
 - youtube channel: https://www.youtube.com/@YaYmsc
 (here you can find tutorials)
+
+
+## Special thanks
+- made with help from Nemo (https://www.youtube.com/@Nemo_2510) 

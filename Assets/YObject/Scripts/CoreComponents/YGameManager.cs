@@ -136,6 +136,7 @@ public class YGameManager : MonoBehaviour
     }
     public void CreateSampleLevel()
     {
+        IDsManager = new YIDsManager(500);
         string objs = "";
         SaveLevelString(objs, sampleLevelName, false, 500);
     }
@@ -177,7 +178,7 @@ public class YGameManager : MonoBehaviour
     private async void ImportSampleLevel()
     {
         var local = await LocalLevels.LoadFileAsync();
-        string level = await PrintLevelStringAsync("SampleLevel");
+        string level = await PrintLevelStringAsync("SampleLevelA");
 
         File.WriteAllText(Application.dataPath + "/sampleLevel.txt", level);
         print("imported");

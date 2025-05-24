@@ -80,7 +80,7 @@ public class MyComponent : YMonoBehaviour
 ```
 
 #### To export game to GD level you need to click "Create Level" button in the YGameManager
-
+!!! geometry dash must be closed and after export you can open it !!!
 
 ## 🧩 Core Concepts & Features
 

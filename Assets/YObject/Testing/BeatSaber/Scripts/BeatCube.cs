@@ -114,6 +114,11 @@ public class BeatCube : YMonoBehaviour
 
         new ItemEdit(9999, true, ItemEdit.Operation.Equals, 5.5f);
         new ItemEdit(9998, true, ItemEdit.Operation.Equals, 2);
+
+        //YCommands.If(gameObject.GetInstanceID() + ".transform.position.z < 5.5",
+        //    YCommands.If(gameObject.GetInstanceID() + ".transform.position.z > 2",
+        //    new YTrigger[] { new ColorTrigger(3, 0, Color.red) }, new YTrigger[0]), new YTrigger[0]);
+
         new ItemCompare(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), 9999, true, true, 1, 1, ItemCompare.Operation.Less,
             new YTrigger[] { new ItemCompare(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), 9998, true, true, 1, 1, ItemCompare.Operation.More,
             triggers2 , new YTrigger[]{  new ItemCompare(alreadyDone, 0, false, false, 1, 0, ItemCompare.Operation.Equals, new YTrigger[] { new ItemEdit(alreadyDone,false, ItemEdit.Operation.Equals, 1), new ItemEdit(YIDsManager.Instance.GetIdByName("BeatSaberGameManager.misses"), false, ItemEdit.Operation.Add, 1), new ItemEdit(YIDsManager.Instance.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Add, 30), new Spawn(433, false, 0, new Dictionary<int, int>()) }, new YTrigger[0]) } )}, new YTrigger[0]);

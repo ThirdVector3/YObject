@@ -108,7 +108,7 @@ public class TestComponent : YMonoBehaviour
 
     public override void Tick()
     {
-        GetComponent<YTransform>().SetState(1);
+        GetComponent<YTransform>().SetState(true, false);
         GetComponent<YTransform>().Rotate(1f,1f,0);
     }
 }

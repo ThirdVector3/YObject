@@ -7,7 +7,7 @@ public class BeatSaberGameManager : YMonoBehaviour
     private int misses;
     private int gameover;
     private int state;
-    public override YGDObject[] Init()
+    public override void Init()
     {
         misses = YGameManager.Instance.IDsManager.GetFreeIdInt();
         YGameManager.Instance.IDsManager.AddVariable("BeatSaberGameManager.misses", misses, false);
@@ -15,8 +15,6 @@ public class BeatSaberGameManager : YMonoBehaviour
         YGameManager.Instance.IDsManager.AddVariable("BeatSaberGameManager.gameover", gameover, false);
         state = YGameManager.Instance.IDsManager.AddVariable("BeatSaberGameManager.state", YGameManager.Instance.IDsManager.GetFreeIdInt(), false);
         CreateEndCoroutine();
-
-        return new YGDObject[] { endCoroutine };
     }
 
     public override void Tick()

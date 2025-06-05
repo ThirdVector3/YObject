@@ -256,6 +256,8 @@ public class YIDsManager
     }
     public (int, float) GetMemoryValue(int id)
     {
+        if (id == 0)
+            return (0, 0);
         return memory[id];
     }
     public (int, float) GetMemoryValueByName(string name)

@@ -43,13 +43,13 @@ public class YTransform : YMonoBehaviour
         //return triggers.ToArray();
     }
 
-    public override YGDObject[] Init()
+    public override void Init()
     {
         if (initialised)
-            return new YGDObject[0];
+            return;
 
         if (gameObject.isStatic)
-            return new YGDObject[0];
+            return;
 
         YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".transform.position.x", YGameManager.Instance.IDsManager.GetFreeIdFloat(), true);
         YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".transform.position.y", YGameManager.Instance.IDsManager.GetFreeIdFloat(), true);
@@ -77,7 +77,6 @@ public class YTransform : YMonoBehaviour
 
         initialised = true;
 
-        return new YGDObject[0];
     }
 
     public override void Tick()

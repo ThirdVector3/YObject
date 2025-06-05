@@ -3,23 +3,23 @@ using UnityEngine;
 
 public class TestComponent2 : YMonoBehaviour
 {
-    public float rot;
-    public void Update()
+    private YVariable speed;
+
+    public override void Init()
     {
-        //print(YGameManager.Instance.GetMemoryValue(5000));
+        speed = new YFloat(0.1f);
     }
 
     public override void Begin()
     {
         //return null;//new YTrigger[] { new SongTrigger(63, 0, 1, true, 0, 0, 0, 0) };
-    }
 
+    }
 
     public override void Tick()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
 
-
+        GetComponent<YTransform>().Translate(23, (new YFloat(0.1f) + speed).GetID(), 23);
 
         //triggers.Add(new ItemEdit(5001, true, ItemEdit.Operation.Equals, 100));
         //triggers.AddRange(YMath.Sqrt(5001, 5000));

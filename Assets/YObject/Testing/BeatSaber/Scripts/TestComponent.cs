@@ -25,7 +25,7 @@ public class TestComponent : YMonoBehaviour
     }
 
     private Coroutine yCoroutine;
-    public override YGDObject[] Init()
+    public override void Init()
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
@@ -42,11 +42,6 @@ public class TestComponent : YMonoBehaviour
         triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
 
         yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray()); //new YCoroutine(triggers.ToArray());
-
-        return new YGDObject[]
-        {
-            yCoroutine
-        };
     }
 
     public override void Tick()

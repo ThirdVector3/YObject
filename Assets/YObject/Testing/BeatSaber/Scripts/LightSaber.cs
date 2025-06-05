@@ -7,7 +7,7 @@ public class LightSaber : YMonoBehaviour
     [SerializeField] private bool left = true;
 
 
-    public override YGDObject[] Init()
+    public override void Init()
     {
         saberUpDoingId = YGameManager.Instance.IDsManager.GetFreeIdInt();
         YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".LightSaber.saberUpDoing", saberUpDoingId, false);
@@ -20,7 +20,6 @@ public class LightSaber : YMonoBehaviour
         SaberUp();
         SaberLeft();
         SaberRight();
-        return new YGDObject[] { saberUp, saberLeft, saberRight };
     }
 
     public override void Tick()

@@ -31,14 +31,13 @@ public class BeatCube : YMonoBehaviour
         new ItemEdit(alreadyDone, false, ItemEdit.Operation.Equals, 0);
     }
 
-    public override YGDObject[] Init()
+    public override void Init()
     {
         alreadyDone = YGameManager.Instance.IDsManager.GetFreeIdInt();
         YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".BeatCube.alreadyDone", alreadyDone, false);
 
         GetComponent<YTransform>().Init();
         CreateHitCoroutine();
-        return new YGDObject[] { hitCoroutine };
     }
 
     public override void Tick()
@@ -129,6 +128,7 @@ public class BeatCube : YMonoBehaviour
     private Coroutine hitCoroutine;
     private void CreateHitCoroutine()
     {
+        YCoroutines.RecordCoroutine();
         List<YTrigger> triggers = new List<YTrigger>();
 
         float adder = 0;
@@ -143,7 +143,7 @@ public class BeatCube : YMonoBehaviour
             adder += 1;
         }
         triggers.AddRange(GetComponent<YTransform>().Translate(0, -10f, 0));
-        Coroutine coroutine = YCoroutines.GetCoroutine(triggers.ToArray());
+        Coroutine coroutine = YCoroutines.GetCoroutine();
         hitCoroutine = coroutine;
     }
 }

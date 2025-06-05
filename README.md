@@ -35,7 +35,7 @@ public class MyComponent : YMonoBehaviour
         new SongTrigger(63, 0, 1, true, 0, 0, 0, 0);
     }
     private Coroutine yCoroutine;
-    public override YGDObject[] Init()
+    public override void Init()
     {
         YIDsManager.Instance.AddVariable(gameObject.GetInstanceID() + ".variable", YIDsManager.Instance.GetFreeIdFloat(), true);
 
@@ -54,7 +54,6 @@ public class MyComponent : YMonoBehaviour
         triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
 
         yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray());
-        return new YGDObject[]{ yCoroutine };
     }
 
     public override void Tick()
@@ -101,9 +100,9 @@ public class TestComponent : YMonoBehaviour
 
     }
 
-    public override YGDObject[] Init()
+    public override void Init()
     {
-        return null;
+
     }
 
     public override void Tick()
@@ -174,7 +173,7 @@ public class TestComponent : YMonoBehaviour
     }
 
     private Coroutine yCoroutine;
-    public override YGDObject[] Init()
+    public override void Init()
     {
         List<YTrigger> triggers = new List<YTrigger>();
 
@@ -191,10 +190,6 @@ public class TestComponent : YMonoBehaviour
 
         yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray());
 
-        return new YGDObject[]
-        {
-            yCoroutine
-        };
     }
 ```
 

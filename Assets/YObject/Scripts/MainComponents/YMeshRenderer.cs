@@ -60,7 +60,7 @@ public class YMeshRenderer : YMonoBehaviour
     }
 
 
-    public override YGDObject[] Init()
+    public override void Init()
     {
         List<YGDObject> objects = new List<YGDObject>();
 
@@ -80,7 +80,7 @@ public class YMeshRenderer : YMonoBehaviour
         }
 
         if (!YGameManager.Instance.transportingToGd)
-            return null;
+            return;
 
         GetComponent<YTransform>().Init();
         float minDist = 0;
@@ -98,7 +98,6 @@ public class YMeshRenderer : YMonoBehaviour
             objects.AddRange(LODInit(new YMeshLOD() { parent = this.transform, distance = cullDistance }, minDist));
         }
 
-        return objects.ToArray();
     }
 
     private YGDObject[] LODInit(YMeshLOD LOD, float minDist = 0, bool isNotLOD = false)

@@ -32,11 +32,13 @@ public class YGameManager : MonoBehaviour
 
 
     public List<YTrigger> globalPool;
+    public List<YGDObject> globalGDObjectsPool;
     public bool transportingToGd = false;
+    public bool gameobjectsInitialization = false;
 
 
 
-    private List<YTrigger> globalBeginTriggers = new List<YTrigger>();
+    public List<YTrigger> globalBeginTriggers = new List<YTrigger>();
     private List<YTrigger> globalTickTriggers = new List<YTrigger>();
     private List<YGDObject> globalInitGDObjects = new List<YGDObject>();
     public Dictionary<string, List<YTrigger>> groupsBeginTriggers = new Dictionary<string, List<YTrigger>>();
@@ -219,6 +221,7 @@ public class YGameManager : MonoBehaviour
         GameobjectGroupsManager = new YGameobjectGroupsManager();
 
         globalPool = new List<YTrigger>();
+        globalGDObjectsPool = new List<YGDObject>();
 
         globalInitGDObjects.Clear();
         globalBeginTriggers.Clear();
@@ -269,16 +272,24 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-
+        gameobjectsInitialization = true;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null)
             {
-                var a = yMono.Init();
-                if (a != null)
-                    globalInitGDObjects.AddRange(a);
+                globalGDObjectsPool.Clear();
+
+                yMono.Init();
+                foreach (YGDObject GDObject in globalGDObjectsPool)
+                {
+                    if (GDObject.isFirstLevel)
+                    {
+                        globalInitGDObjects.Add(GDObject);
+                    }
+                }
             }
         }
+        gameobjectsInitialization = false;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null && yMono is YTransform)
@@ -341,17 +352,31 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
+
+
         IDsManager.InitGroups(groupsGroup.Keys.ToArray());
+        gameobjectsInitialization = true;
+
+
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
-                var a = yMono.Init();
-                if (a != null)
-                    groupsInitGDObjects[yGameobjectGroup.GetName()].AddRange(a);
+
+                globalGDObjectsPool.Clear();
+
+                yMono.Init();
+                foreach (YGDObject GDObject in globalGDObjectsPool)
+                {
+                    if (GDObject.isFirstLevel)
+                    {
+                        groupsInitGDObjects[yGameobjectGroup.GetName()].Add(GDObject);
+                    }
+                }
             }
         }
+        gameobjectsInitialization = false;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && yMono is YTransform)

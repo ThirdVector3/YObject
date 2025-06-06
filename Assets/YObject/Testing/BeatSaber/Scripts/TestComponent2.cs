@@ -15,11 +15,14 @@ public class TestComponent2 : YMonoBehaviour
         //return null;//new YTrigger[] { new SongTrigger(63, 0, 1, true, 0, 0, 0, 0) };
 
     }
-
+    private void Update()
+    {
+        //print(YIDsManager.Instance.GetMemoryValue(19));
+    }
     public override void Tick()
     {
+        //new ItemCompare(new YVariable(19, true), new YInt(1), ItemCompare.Operation.Equals, GetComponent<YTransform>().Translate(23, (new YFloat(0.1f) + speed).GetID(), 23), new YTrigger[0]);
 
-        GetComponent<YTransform>().Translate(23, (new YFloat(0.1f) + speed).GetID(), 23);
 
         //triggers.Add(new ItemEdit(5001, true, ItemEdit.Operation.Equals, 100));
         //triggers.AddRange(YMath.Sqrt(5001, 5000));

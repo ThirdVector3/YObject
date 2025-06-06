@@ -81,12 +81,12 @@ public class ItemCompare : YTrigger
 
         ChangeChildrenFromFirstLayer();
     }
-    public ItemCompare(YTmpVariable var1, YTmpVariable var2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
+    public ItemCompare(YVariable var1, YVariable var2, Operation operation, IEnumerable<YTrigger> trueTriggers, IEnumerable<YTrigger> falseTriggers) : base()
     {
-        this.id1 = var1.id;
-        this.id2 = var2.id;
-        this.is1float = var1 is YTmpFloat;
-        this.is2float = var2 is YTmpFloat;
+        this.id1 = var1.GetID();
+        this.id2 = var2.GetID();
+        this.is1float = var1.IsFloat();
+        this.is2float = var2.IsFloat();
         this.multiplier1 = 1;
         this.multiplier2 = 1;
         this.operation = operation;
@@ -140,6 +140,7 @@ public class ItemCompare : YTrigger
     {
         float a = is1float ? YGameManager.Instance.IDsManager.GetMemoryValue(id1).Item2 : YGameManager.Instance.IDsManager.GetMemoryValue(id1).Item1;
         float b = is2float ? YGameManager.Instance.IDsManager.GetMemoryValue(id2).Item2 : YGameManager.Instance.IDsManager.GetMemoryValue(id2).Item1;
+
 
         if (id2 == 0)
             b = 1;

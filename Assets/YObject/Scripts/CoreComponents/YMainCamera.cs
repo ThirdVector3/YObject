@@ -22,6 +22,7 @@ public class YMainCamera : YMonoBehaviour
         _instance = this;
 
         cameraComponent = GetComponent<Camera>();
+        cameraComponent.sensorSize = new Vector2(16, 9);
     }
 
     void Update()
@@ -58,6 +59,8 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.x),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.y),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.z),
+
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, cameraComponent.focalLength),
         };
 
         //return triggers.ToArray();

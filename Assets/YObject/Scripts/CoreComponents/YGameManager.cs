@@ -514,19 +514,6 @@ public class YGameManager : MonoBehaviour
                     Rgb = RgbColor.FromHex(col)
                 });
             }
-            //for (int i = 0; i < colors.Count; i++)
-            //{
-            //    string col = "#" + colors[i].color1.ToHexString().ToLower().Substring(0, 6);
-            //    savingLevel.AddColor(new GeometryDashAPI.Levels.Color(2 * i + 3)
-            //    {
-            //        Rgb = RgbColor.FromHex(col)
-            //    });
-            //    col = "#" + colors[i].color2.ToHexString().ToLower().Substring(0, 6);
-            //    savingLevel.AddColor(new GeometryDashAPI.Levels.Color(2 * i + 4)
-            //    {
-            //        Rgb = RgbColor.FromHex(col)
-            //    });
-            //}
 
             var levelInfo = LevelCreatorModel.CreateNew(levelName, "Yobj");
             levelInfo.SaveLevel(savingLevel);
@@ -560,20 +547,6 @@ public class YGameManager : MonoBehaviour
                     Rgb = RgbColor.FromHex(col)
                 });
             }
-
-            //for (int i = 0; i < colors.Count; i++)
-            //{
-            //    string col = "#" + colors[i].color1.ToHexString().ToLower().Substring(0, 6);
-            //    savingLevel.AddColor(new GeometryDashAPI.Levels.Color(2 * i + 3)
-            //    {
-            //        Rgb = RgbColor.FromHex(col) // orange
-            //    });
-            //    col = "#" + colors[i].color2.ToHexString().ToLower().Substring(0, 6);
-            //    savingLevel.AddColor(new GeometryDashAPI.Levels.Color(2 * i + 4)
-            //    {
-            //        Rgb = RgbColor.FromHex(col) // orange
-            //    });
-            //}
             levelInfo.SaveLevel(savingLevel);
         }
         local.Save();

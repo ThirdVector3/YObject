@@ -32,6 +32,7 @@ public class YVariable
     protected int id;
     protected bool isFloat;
     public int GetID() => id;
+    public bool IsFloat() => isFloat;
 
     #region operators
 

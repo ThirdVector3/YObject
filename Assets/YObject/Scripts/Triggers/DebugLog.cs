@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 
-public class YWaitForSeconds : YTrigger
+public class DebugLog : YTrigger
 {
-    public float seconds;
+    public string text;
 
-    public YWaitForSeconds(float seconds) : base()
-    { 
-        this.seconds = seconds;
+    public DebugLog(string text) : base()
+    {
+        this.text = text;
     }
 
     public override void Activate()
     {
-
+        Debug.Log(text);
     }
 
     public override string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null)

@@ -12,7 +12,9 @@ public class YMainCamera : YMonoBehaviour
         get
         {
             if (_instance == null)
+            {
                 _instance = FindAnyObjectByType<YMainCamera>();
+            }
             return _instance;
         }
     }
@@ -50,6 +52,7 @@ public class YMainCamera : YMonoBehaviour
 
     public override void Begin()
     {
+        cameraComponent = GetComponent<Camera>();
         List<YTrigger> triggers = new List<YTrigger>()
         {
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Equals, transform.position.x),

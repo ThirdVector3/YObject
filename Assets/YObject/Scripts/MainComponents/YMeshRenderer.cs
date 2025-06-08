@@ -231,6 +231,7 @@ public class YMeshRenderer : YMonoBehaviour
 
         foreach (YTriangle t in LOD.parent.GetComponentsInChildren<YTriangle>())
         {
+            t.ValidateLayerParent();
             if (t.layerParent)
             {
                 int group = YGameManager.Instance.IDsManager.GetFreeGroup();

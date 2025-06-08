@@ -165,7 +165,7 @@ public class YTriangle : MonoBehaviour
         return (v1 * 2 - 1, v2 * 2 - 1, v3 * 2 - 1);
     }
 
-    private void ValidateLayerParent()
+    public void ValidateLayerParent()
     {
         if (layerParent)
         {

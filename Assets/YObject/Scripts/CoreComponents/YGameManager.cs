@@ -54,7 +54,7 @@ public class YGameManager : MonoBehaviour
     public string sampleLevelName = "SampleLevel";
     public LevelSavingType levelSavingType;
     public bool updateLevel;
-    public int firstFreeID = 500;
+    public int firstFreeID = 600;
 
     public enum LevelSavingType
     {
@@ -134,7 +134,7 @@ public class YGameManager : MonoBehaviour
             }
         }
 
-        SaveLevelString(objs, levelName, updateLevel, 2010, levelSavingType, sampleLevelName, 500);
+        SaveLevelString(objs, levelName, updateLevel, 2010, levelSavingType, sampleLevelName, firstFreeID);
     }
     public void CreateSampleLevel()
     {

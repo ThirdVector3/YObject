@@ -252,7 +252,7 @@ MonoBehaviour:
   transportingToGd: 1
   gameobjectsInitialization: 0
   levelName: Game
-  sampleLevelName: SampleLevelA
+  sampleLevelName: SampleLevel
   levelSavingType: 0
   updateLevel: 1
   firstFreeID: 600

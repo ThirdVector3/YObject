@@ -24,6 +24,14 @@ public class YMainCamera : YMonoBehaviour
         _instance = this;
 
         cameraComponent = GetComponent<Camera>();
+        cameraComponent.usePhysicalProperties = true;
+        cameraComponent.sensorSize = new Vector2(16, 9);
+    }
+
+    private void OnValidate()
+    {
+        cameraComponent = GetComponent<Camera>();
+        cameraComponent.usePhysicalProperties = true;
         cameraComponent.sensorSize = new Vector2(16, 9);
     }
 

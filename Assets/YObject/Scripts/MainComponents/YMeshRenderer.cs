@@ -232,7 +232,7 @@ public class YMeshRenderer : YMonoBehaviour
         foreach (YTriangle t in LOD.parent.GetComponentsInChildren<YTriangle>())
         {
             t.ValidateLayerParent();
-            if (t.layerParent)
+            if (t.layerParent && !layersIds.ContainsKey(t.layer))
             {
                 int group = YGameManager.Instance.IDsManager.GetFreeGroup();
                 YGameManager.Instance.IDsManager.AddGroup(group);

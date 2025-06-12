@@ -212,6 +212,17 @@ public class YGameManager : MonoBehaviour
         IDsManager.SetMemoryValueByName("Time.time", Time.time);
         IDsManager.SetMemoryValueByName("PI", 3.1415926535f);
     }
+
+    private int startRecordingPoolIndex = 0;
+    public void RecordPool()
+    {
+        startRecordingPoolIndex = globalPool.Count;
+    }
+    public YTrigger[] StopRecordPool()
+    {
+        return globalPool.GetRange(startRecordingPoolIndex, globalPool.Count - startRecordingPoolIndex).ToArray();
+    }
+
     private void InitAll()
     {
         _instance = this;
@@ -292,7 +303,7 @@ public class YGameManager : MonoBehaviour
         gameobjectsInitialization = false;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
-            if (yMono.GetComponent<YGameobjectGroup>() == null && yMono is YTransform)
+            if (yMono.GetComponent<YGameobjectGroup>() == null && (yMono is YTransform || yMono is YMainCamera))
             {
                 globalPool.Clear();
                 //var a =
@@ -323,7 +334,7 @@ public class YGameManager : MonoBehaviour
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
-            if (yMono.GetComponent<YGameobjectGroup>() == null && !(yMono is YTransform))
+            if (yMono.GetComponent<YGameobjectGroup>() == null && !(yMono is YTransform || yMono is YMainCamera))
             {
                 globalPool.Clear();
                 //var a =
@@ -379,7 +390,7 @@ public class YGameManager : MonoBehaviour
         gameobjectsInitialization = false;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
-            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && yMono is YTransform)
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && (yMono is YTransform || yMono is YMainCamera))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
                 globalPool.Clear();
@@ -411,7 +422,7 @@ public class YGameManager : MonoBehaviour
         }
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
-            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !(yMono is YTransform))
+            if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !(yMono is YTransform || yMono is YMainCamera))
             {
                 IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
                 globalPool.Clear();

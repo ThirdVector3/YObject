@@ -12,6 +12,8 @@ public class YTransform : YMonoBehaviour
     [SerializeField] private bool canRotate;
     [SerializeField] private bool canScale;
 
+
+
     public override void Begin()
     {
         List<YTrigger> triggers = new List<YTrigger>();
@@ -74,6 +76,8 @@ public class YTransform : YMonoBehaviour
         YGameManager.Instance.IDsManager.AddVariable(gameObject.GetInstanceID() + ".transform.state", YGameManager.Instance.IDsManager.GetFreeIdFloat(), true);
 
         //print(YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.name + ".transform.position.x").Item2);
+
+
 
         initialised = true;
 
@@ -151,6 +155,84 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
+    public YTrigger[] TranslateLocal(int idInX, int idInY, int idInZ)
+    {
+        YGameManager.Instance.RecordPool();
+
+        YVariable sinX = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.sin.x");
+        YVariable sinY = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.sin.y");
+        YVariable sinZ = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.sin.z");
+        YVariable cosX = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.cos.x");
+        YVariable cosY = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.cos.y");
+        YVariable cosZ = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.cos.z");
+
+        YVariable curX = new YVariable(gameObject.GetInstanceID() + ".transform.position.x");
+        YVariable curY = new YVariable(gameObject.GetInstanceID() + ".transform.position.y");
+        YVariable curZ = new YVariable(gameObject.GetInstanceID() + ".transform.position.z");
+
+        YVariable X = new YFloat(0);
+        YVariable Y = new YFloat(0);
+        YVariable Z = new YFloat(0);
+
+
+        X += new YVariable(idInX, true) * cosY;
+        //Y += 0;
+        Z += new YVariable(idInX, true) * sinY;
+
+        X += new YVariable(idInY, true) * sinY * sinX;
+        Y += new YVariable(idInY, true) * cosX;
+        Z += new YVariable(idInY, true) * cosY * sinX;
+
+        X += new YVariable(idInZ, true) * sinY * cosX * -1;
+        Y += new YVariable(idInZ, true) * sinX;
+        Z += new YVariable(idInZ, true) * cosY * cosX;
+
+
+        curX += X;
+        curY += Y;
+        curZ += Z;
+
+        return YGameManager.Instance.StopRecordPool();
+    }
+    public YTrigger[] TranslateLocal(float x, float y, float z)
+    {
+        YGameManager.Instance.RecordPool();
+
+        YVariable sinX = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.sin.x");
+        YVariable sinY = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.sin.y");
+        YVariable sinZ = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.sin.z");
+        YVariable cosX = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.cos.x");
+        YVariable cosY = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.cos.y");
+        YVariable cosZ = new YVariable(gameObject.GetInstanceID() + ".transform.rotation.cos.z");
+
+        YVariable curX = new YVariable(gameObject.GetInstanceID() + ".transform.position.x");
+        YVariable curY = new YVariable(gameObject.GetInstanceID() + ".transform.position.y");
+        YVariable curZ = new YVariable(gameObject.GetInstanceID() + ".transform.position.z");
+
+        YVariable X = new YFloat(0);
+        YVariable Y = new YFloat(0);
+        YVariable Z = new YFloat(0);
+
+
+        X += new YFloat(x) * cosY;
+        //Y += 0;
+        Z += new YFloat(x) * sinY;
+
+        X += new YFloat(y) * sinY * sinX;
+        Y += new YFloat(y) * cosX;
+        Z += new YFloat(y) * cosY * sinX;
+
+        X += new YFloat(z) * sinY * cosX * -1;
+        Y += new YFloat(z) * sinX;
+        Z += new YFloat(z) * cosY * cosX;
+
+
+        curX += X;
+        curY += Y;
+        curZ += Z;
+
+        return YGameManager.Instance.StopRecordPool();
+    }
     public YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
     {
         YTrigger[] result = new YTrigger[]
@@ -183,6 +265,12 @@ public class YTransform : YMonoBehaviour
     }
     public YTrigger[] Rotate(int idInX, int idInY, int idInZ)
     {
+        if (idInX == 0)
+            idInX = 23;
+        if (idInY == 0)
+            idInY = 23;
+        if (idInZ == 0)
+            idInZ = 23;
         YTrigger[] result = new YTrigger[]
         {
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.x"), true, ItemEdit.Operation.Add, 1, idInX, true, 0, true, ItemEdit.Operation.Add),

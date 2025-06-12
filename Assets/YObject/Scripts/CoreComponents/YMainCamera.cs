@@ -23,12 +23,15 @@ public class YMainCamera : YMonoBehaviour
     {
         _instance = this;
 
-        cameraComponent = GetComponent<Camera>();
-        cameraComponent.usePhysicalProperties = true;
-        cameraComponent.sensorSize = new Vector2(16, 9);
+        SetDefaultSettings();
     }
 
     private void OnValidate()
+    {
+        SetDefaultSettings();
+    }
+
+    private void SetDefaultSettings()
     {
         cameraComponent = GetComponent<Camera>();
         cameraComponent.usePhysicalProperties = true;
@@ -60,6 +63,7 @@ public class YMainCamera : YMonoBehaviour
 
     public override void Begin()
     {
+        SetDefaultSettings();
         cameraComponent = GetComponent<Camera>();
         List<YTrigger> triggers = new List<YTrigger>()
         {
@@ -140,6 +144,83 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Add, z)
         };
         return result;
+    }
+    public YTrigger[] TranslateLocal(int idInX, int idInY, int idInZ)
+    {
+        YGameManager.Instance.RecordPool();
+
+        YVariable sinX = new YVariable("Camera.rotation.sin.x");
+        YVariable sinY = new YVariable("Camera.rotation.sin.y");
+        YVariable sinZ = new YVariable("Camera.rotation.sin.z");
+        YVariable cosX = new YVariable("Camera.rotation.cos.x");
+        YVariable cosY = new YVariable("Camera.rotation.cos.y");
+        YVariable cosZ = new YVariable("Camera.rotation.cos.z");
+
+        YVariable curX = new YVariable("Camera.position.x");
+        YVariable curY = new YVariable("Camera.position.y");
+        YVariable curZ = new YVariable("Camera.position.z");
+
+        YVariable X = new YFloat(0);
+        YVariable Y = new YFloat(0);
+        YVariable Z = new YFloat(0);
+
+        X += new YVariable(idInX, true) * cosY;
+        //Y += 0;
+        Z += new YVariable(idInX, true) * sinY;
+
+        X += new YVariable(idInY, true) * sinY * sinX;
+        Y += new YVariable(idInY, true) * cosX;
+        Z += new YVariable(idInY, true) * cosY * sinX;
+
+        X += new YVariable(idInZ, true) * sinY * cosX * -1;
+        Y += new YVariable(idInZ, true) * sinX;
+        Z += new YVariable(idInZ, true) * cosY * cosX;
+
+
+        curX += X;
+        curY += Y;
+        curZ += Z;
+
+        return YGameManager.Instance.StopRecordPool();
+    }
+    public YTrigger[] TranslateLocal(float x, float y, float z)
+    {
+        YGameManager.Instance.RecordPool();
+
+        YVariable sinX = new YVariable("Camera.rotation.sin.x");
+        YVariable sinY = new YVariable("Camera.rotation.sin.y");
+        YVariable sinZ = new YVariable("Camera.rotation.sin.z");
+        YVariable cosX = new YVariable("Camera.rotation.cos.x");
+        YVariable cosY = new YVariable("Camera.rotation.cos.y");
+        YVariable cosZ = new YVariable("Camera.rotation.cos.z");
+
+        YVariable curX = new YVariable("Camera.position.x");
+        YVariable curY = new YVariable("Camera.position.y");
+        YVariable curZ = new YVariable("Camera.position.z");
+
+        YVariable X = new YFloat(0);
+        YVariable Y = new YFloat(0);
+        YVariable Z = new YFloat(0);
+
+
+        X += new YFloat(x) * cosY;
+        //Y += 0;
+        Z += new YFloat(x) * sinY;
+
+        X += new YFloat(y) * sinY * sinX;
+        Y += new YFloat(y) * cosX;
+        Z += new YFloat(y) * cosY * sinX;
+
+        X += new YFloat(z) * sinY * cosX * -1;
+        Y += new YFloat(z) * sinX;
+        Z += new YFloat(z) * cosY * cosX;
+
+
+        curX += X;
+        curY += Y;
+        curZ += Z;
+
+        return YGameManager.Instance.StopRecordPool();
     }
     public YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
     {

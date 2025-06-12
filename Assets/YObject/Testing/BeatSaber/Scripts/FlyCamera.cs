@@ -3,7 +3,6 @@ using Unity.VisualScripting;
 
 public class FlyCamera : YMonoBehaviour
 {
-
     public override void Tick()
     {
         //List<YTrigger> triggers = new List<YTrigger>();
@@ -43,25 +42,28 @@ public class FlyCamera : YMonoBehaviour
         //triggers.Add(itemCompareAddZ);
         //triggers.Add(itemCompareSubZ);
 
+        //YMainCamera.Instance.TranslateLocal(0, 0, 0.05f);
+        //YInput.GetP1Up(YMainCamera.Instance.TranslateLocal(0, 0, 0.1f), new YTrigger[0]);
+        //YInput.GetP2Up(YMainCamera.Instance.TranslateLocal(0.1f, 0, 0), new YTrigger[0]);
 
 
-
-        YMainCamera.Instance.GetSin(9999,9998,9997);
-        YMainCamera.Instance.GetCos(9996,9995,9994);
-        new ItemEdit(9998, true, ItemEdit.Operation.Divide, 10);
-        new ItemEdit(9995, true, ItemEdit.Operation.Divide, -10);
-        new ItemEdit(9999, true, ItemEdit.Operation.Divide, 10);
-        new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
-        new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
-        new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add);
+        //YMainCamera.Instance.GetSin(9999,9998,9997);
+        //YMainCamera.Instance.GetCos(9996,9995,9994);
+        //new ItemEdit(9998, true, ItemEdit.Operation.Divide, 10);
+        //new ItemEdit(9995, true, ItemEdit.Operation.Divide, -10);
+        //new ItemEdit(9999, true, ItemEdit.Operation.Divide, 10);
+        //new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
+        //new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
+        //new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add);
         YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]);
         YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]);
         YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]);
         YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]);
-        YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]);
-        YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]);
+        //YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]);
+        //YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]);
 
-
+        YInput.GetP1Up(YMainCamera.Instance.TranslateLocal(0, 0, 0.1f), new YTrigger[0]);
+        YInput.GetP2Up(YMainCamera.Instance.TranslateLocal(-0.1f, 0, 0), new YTrigger[0]);
 
         //return triggers.ToArray();
     }

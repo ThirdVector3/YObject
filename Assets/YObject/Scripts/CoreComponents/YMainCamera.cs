@@ -97,6 +97,12 @@ public class YMainCamera : YMonoBehaviour
     }
     public YTrigger[] SetPosition(int idInX, int idInY, int idInZ)
     {
+        if (idInX == 0)
+            idInX = 23;
+        if (idInY == 0)
+            idInY = 23;
+        if (idInZ == 0)
+            idInZ = 23;
         YTrigger[] result = new YTrigger[]
         {
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Equals, 1, idInX, true, 0, true, ItemEdit.Operation.Add),
@@ -127,6 +133,12 @@ public class YMainCamera : YMonoBehaviour
     }
     public YTrigger[] Translate(int idInX, int idInY, int idInZ)
     {
+        if (idInX == 0)
+            idInX = 23;
+        if (idInY == 0)
+            idInY = 23;
+        if (idInZ == 0)
+            idInZ = 23;
         YTrigger[] result = new YTrigger[]
         {
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Add, 1, idInX, true, 0, true, ItemEdit.Operation.Add),
@@ -147,6 +159,12 @@ public class YMainCamera : YMonoBehaviour
     }
     public YTrigger[] TranslateLocal(int idInX, int idInY, int idInZ)
     {
+        if (idInX == 0)
+            idInX = 23;
+        if (idInY == 0)
+            idInY = 23;
+        if (idInZ == 0)
+            idInZ = 23;
         YGameManager.Instance.RecordPool();
 
         YVariable sinX = new YVariable("Camera.rotation.sin.x");
@@ -224,11 +242,17 @@ public class YMainCamera : YMonoBehaviour
     }
     public YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
     {
+        if (idInX == 0)
+            idInX = 23;
+        if (idInY == 0)
+            idInY = 23;
+        if (idInZ == 0)
+            idInZ = 23;
         YTrigger[] result = new YTrigger[]
         {
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, 1, idInX, true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, -1, idInX, true, 0, true, ItemEdit.Operation.Add),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -1, idInY, true, 0, true, ItemEdit.Operation.Add),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         };
         return result;
     }
@@ -236,9 +260,9 @@ public class YMainCamera : YMonoBehaviour
     {
         YTrigger[] result = new YTrigger[]
         {
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, x),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, y),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, z)
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, -x),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -y),
+            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -z)
         };
         return result;
     }
@@ -254,6 +278,12 @@ public class YMainCamera : YMonoBehaviour
     }
     public YTrigger[] Rotate(int idInX, int idInY, int idInZ)
     {
+        if (idInX == 0)
+            idInX = 23;
+        if (idInY == 0)
+            idInY = 23;
+        if (idInZ == 0)
+            idInZ = 23;
         YTrigger[] result = new YTrigger[]
         {
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Add, 1, idInX, true, 0, true, ItemEdit.Operation.Add),

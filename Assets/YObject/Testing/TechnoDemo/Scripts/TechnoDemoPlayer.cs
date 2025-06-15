@@ -20,7 +20,12 @@ public class TechnoDemoPlayer : YMonoBehaviour
     private void Move()
     {
         YVariable move = new YFloat(2.5f) * new YVariable("Time.deltaTime");
-        YInput.GetP1Up(GetComponent<YTransform>().TranslateLocal(0, 0, move.GetID()), new YTrigger[0]);
+        //YInput.GetP1Up(GetComponent<YTransform>().TranslateLocal(0, 0, move.GetID()), new YTrigger[0]);
+        new Condition(new YVariable("Input.P1Up"), new YFloat(1), ItemCompare.Operation.Equals)
+            .Then(() =>
+            {
+                GetComponent<YTransform>().TranslateLocal(0, 0, move.GetID());
+            });
     }
     private void Rotate()
     {

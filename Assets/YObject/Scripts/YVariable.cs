@@ -41,7 +41,7 @@ public class YVariable
     public bool IsFloat() => isFloat;
 
     #region operators
-
+    public static implicit operator int(YVariable yVariable) { return yVariable.id; }
     public static YVariable operator +(YVariable a, YVariable b)
     {
         new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Add, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);

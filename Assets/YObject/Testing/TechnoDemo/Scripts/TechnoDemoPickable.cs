@@ -16,8 +16,8 @@ public class TechnoDemoPickable : YMonoBehaviour
         YVariable playerPosY = new YFloat();
         YVariable playerPosZ = new YFloat();
 
-        GetComponent<YTransform>().GetPosition(posX.GetID(), posY.GetID(), posZ.GetID());
-        playerHand.GetPosition(playerPosX.GetID(), playerPosY.GetID(), playerPosZ.GetID());
+        GetComponent<YTransform>().GetPosition(posX, posY, posZ);
+        playerHand.GetPosition(playerPosX, playerPosY, playerPosZ);
 
         posX -= playerPosX;
         posY -= playerPosY;
@@ -41,14 +41,14 @@ public class TechnoDemoPickable : YMonoBehaviour
         YVariable playerPosY = new YFloat();
         YVariable playerPosZ = new YFloat();
 
-        GetComponent<YTransform>().GetPosition(posX.GetID(), posY.GetID(), posZ.GetID());
-        playerHand.GetPosition(playerPosX.GetID(), playerPosY.GetID(), playerPosZ.GetID());
+        GetComponent<YTransform>().GetPosition(posX, posY, posZ);
+        playerHand.GetPosition(playerPosX, playerPosY, playerPosZ);
 
         Lerp(posX, playerPosX, t);
         Lerp(posY, playerPosY, t);
         Lerp(posZ, playerPosZ, t);
 
-        GetComponent<YTransform>().SetPosition(posX.GetID(), posY.GetID(), posZ.GetID());
+        GetComponent<YTransform>().SetPosition(posX, posY, posZ);
 
 
         YVariable rotX = new YFloat();
@@ -56,7 +56,7 @@ public class TechnoDemoPickable : YMonoBehaviour
         YVariable rotZ = new YFloat();
 
         playerHand.GetRotation(9999, 9998, 9997);
-        GetComponent<YTransform>().GetRotation(rotX.GetID(), rotY.GetID(), rotZ.GetID());
+        GetComponent<YTransform>().GetRotation(rotX, rotY, rotZ);
         YVariable x = new YVariable(9999, true) + rotation.x;
         YVariable y = new YVariable(9998, true) + rotation.y;
         YVariable z = new YVariable(9997, true) + rotation.z;
@@ -65,7 +65,7 @@ public class TechnoDemoPickable : YMonoBehaviour
         Lerp(rotY, y, t);
         Lerp(rotZ, z, t);
 
-        GetComponent<YTransform>().SetRotation(rotX.GetID(), rotY.GetID(), rotZ.GetID());
+        GetComponent<YTransform>().SetRotation(rotX, rotY, rotZ);
 
 
         return YGameManager.Instance.StopRecordPool();

@@ -15,6 +15,7 @@ public class YGameManagerEditor : Editor
         SerializedProperty sampleLevelNameProperty = serializedObject.FindProperty("sampleLevelName");
         SerializedProperty updateLevelProperty = serializedObject.FindProperty("updateLevel");
         SerializedProperty lastIDProperty = serializedObject.FindProperty("firstFreeID");
+        SerializedProperty playerNameProperty = serializedObject.FindProperty("playerName");
 
 
         EditorGUILayout.PropertyField(levelNameProperty, new GUIContent("Level Name"));
@@ -36,6 +37,7 @@ public class YGameManagerEditor : Editor
             yGameManager.CreateSampleLevel();
         }
 
+        EditorGUILayout.PropertyField(playerNameProperty, new GUIContent("Player Name"));
 
         serializedObject.ApplyModifiedProperties();
     }

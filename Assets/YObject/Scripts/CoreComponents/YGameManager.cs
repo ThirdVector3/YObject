@@ -1,4 +1,5 @@
 ﻿using GeometryDashAPI.Data;
+using GeometryDashAPI.Data.Enums;
 using GeometryDashAPI.Data.Models;
 using GeometryDashAPI.Levels;
 using GeometryDashAPI.Levels.GameObjects.Default;
@@ -55,6 +56,7 @@ public class YGameManager : MonoBehaviour
     public LevelSavingType levelSavingType;
     public bool updateLevel;
     public int firstFreeID = 600;
+    public string playerName = "YObject";
 
     public enum LevelSavingType
     {
@@ -526,7 +528,7 @@ public class YGameManager : MonoBehaviour
                 });
             }
 
-            var levelInfo = LevelCreatorModel.CreateNew(levelName, "Yobj");
+            var levelInfo = LevelCreatorModel.CreateNew(levelName, playerName);
             levelInfo.SaveLevel(savingLevel);
             local.AddLevel(levelInfo);
         }

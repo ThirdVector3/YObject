@@ -37,7 +37,7 @@ public class YGameManagerEditor : Editor
             yGameManager.CreateSampleLevel();
         }
 
-        EditorGUILayout.PropertyField(playerNameProperty, new GUIContent("Player Name"));
+        //EditorGUILayout.PropertyField(playerNameProperty, new GUIContent("Player Name"));
 
         serializedObject.ApplyModifiedProperties();
     }

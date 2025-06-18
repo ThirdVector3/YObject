@@ -138,7 +138,10 @@ public class ItemEdit : YTrigger
                         result *= memVal2.Item2;
                         break;
                     case Operation.Divide:
-                        result /= memVal2.Item2;
+                        if (memVal2.Item2 == 0)
+                            result = 0;
+                        else
+                            result /= memVal2.Item2;
                         break;
                 }
             }
@@ -158,7 +161,10 @@ public class ItemEdit : YTrigger
                         result *= memVal2.Item1;
                         break;
                     case Operation.Divide:
-                        result /= memVal2.Item1;
+                        if (memVal2.Item1 == 0)
+                            result = 0;
+                        else
+                            result /= memVal2.Item1;
                         break;
                 }
             }
@@ -216,7 +222,10 @@ public class ItemEdit : YTrigger
                     break;
                 case Operation.Divide:
                     editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
-                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, editVal.Item2 / result);
+                    if (result == 0)
+                        YGameManager.Instance.IDsManager.SetMemoryValue(editID, 0);
+                    else
+                        YGameManager.Instance.IDsManager.SetMemoryValue(editID, editVal.Item2 / result);
                     break;
             }
         }
@@ -241,7 +250,10 @@ public class ItemEdit : YTrigger
                     break;
                 case Operation.Divide:
                     editVal = YGameManager.Instance.IDsManager.GetMemoryValue(editID);
-                    YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item1 / result));
+                    if (result == 0)
+                        YGameManager.Instance.IDsManager.SetMemoryValue(editID, 0);
+                    else
+                        YGameManager.Instance.IDsManager.SetMemoryValue(editID, (int)(editVal.Item1 / result));
                     break;
             }
         }

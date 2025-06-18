@@ -105,7 +105,7 @@ public class YTransform : YMonoBehaviour
 
 
 
-    public YTrigger[] SetPosition(int idInX, int idInY, int idInZ)
+    public virtual YTrigger[] SetPosition(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -121,7 +121,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] SetPosition(float x, float y, float z)
+    public virtual YTrigger[] SetPosition(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -131,7 +131,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] GetPosition(int idOutX, int idOutY, int idOutZ)
+    public virtual YTrigger[] GetPosition(int idOutX, int idOutY, int idOutZ)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -141,7 +141,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] Translate(int idInX, int idInY, int idInZ)
+    public virtual YTrigger[] Translate(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -157,7 +157,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] Translate(float x, float y, float z)
+    public virtual YTrigger[] Translate(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -167,7 +167,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] TranslateLocal(int idInX, int idInY, int idInZ)
+    public virtual YTrigger[] TranslateLocal(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -212,7 +212,7 @@ public class YTransform : YMonoBehaviour
 
         return YGameManager.Instance.StopRecordPool();
     }
-    public YTrigger[] TranslateLocal(float x, float y, float z)
+    public virtual YTrigger[] TranslateLocal(float x, float y, float z)
     {
         YGameManager.Instance.RecordPool();
 
@@ -251,7 +251,7 @@ public class YTransform : YMonoBehaviour
 
         return YGameManager.Instance.StopRecordPool();
     }
-    public YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
+    public virtual YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -261,7 +261,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] SetRotation(float x, float y, float z)
+    public virtual YTrigger[] SetRotation(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -271,7 +271,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] GetRotation(int idOutX, int idOutY, int idOutZ)
+    public virtual YTrigger[] GetRotation(int idOutX, int idOutY, int idOutZ)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -281,7 +281,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] Rotate(int idInX, int idInY, int idInZ)
+    public virtual YTrigger[] Rotate(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -297,7 +297,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] Rotate(float x, float y, float z)
+    public virtual YTrigger[] Rotate(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -307,7 +307,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] GetSin(int idOutX, int idOutY, int idOutZ)
+    public virtual YTrigger[] GetSin(int idOutX, int idOutY, int idOutZ)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -317,7 +317,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] GetCos(int idOutX, int idOutY, int idOutZ)
+    public virtual YTrigger[] GetCos(int idOutX, int idOutY, int idOutZ)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -327,7 +327,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] SetScale(int idInX, int idInY, int idInZ)
+    public virtual YTrigger[] SetScale(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -343,7 +343,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] SetScale(float x, float y, float z)
+    public virtual YTrigger[] SetScale(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -353,7 +353,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] GetScale(int idOutX, int idOutY, int idOutZ)
+    public virtual YTrigger[] GetScale(int idOutX, int idOutY, int idOutZ)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -363,7 +363,7 @@ public class YTransform : YMonoBehaviour
         };
         return result;
     }
-    public YTrigger[] SetState(bool canRotate, bool canScale)
+    public virtual YTrigger[] SetState(bool canRotate, bool canScale)
     {
         YTrigger[] result;// = new YTrigger[]
         //{
@@ -379,7 +379,7 @@ public class YTransform : YMonoBehaviour
             result = new YTrigger[] { new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, 3) };
         return result;
     }
-    public YTrigger[] GetState(int idOut)
+    public virtual YTrigger[] GetState(int idOut)
     {
         YTrigger[] result = new YTrigger[]
         {

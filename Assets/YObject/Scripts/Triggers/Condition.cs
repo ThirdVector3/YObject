@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Unity.VisualScripting.Metadata;
 
 public class Condition : YTrigger
 {
@@ -17,6 +18,8 @@ public class Condition : YTrigger
     private YTrigger[] trueTriggers;
     private YTrigger[] falseTriggers;
 
+    private ItemCompare itemCompare = null;
+
     public Condition(YVariable var1, YVariable var2, ItemCompare.Operation operation)
     {
         this.id1 = var1.GetID();
@@ -26,6 +29,21 @@ public class Condition : YTrigger
         this.multiplier1 = 1;
         this.multiplier2 = 1;
         this.operation = operation;
+        trueTriggers = new YTrigger[0];
+        falseTriggers = new YTrigger[0];
+        trueId = 0;
+        falseId = 0;
+    }
+
+    public Condition(YVariable result)
+    {
+        this.id1 = result.GetID();
+        this.id2 = 0;
+        this.is1float = result.IsFloat();
+        this.is2float = true;
+        this.multiplier1 = 1;
+        this.multiplier2 = 1;
+        this.operation = ItemCompare.Operation.Equals;
         trueTriggers = new YTrigger[0];
         falseTriggers = new YTrigger[0];
         trueId = 0;
@@ -53,6 +71,7 @@ public class Condition : YTrigger
         trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
         YGameManager.Instance.IDsManager.AddGroup(trueId);
 
+
         return this;
     }
     public Condition Else(Action block)
@@ -69,6 +88,7 @@ public class Condition : YTrigger
             trig.isFirstLevel = false;
         falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
         YGameManager.Instance.IDsManager.AddGroup(falseId);
+
 
         return this;
     }
@@ -89,6 +109,7 @@ public class Condition : YTrigger
                 trigger.AddGroup(group, toChildren);
             }
         }
+
     }
     public override void AddGroupParent(int group, bool toChildren = false)
     {
@@ -106,6 +127,7 @@ public class Condition : YTrigger
                 trigger.AddGroupParent(group, toChildren);
             }
         }
+
     }
     public override void AddGroups(params int[] groups)
     {
@@ -129,6 +151,7 @@ public class Condition : YTrigger
                 trigger.AddGroups(groups, toChildren);
             }
         }
+
     }
     public override void AddGroupsParent(int[] groups, bool toChildren = false)
     {
@@ -164,7 +187,8 @@ public class Condition : YTrigger
             triggers += trigger.GetString(triggersPos);
             triggersPos.x += 2;
         }
-
+        
         return $"1,3620,2,{pos.Value.x},3,{pos.Value.y}{GetGroupsString(groups, groupsParent)},155,1,62,1,87,1,36,1,80,{id1},95,{id2},51,{trueId},71,{falseId},476,{(is1float ? 2 : 1)},477,{(is2float ? 2 : 1)},479,{multiplier1},483,{multiplier2},480,3,481,3,482,{(int)operation};" + triggers;
+
     }
 }

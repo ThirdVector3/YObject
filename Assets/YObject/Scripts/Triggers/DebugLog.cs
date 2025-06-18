@@ -2,16 +2,24 @@
 
 public class DebugLog : YTrigger
 {
-    public string text;
+    private string text = null;
+    private YVariable yVariable = null;
 
     public DebugLog(string text) : base()
     {
         this.text = text;
     }
+    public DebugLog(YVariable variable) : base()
+    {
+        this.yVariable = variable;
+    }
 
     public override void Activate()
     {
-        Debug.Log(text);
+        if ((object)yVariable != null)
+            Debug.Log(YIDsManager.Instance.GetMemoryValue(yVariable));
+        else
+            Debug.Log(text);
     }
 
     public override string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null)

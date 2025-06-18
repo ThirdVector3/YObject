@@ -28,7 +28,7 @@ public class YMeshRenderer : YMonoBehaviour
 
     private int isLODActiveID = 0;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (gameObject.isStatic)
             LODSystemEnabled = false;

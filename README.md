@@ -1,6 +1,10 @@
 # ![](imgs/YObjectLogomini.png)  YObject
 Unity to GD tool
 
+- !THE DOCUMENTATION IS OUTDATED AND WILL BE UPDATED SOON!
+- !THE DOCUMENTATION IS OUTDATED AND WILL BE UPDATED SOON!
+- !THE DOCUMENTATION IS OUTDATED AND WILL BE UPDATED SOON!
+
 ## 🚀 Philosophy
 
 The core principles behind YObject:

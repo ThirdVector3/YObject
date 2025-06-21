@@ -27,7 +27,7 @@ public class YVariable
 
     protected static int GetNewID(bool isFloat)
     {
-        if (YGameManager.Instance.gameobjectsInitialization)
+        if (YGameManager.Instance.gameobjectsAndServicesInitialization)
             return YIDsManager.Instance.AddVariable(
                 Guid.NewGuid().ToString() + DateTime.UtcNow.Ticks.ToString(),
                 isFloat ? YIDsManager.Instance.GetFreeIdFloat() : YIDsManager.Instance.GetFreeIdInt(),

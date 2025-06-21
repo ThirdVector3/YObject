@@ -6,7 +6,7 @@
     public YFloat(float value) : base(GetNewID(true), true)
     {
         var trig = new ItemEdit(id, true, ItemEdit.Operation.Equals, value);
-        if (YGameManager.Instance.gameobjectsInitialization)
+        if (YGameManager.Instance.gameobjectsAndServicesInitialization)
         {
             if (YIDsManager.Instance.GetCurrentGroupName() == null)
             {

@@ -6,7 +6,7 @@
     public YInt(int value) : base(GetNewID(false), false)
     {
         var trig = new ItemEdit(id, false, ItemEdit.Operation.Equals, value);
-        if (YGameManager.Instance.gameobjectsInitialization)
+        if (YGameManager.Instance.gameobjectsAndServicesInitialization)
         {
             if (YIDsManager.Instance.GetCurrentGroupName() == null)
             {

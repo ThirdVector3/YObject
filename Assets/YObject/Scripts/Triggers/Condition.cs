@@ -43,7 +43,7 @@ public class Condition : YTrigger
         this.is2float = true;
         this.multiplier1 = 1;
         this.multiplier2 = 1;
-        this.operation = ItemCompare.Operation.Equals;
+        this.operation = ItemCompare.Operation.MoreOrEquals;
         trueTriggers = new YTrigger[0];
         falseTriggers = new YTrigger[0];
         trueId = 0;

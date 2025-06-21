@@ -78,7 +78,13 @@ public class YTriangle : MonoBehaviour
 
         UpdateColor();
     }
-
+    public void ResetCorrectors()
+    {
+        color1Corrector = new UnityEngine.Color(0.5f, 0.25f, 0.25f);
+        color2Corrector = new UnityEngine.Color(0.5f, 0.25f, 0.25f);
+        color3Corrector = new UnityEngine.Color(0.5f, 0.25f, 0.25f);
+        UpdateColor();
+    }
     private void OnValidate()
     {
         ValidateLayerParent();

@@ -4,6 +4,7 @@ using GeometryDashAPI.Data.Models;
 using GeometryDashAPI.Levels;
 using GeometryDashAPI.Levels.GameObjects.Default;
 using GeometryDashAPI.Levels.Structures;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -31,11 +32,13 @@ public class YGameManager : MonoBehaviour
     public YSoundManager SoundManager;
 
 
+    private static List<YService> services;
+    
 
     public List<YTrigger> globalPool;
     public List<YGDObject> globalGDObjectsPool;
     public bool transportingToGd = false;
-    public bool gameobjectsInitialization = false;
+    public bool gameobjectsAndServicesInitialization = false;
 
 
 
@@ -63,6 +66,17 @@ public class YGameManager : MonoBehaviour
         Override = 0,
         UseSample = 1,
     }
+
+    public static T GetService<T>() where T : class
+    {
+        foreach (var service in services)
+        {
+            if (service is T)
+                return service as T;
+        }
+        return null;
+    }
+
     public void SaveLevel()
     {
         transportingToGd = true;
@@ -236,6 +250,9 @@ public class YGameManager : MonoBehaviour
         globalPool = new List<YTrigger>();
         globalGDObjectsPool = new List<YGDObject>();
 
+        services = GetAllServices();
+
+
         globalInitGDObjects.Clear();
         globalBeginTriggers.Clear();
         globalTickTriggers.Clear();
@@ -252,9 +269,63 @@ public class YGameManager : MonoBehaviour
 
         YCoroutines.Init();
 
+        InitServices();
         InitGameobjects();
     }
 
+    private List<YService> GetAllServices()
+    {
+        return AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => type.IsSubclassOf(typeof(YService)))
+            .Select(type => Activator.CreateInstance(type) as YService)
+            .ToList();
+    }
+    private void InitServices()
+    {
+        IDsManager.SetCurrentGroupName(null);
+        foreach (var yService in services)
+        {
+            yService.Uninit();
+        }
+        gameobjectsAndServicesInitialization = true;
+        foreach (var yService in services)
+        {
+            globalGDObjectsPool.Clear();
+
+            yService.Init();
+            foreach (YGDObject GDObject in globalGDObjectsPool)
+            {
+                if (GDObject.isFirstLevel)
+                {
+                    globalInitGDObjects.Add(GDObject);
+                }
+            }
+        }
+        gameobjectsAndServicesInitialization = false;
+        foreach (var yService in services)
+        {
+            globalPool.Clear();
+            yService.Begin();
+            foreach (YTrigger trigger in globalPool)
+            {
+                if (trigger.isFirstLevel)
+                {
+                    globalBeginTriggers.Add(trigger);
+                }
+            }
+
+            globalPool.Clear();
+            yService.Tick();
+            foreach (YTrigger trigger in globalPool)
+            {
+                if (trigger.isFirstLevel)
+                {
+                    globalTickTriggers.Add(trigger);
+                }
+            }
+        }
+    }
     private void InitGameobjects()
     {
         IDsManager.SetCurrentGroupName(null);
@@ -285,7 +356,7 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-        gameobjectsInitialization = true;
+        gameobjectsAndServicesInitialization = true;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null)
@@ -302,7 +373,7 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-        gameobjectsInitialization = false;
+        gameobjectsAndServicesInitialization = false;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.GetComponent<YGameobjectGroup>() == null && (yMono is YTransform || yMono is YMainCamera))
@@ -368,7 +439,7 @@ public class YGameManager : MonoBehaviour
 
 
         IDsManager.InitGroups(groupsGroup.Keys.ToArray());
-        gameobjectsInitialization = true;
+        gameobjectsAndServicesInitialization = true;
 
 
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
@@ -389,7 +460,7 @@ public class YGameManager : MonoBehaviour
                 }
             }
         }
-        gameobjectsInitialization = false;
+        gameobjectsAndServicesInitialization = false;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && (yMono is YTransform || yMono is YMainCamera))

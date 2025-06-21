@@ -17,6 +17,8 @@ MonoBehaviour:
   trianglePrefab: {fileID: 1658627886748779419, guid: 7d9c59f7e5e94314a8e0db00d2fdb5b5, type: 3}
   songs:
     _serializedList:
+    - Key: 467339
+      Value: {fileID: 8300000, guid: 755fd33843992e547b8ce82aa9bc95eb, type: 3}
     - Key: 63
       Value: {fileID: 8300000, guid: 6a385eedf339d3d45b1ba5a8ec7d59cf, type: 3}
     - Key: 778356
@@ -30,9 +32,9 @@ MonoBehaviour:
   - {r: 0.07791921, g: 0.11435423, b: 0.16037738, a: 1}
   - {r: 0.07058824, g: 0.07350723, b: 0.16078432, a: 1}
   - {r: 0.17822178, g: 0.1882751, b: 0.4245283, a: 1}
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.1462264, b: 0.1462264, a: 1}
+  - {r: 0, g: 0.052033424, b: 1, a: 1}
+  - {r: 0.13071728, g: 1, b: 0, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}

@@ -1,10 +1,17 @@
-﻿public class YVector3 : YVector2
+﻿using System.Security.Cryptography;
+
+public class YVector3 : YVector2
 {
-    protected YVariable z;
+    public YVariable z;
     public YVector3(float x, float y, float z) : base(x,y)
     {
         z = new YFloat(z);
     }
+    public YVector3(int xId, int yId, int zId) : base(xId, yId)
+    {
+        z = new YVariable(zId, true);
+    }
+
     public static YVector3 operator +(YVector3 a, YVector3 b)
     {
         a.x += b.x;

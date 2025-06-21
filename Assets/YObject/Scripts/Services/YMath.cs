@@ -190,4 +190,28 @@ public static class YMath
 
         return triggers.ToArray();
     }
+
+    public static YTrigger[] Max(int idIn1, int idIn2, int idOut)
+    {
+        YGameManager.Instance.RecordPool();
+
+        YVariable isFirstBigger = new YVariable(idIn1, true) > new YVariable(idIn2, true);
+        isFirstBigger = new YFloat(1) * isFirstBigger * new YVariable(idIn1, true) + ((1 - new YFloat(1) * isFirstBigger) * new YVariable(idIn2, true));
+
+        new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1, isFirstBigger, true, 0, true, ItemEdit.Operation.Add);
+
+        return YGameManager.Instance.StopRecordPool();
+    }
+
+    public static YTrigger[] Min(int idIn1, int idIn2, int idOut)
+    {
+        YGameManager.Instance.RecordPool();
+
+        YVariable isFirstLess = new YVariable(idIn1, true) < new YVariable(idIn2, true);
+        isFirstLess = new YFloat(1) * isFirstLess * new YVariable(idIn1, true) + ((1 - new YFloat(1) * isFirstLess) * new YVariable(idIn2, true));
+
+        new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1, isFirstLess, true, 0, true, ItemEdit.Operation.Add);
+
+        return YGameManager.Instance.StopRecordPool();
+    }
 }

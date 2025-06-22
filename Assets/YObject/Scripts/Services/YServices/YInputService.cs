@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class YInputService : YService
+public class YInputService : YService<YInputService>
 {
     private YVariable previousP1LeftTMP;
     private YVariable previousP1RightTMP;

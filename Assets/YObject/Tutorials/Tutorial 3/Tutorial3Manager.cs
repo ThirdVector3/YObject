@@ -8,13 +8,13 @@ public class Tutorial3Manager : YMonoBehaviour
     {
         //new SongTrigger(467339, 0, 1, false, 0, 0, 0, 0);
 
-        new Condition(YGameManager.GetService<YInputService>().P2LeftDown())
+        new Condition(YInputService.Get().P2LeftDown())
             .Then(() =>
             {
                 YGameobjectGroupsManager.Instance.SetCurrentGroup("first group");
             });
 
-        new Condition(YGameManager.GetService<YInputService>().P2RightDown())
+        new Condition(YInputService.Get().P2RightDown())
             .Then(() =>
             {
                 YGameobjectGroupsManager.Instance.SetCurrentGroup("second group");

@@ -32,7 +32,7 @@ public class YGameManager : MonoBehaviour
     public YSoundManager SoundManager;
 
 
-    private static List<YService> services;
+    private static List<YServiceBase> services;
     
 
     public List<YTrigger> globalPool;
@@ -273,12 +273,12 @@ public class YGameManager : MonoBehaviour
         InitGameobjects();
     }
 
-    private List<YService> GetAllServices()
+    private List<YServiceBase> GetAllServices()
     {
         return AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.IsSubclassOf(typeof(YService)))
-            .Select(type => Activator.CreateInstance(type) as YService)
+            .Where(type => type.IsSubclassOf(typeof(YServiceBase)) && !type.IsAbstract)
+            .Select(type => Activator.CreateInstance(type) as YServiceBase)
             .ToList();
     }
     private void InitServices()

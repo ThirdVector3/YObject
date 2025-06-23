@@ -33,19 +33,19 @@ public class YInputService : YService<YInputService>
     }
     public override void Tick()
     {
-        previousP1Left = previousP1Left - previousP1Left + previousP1LeftTMP;
-        previousP1Right = previousP1Right - previousP1Right + previousP1RightTMP;
-        previousP1Up = previousP1Up - previousP1Up + previousP1UpTMP;
-        previousP2Left = previousP2Left - previousP2Left + previousP2LeftTMP;
-        previousP2Right = previousP2Right - previousP2Right + previousP2RightTMP;
-        previousP2Up = previousP2Up - previousP2Up + previousP2UpTMP;
+        previousP1Left.SetValue(previousP1LeftTMP);
+        previousP1Right.SetValue(previousP1RightTMP);
+        previousP1Up.SetValue(previousP1UpTMP);
+        previousP2Left.SetValue(previousP2LeftTMP);
+        previousP2Right.SetValue(previousP2RightTMP);
+        previousP2Up.SetValue(previousP2UpTMP);
 
-        previousP1LeftTMP = previousP1LeftTMP - previousP1LeftTMP + new YVariable("Input.P1Left");
-        previousP1RightTMP = previousP1RightTMP - previousP1RightTMP + new YVariable("Input.P1Right");
-        previousP1UpTMP = previousP1UpTMP - previousP1UpTMP + new YVariable("Input.P1Up");
-        previousP2LeftTMP = previousP2LeftTMP - previousP2LeftTMP + new YVariable("Input.P2Left");
-        previousP2RightTMP = previousP2RightTMP - previousP2RightTMP + new YVariable("Input.P2Right");
-        previousP2UpTMP = previousP2UpTMP - previousP2UpTMP + new YVariable("Input.P2Up");
+        previousP1LeftTMP.SetValue(new YVariable("Input.P1Left"));
+        previousP1RightTMP.SetValue(new YVariable("Input.P1Right"));
+        previousP1UpTMP.SetValue(new YVariable("Input.P1Up"));
+        previousP2LeftTMP.SetValue(new YVariable("Input.P2Left"));
+        previousP2RightTMP.SetValue(new YVariable("Input.P2Right"));
+        previousP2UpTMP.SetValue(new YVariable("Input.P2Up"));
     }
 
     public YVariable P1LeftDown()

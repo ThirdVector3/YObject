@@ -16,6 +16,14 @@ public class YVariable
         this.isFloat = YIDsManager.Instance.GetIsFloatByName(name);
     }
 
+    public void SetValue(YVariable value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Equals, 1, value.id, value.isFloat, 0, true, ItemEdit.Operation.Add);
+    }
+    public void SetValue(float value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Equals, value);
+    }
 
     private static int lastTmpId = 9999;
     private static int GetNewTmpId()

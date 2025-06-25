@@ -1,10 +1,6 @@
 # ![](imgs/YObjectLogomini.png)  YObject
 Unity to GD tool
 
-- !THE DOCUMENTATION IS OUTDATED AND WILL BE UPDATED SOON!
-- !THE DOCUMENTATION IS OUTDATED AND WILL BE UPDATED SOON!
-- !THE DOCUMENTATION IS OUTDATED AND WILL BE UPDATED SOON!
-
 ## 🚀 Philosophy
 
 The core principles behind YObject:
@@ -19,7 +15,7 @@ For a quick start you need to have YGameManager and Camera with YMainCamera comp
 
 ![](imgs/3.png)
 
-Let's get started with adding simple cube on scene. You can create object and put YMeshRenderer on it. Then you can put mesh on this object by selecting mesh and pressing "Create Mesh".
+Let's get started with adding simple cube on scene. You can create an empty gameobject and put YMeshRenderer on it. Then you can put mesh on this object by selecting mesh and pressing "Create Mesh".
 
 ![](imgs/1.png)
 
@@ -30,54 +26,57 @@ Then you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your co
 ```cs
 public class MyComponent : YMonoBehaviour
 {
+    private YVariable cameraRotationSpeed;
     public override void Begin()
     {
         YCoroutines.StartCoroutine(yCoroutine);
 
-        new ColorTrigger(1000, 1, Color.white);
+        new ColorTrigger(3, 1, Color.black);
 
-        new SongTrigger(63, 0, 1, true, 0, 0, 0, 0);
+        new SongTrigger(467339, 0, 1, false, 0, 0, 0, 0);
     }
     private Coroutine yCoroutine;
     public override void Init()
     {
-        YIDsManager.Instance.AddVariable(gameObject.GetInstanceID() + ".variable", YIDsManager.Instance.GetFreeIdFloat(), true);
-
-
-        List<YTrigger> triggers = new List<YTrigger>();
+        // creating variable
+        cameraRotationSpeed = new YFloat(2.5f);
 
         GetComponent<YTransform>().Init();
 
-        triggers.Add(new YWaitForSeconds(3));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(0f, 0, 0));
-        triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(1f, 1, 1));
-        triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(2f, 2, 2));
-        triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
+        // creating coroutine
+        YCoroutines.RecordCoroutine();
 
-        yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray());
+        new YWaitForSeconds(3);
+        GetComponent<YTransform>().SetPosition(0f, 0, 0);
+        new YWaitForSeconds(1);
+        GetComponent<YTransform>().SetPosition(1f, 1, 1);
+        new YWaitForSeconds(1);
+        GetComponent<YTransform>().SetPosition(2f, 2, 2);
+        new YWaitForSeconds(1);
+        GetComponent<YTransform>().SetPosition(3f, 3, 3);
+
+        yCoroutine = YCoroutines.GetCoroutine();
     }
 
     public override void Tick()
     {
         // free fly camera
-        
-        YMainCamera.Instance.GetSin(9999,9998,9997);
-        YMainCamera.Instance.GetCos(9996,9995,9994);
-        new ItemEdit(9998, true, ItemEdit.Operation.Divide, 30);
-        new ItemEdit(9995, true, ItemEdit.Operation.Divide, -30);
-        new ItemEdit(9999, true, ItemEdit.Operation.Divide, 30);
-        new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
-        new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
-        new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add);
-        YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]);
-        YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]);
-        YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]);
-        YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]);
-        YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]);
-        YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]);
+
+        new Condition(YInputService.Get().P1Left())
+            .Then(() =>
+            {
+                YMainCamera.Instance.Rotate(0, cameraRotationSpeed, 0);
+            });
+        new Condition(YInputService.Get().P1Right())
+            .Then(() =>
+            {
+                YMainCamera.Instance.Rotate(0, new YFloat(-1) * cameraRotationSpeed, 0);
+            });
+        new Condition(YInputService.Get().P1Up())
+            .Then(() =>
+            {
+                YMainCamera.Instance.TranslateLocal(0, 0, 0.1f);
+            });
     }
 }
 ```
@@ -101,71 +100,184 @@ public class TestComponent : YMonoBehaviour
 
     public override void Begin()
     {
+        // On gameobject start its game cycle
 
+        // Use for setting default state of gameobject
     }
 
     public override void Init()
     {
+        // Initialize gameobject
 
+        // Use for creating gameobject properties (variables)
+        // and for low-level gd objects creating
     }
 
     public override void Tick()
     {
-        GetComponent<YTransform>().SetState(true, false);
-        GetComponent<YTransform>().Rotate(1f,1f,0);
+        // On every tick
+
+        // Use for making game logic
     }
 }
 ```
 
-### 🎯 Main Operations
+### 🛠️ YGameManager Functions
+```cs
+// Record triggers created by commands
+YGameManager.Instance.RecordPool();
+// Stops recording and returns recorded triggers
+YGameManager.Instance.StopRecordPool();
+```
 
-<!-- - Add variable
+### 📊 Variables Usage
+- YVariable
     ```cs
-    YIDsManager.Instance.AddVariable(gameObject.name + ".component.vector.x", YIDsManager.Instance.GetFreeIdFloat(), true);
-    YIDsManager.Instance.AddVariable(gameObject.name + ".component.vector.y", YIDsManager.Instance.GetFreeIdFloat(), true);
-    YIDsManager.Instance.AddVariable(gameObject.name + ".component.vector.z", YIDsManager.Instance.GetFreeIdFloat(), true);
+    // You can get global variables using this
+    YVariable deltaTime = new YVariable("Time.deltaTime");
     ```
-    -->
-- Get free ids, groups or gradients
+- YInt
     ```cs
-    YIDsManager.Instance.GetFreeIdFloat();
-
-    YIDsManager.Instance.GetFreeIdInt();
-
-    YIDsManager.Instance.GetFreeGroup();
-    
-    YIDsManager.Instance.GetFreeGradient();
+    // You can create Int variable using this
+    YVariable intVar = new YInt(10);
     ```
-- Add (Take place in memory) ids, groups or gradients
+- YFloat
     ```cs
-    YIDsManager.Instance.AddVariable("varName", id, true);
-
-    YIDsManager.Instance.AddVariable("varName", id, false);
-
-    YIDsManager.Instance.AddGroup(group);
-
-    YIDsManager.Instance.AddGradient(gradient);
+    // You can create Int variable using this
+    YVariable floatVar = new YFloat(1.25f);
     ```
+
 
 ### 🧩 Main Triggers For Code Logic
-- ItemEdit
+- ColorTrigger
     ```cs
-    new ItemEdit(9999, true, ItemEdit.Operation.Equals, 10);
+    new ColorTrigger(3, 1, Color.black);
+    // ColorTrigger(int id, float duration, Color color)
     ```
-- ItemCompare
+- SongTrigger
     ```cs
-    new ItemCompare(9999, 0, true, true, 1, 1, ItemCompare.Operation.Equals, triggersTrue, triggersFalse);
+    new SongTrigger(467339, 0, 1, false, 0, 0, 0, 0);
+    // SongTrigger(int id, int channel, float volume, bool loop,
+    // int startMs, int endMs, int fadeInMs, int fadeOutMs)
+    ```
+- RandomTrigger
+    ```cs
+    new RandomTrigger(50f, GetComponent<YTransform>().Translate(0.1f, 0, 0), GetComponent<YTransform>().Translate(-0.1f, 0, 0));
+    // RandomTrigger(float percentage,
+    // YTrigger[] triggers1, YTrigger[] triggers2)
+    ```
+- DebugLog
+    ```cs
+    new DebugLog("Debug message");
+    // DebugLog(string text)
+    // DebugLog(YVariable variable)
+    ```
+- Condition
+    ```cs
+    new Condition(YInputService.Get().P1Up())
+        .Then(() =>
+        {
+            YMainCamera.Instance.TranslateLocal(0, 0, 0.1f);
+        });
+    // Condition(YVariable result)
+    // Condition(YVariable var1, YVariable var2, ItemCompare.Operation operation)
+    ```
+- YWaitForSeconds
+    ```cs
+    new YWaitForSeconds(1);
+    // YWaitForSeconds(float seconds)
     ```
 
 ### 🧭 Built-in Components
 - YTransform: Position, Rotation, Scale
     ```cs
-    GetComponent<YTransform>().Translate(1f,5f,3f);
+    yTransform = GetComponent<YTransform>();
+    // get YTransform from gameobject
+
+    // there are all functions in YTransform:
+
+    yTransform.SetPosition(x, y, z) or
+    yTransform.SetPosition(xID, yID, zID):
+    // Sets the position of an object based on the specified x, y, and z coordinates.
+
+    yTransform.GetPosition(xID, yID, zID):
+    //Gets the position of an object and writes x, y, and z values to the specified IDs.
+    
+    yTransform.Translate(x, y, z) or
+    yTransform.Translate(xID, yID, zID):
+    //Translates an object relatively to the previous coordinates.
+    
+    yTransform.TranslateLocal(x, y, z) or
+    yTransform.TranslateLocal(xID, yID, zID):
+    //Translates an object, but locally, instead of globally.
+    
+    yTransform.SetRotation(x, y, z) or
+    yTransform.SetRotation(xID, yID, zID):
+    //Sets the rotation of an object based on the specified x, y, and z coordinates.
+    
+    yTransform.GetRotation(xID, yID, zID):
+    //Gets the rotation of an object and writes x, y, and z values to the specified IDs.
+    
+    yTransform.Rotate(x, y, z) or
+    yTransform.Rotate(xID, yID, zID):
+    //Rotates an object.
+
+    yTransform.SetScale(x, y, z) or
+    yTransform.SetScale(xID, yID, zID):
+    //Sets the scale of an object based on the specified x, y, and z coordinates.
+    
+    yTransform.GetScale(xID, yID, zID):
+    //Gets the scale of an object and writes x, y, and z values to the specified IDs.
+
+    yTransform.SetState(canRotate, canScale)
+    //Sets the state of an object based on the specified canRotate (bool) and canScale (bool)
+    
+    yTransform.GetSin(xID, yID, zID):
+    //Gets the sine of an object and writes x, y, and z values to the specified IDs.
+    
+    yTransform.GetCos(xID, yID, zID):
+    //Gets the cosine of an object and writes x, y, and z values to the specified IDs.
+
     ```
 - YMeshRenderer: Renders 3D models
 - YMainCamera: Main camera data
     ```cs
     YMainCamera.Instance.Translate(1f,5f,3f);
+
+    // there are all functions in YMainCamera:
+
+    YMainCamera.Instance.SetPosition(x, y, z) or
+    YMainCamera.Instance.SetPosition(xID, yID, zID):
+    // Sets the position of the camera based on the specified x, y, and z coordinates.
+
+    YMainCamera.Instance.GetPosition(xID, yID, zID):
+    //Gets the position of the camera and writes x, y, and z values to the specified IDs.
+    
+    YMainCamera.Instance.Translate(x, y, z) or
+    YMainCamera.Instance.Translate(xID, yID, zID):
+    //Translates the camera relatively to the previous coordinates.
+    
+    YMainCamera.Instance.TranslateLocal(x, y, z) or
+    YMainCamera.Instance.TranslateLocal(xID, yID, zID):
+    //Translates the camera, but locally, instead of globally.
+    
+    YMainCamera.Instance.SetRotation(x, y, z) or
+    YMainCamera.Instance.SetRotation(xID, yID, zID):
+    //Sets the rotation of the camera based on the specified x, y, and z coordinates.
+    
+    YMainCamera.Instance.GetRotation(xID, yID, zID):
+    //Gets the rotation of the camera and writes x, y, and z values to the specified IDs.
+    
+    YMainCamera.Instance.Rotate(x, y, z) or
+    YMainCamera.Instance.Rotate(xID, yID, zID):
+    //Rotates an object.
+    
+    YMainCamera.Instance.GetSin(xID, yID, zID):
+    //Gets the sine of the camera and writes x, y, and z values to the specified IDs.
+    
+    YMainCamera.Instance.GetCos(xID, yID, zID):
+    //Gets the cosine of the camera and writes x, y, and z values to the specified IDs.
+
     ```
 
 ### 🔁 Coroutines
@@ -179,21 +291,18 @@ public class TestComponent : YMonoBehaviour
     private Coroutine yCoroutine;
     public override void Init()
     {
-        List<YTrigger> triggers = new List<YTrigger>();
+        YCoroutines.RecordCoroutine();
 
-        GetComponent<YTransform>().Init();
+        new YWaitForSeconds(3);
+        GetComponent<YTransform>().SetPosition(0f, 0, 0);
+        new YWaitForSeconds(1);
+        GetComponent<YTransform>().SetPosition(1f, 1, 1);
+        new YWaitForSeconds(1);
+        GetComponent<YTransform>().SetPosition(2f, 2, 2);
+        new YWaitForSeconds(1);
+        GetComponent<YTransform>().SetPosition(3f, 3, 3);
 
-        triggers.Add(new YWaitForSeconds(3));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(0f, 0, 0));
-        triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(1f, 1, 1));
-        triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(2f, 2, 2));
-        triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
-
-        yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray());
-
+        yCoroutine = YCoroutines.GetCoroutine();
     }
 ```
 
@@ -204,7 +313,7 @@ Reduce mesh detail based on camera distance.
 
 ### ✎ Triangle layer
 
-You can set layer (layer means triangles with one layer will be activated on one layer) and layer parent (layer parent means this triangle will be main triangle for layer calculations) of triangle
+You can set layer (layer means triangles with one layer will be spawned on one layer) and layer parent (layer parent means this triangle will be main triangle for layer calculations) of triangle
 
 ![](imgs/6.png)
 
@@ -249,12 +358,43 @@ And you can change color channels in the YProjectSettings in Assets/YObject/Reso
 ### 🎮 Input System
 
 ```cs
-YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0])
+// in engine there is service for Input
+
+// you can get it by using Get() function in YInputService
+var inputService = YInputService.Get();
+
+// now you can make condition with Input buttons
+
+new Condition(inputService.P1Right())
+        .Then(() =>
+        {
+            // code
+        });
+
+// there are a lot of functions in it:
+P1Right()
+P1RightDown()
+P1RightUp()
+P1Left()
+P1LeftDown()
+P1LeftUp()
+P1Up()
+P1UpDown()
+P1UpUp()
+P2Right()
+P2RightDown()
+P2RightUp()
+P2Left()
+P2LeftDown()
+P2LeftUp()
+P2Up()
+P2UpDown()
+P2UpUp()
 ```
 
 ### 🎲 Random
 ```cs
-new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0))
+new RandomTrigger(50f, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0))
 ```
 
 ### ⏱️ Delta Time & Time Control
@@ -262,8 +402,24 @@ new RandomTrigger(50, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComp
 - Use variable Time.deltaTime to get Delta time
 
 ```cs
-GetComponent<YTransform>().Rotate(23, YIDsManager.Instance.GetIdByName("Time.time"), 23);
+GetComponent<YTransform>().Rotate(0, new YVariable("Time.time"), 0);
 // 23 - zero variable
+```
+
+### 📐 Math
+```cs
+// There are some math functions
+YMath.SinDeg(idIn, idOut);
+YMath.SinRad(idIn, idOut);
+YMath.CosDeg(idIn, idOut);
+YMath.CosRad(idIn, idOut);
+YMath.TanDeg(idIn, idOut);
+YMath.TanRad(idIn, idOut);
+YMath.CotDeg(idIn, idOut);
+YMath.CotRad(idIn, idOut);
+YMath.Sqrt(idIn, idOut);
+YMath.Max(idIn1, idIn2, idOut);
+YMath.Min(idIn1, idIn2, idOut);
 ```
 
 ## How to use

@@ -17,7 +17,12 @@ public class DebugLog : YTrigger
     public override void Activate()
     {
         if ((object)yVariable != null)
-            Debug.Log(YIDsManager.Instance.GetMemoryValue(yVariable));
+        {
+            if (yVariable.IsFloat())
+                Debug.Log(YIDsManager.Instance.GetMemoryValue(yVariable).Item2);
+            else
+                Debug.Log(YIDsManager.Instance.GetMemoryValue(yVariable).Item1);
+        }
         else
             Debug.Log(text);
     }

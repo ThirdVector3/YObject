@@ -242,8 +242,6 @@ YGameManager.Instance.StopRecordPool();
 - YMeshRenderer: Renders 3D models
 - YMainCamera: Main camera data
     ```cs
-    YMainCamera.Instance.Translate(1f,5f,3f);
-
     // there are all functions in YMainCamera:
 
     YMainCamera.Instance.SetPosition(x, y, z) or

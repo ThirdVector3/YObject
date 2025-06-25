@@ -135,6 +135,18 @@ YGameManager.Instance.StopRecordPool();
     ```cs
     // You can get global variables using this
     YVariable deltaTime = new YVariable("Time.deltaTime");
+
+    // You can make operations between variables like:
+
+    new YFloat(10) * deltaTime;
+    new YFloat(1) == new YFloat(2);
+
+    // (ATTENTION) when you make operations you rewrite value of left variable instead when you make boolean operations
+
+    // so please don't do:
+    deltaTime * new YFloat(10);
+    // do:
+    new YFloat(10) * deltaTime;
     ```
 - YInt
     ```cs

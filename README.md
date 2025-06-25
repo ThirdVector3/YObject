@@ -186,10 +186,14 @@ YGameManager.Instance.StopRecordPool();
     ```
 - Condition
     ```cs
-    new Condition(YInputService.Get().P1Up())
+    new Condition(new YFloat(10f) > new YFloat(9f))
         .Then(() =>
         {
-            YMainCamera.Instance.TranslateLocal(0, 0, 0.1f);
+            new DebugLog("10 > 9");
+        })
+        .Else(() =>
+        {
+            new DebugLog("10 <= 9");
         });
     // Condition(YVariable result)
     // Condition(YVariable var1, YVariable var2, ItemCompare.Operation operation)

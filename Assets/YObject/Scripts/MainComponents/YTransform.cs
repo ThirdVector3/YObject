@@ -396,38 +396,42 @@ public class YTransform : YMonoBehaviour
     {
         if (!gameObject.isStatic)
         {
-            var group = GetComponent<YGameobjectGroup>();
-            transform.position = new Vector3(
-                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.position.x", group != null ? group.GetName() : null).Item2,
-                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.position.y", group != null ? group.GetName() : null).Item2,
-                YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.position.z", group != null ? group.GetName() : null).Item2
-            );
-            if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 1 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
+            try
             {
-                transform.eulerAngles = new Vector3(
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.rotation.x", group != null ? group.GetName() : null).Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.rotation.y", group != null ? group.GetName() : null).Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.rotation.z", group != null ? group.GetName() : null).Item2
+                var group = GetComponent<YGameobjectGroup>();
+                transform.position = new Vector3(
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.position.x", group != null ? group.GetName() : null).Item2,
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.position.y", group != null ? group.GetName() : null).Item2,
+                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.position.z", group != null ? group.GetName() : null).Item2
                 );
-            }
-            else
-            {
-                transform.eulerAngles = Vector3.zero;
-            }
+                if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 1 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
+                {
+                    transform.eulerAngles = new Vector3(
+                        YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.rotation.x", group != null ? group.GetName() : null).Item2,
+                        YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.rotation.y", group != null ? group.GetName() : null).Item2,
+                        YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.rotation.z", group != null ? group.GetName() : null).Item2
+                    );
+                }
+                else
+                {
+                    transform.eulerAngles = Vector3.zero;
+                }
 
-            if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 2 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
-            {
+                if (YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 2 || YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.state", group != null ? group.GetName() : null).Item2 == 3)
+                {
 
-                transform.localScale = new Vector3(
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.x", group != null ? group.GetName() : null).Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.y", group != null ? group.GetName() : null).Item2,
-                    YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.z", group != null ? group.GetName() : null).Item2
-                );
+                    transform.localScale = new Vector3(
+                        YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.x", group != null ? group.GetName() : null).Item2,
+                        YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.y", group != null ? group.GetName() : null).Item2,
+                        YGameManager.Instance.IDsManager.GetMemoryValueByName(gameObject.GetInstanceID() + ".transform.scale.z", group != null ? group.GetName() : null).Item2
+                    );
+                }
+                else
+                {
+                    transform.localScale = Vector3.one;
+                }
             }
-            else
-            {
-                transform.localScale = Vector3.one;
-            }
+            catch { }
         }
     }
 }

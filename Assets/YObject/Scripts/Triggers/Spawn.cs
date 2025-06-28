@@ -9,6 +9,27 @@ public class Spawn : YTrigger
     private float delay;
     private Dictionary<int, int> remap;
 
+    public Spawn(int spawnID) : base()
+    {
+        this.spawnID = spawnID;
+        this.spawnOrdered = false;
+        this.delay = 0;
+        this.remap = null;
+    }
+    public Spawn(int spawnID, float delay) : base()
+    {
+        this.spawnID = spawnID;
+        this.spawnOrdered = false;
+        this.delay = delay;
+        this.remap = null;
+    }
+    public Spawn(int spawnID, bool spawnOrdered, float delay) : base()
+    {
+        this.spawnID = spawnID;
+        this.spawnOrdered = spawnOrdered;
+        this.delay = delay;
+        this.remap = null;
+    }
     public Spawn(int spawnID, bool spawnOrdered, float delay, Dictionary<int, int> remap) : base()
     {
         this.spawnID = spawnID;

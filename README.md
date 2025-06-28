@@ -208,6 +208,14 @@ YGameManager.Instance.StopRecordPool();
     new YWaitForSeconds(1);
     // YWaitForSeconds(float seconds)
     ```
+- Spawn
+    ```cs
+    new Spawn(1);
+    // Spawn(int spawnID)
+    // Spawn(int spawnID, float delay)
+    // Spawn(int spawnID, bool spawnOrdered, float delay)
+    // Spawn(int spawnID, bool spawnOrdered, float delay, Dictionary<int, int> remap)
+    ```
 
 ### 🧭 Built-in Components
 - YTransform: Position, Rotation, Scale

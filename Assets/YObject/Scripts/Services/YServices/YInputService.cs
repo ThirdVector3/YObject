@@ -58,7 +58,7 @@ public class YInputService : YService<YInputService>
     }
     public YVariable P1Left()
     {
-        return new YVariable("Input.P1Left");
+        return new YInt(1) * new YVariable("Input.P1Left");
     }
 
     public YVariable P1RightDown()
@@ -71,7 +71,7 @@ public class YInputService : YService<YInputService>
     }
     public YVariable P1Right()
     {
-        return new YVariable("Input.P1Right");
+        return new YInt(1) * new YVariable("Input.P1Right");
     }
 
     public YVariable P1UpDown()
@@ -84,7 +84,7 @@ public class YInputService : YService<YInputService>
     }
     public YVariable P1Up()
     {
-        return new YVariable("Input.P1Up");
+        return new YInt(1) * new YVariable("Input.P1Up");
     }
 
     public YVariable P2LeftDown()
@@ -97,7 +97,7 @@ public class YInputService : YService<YInputService>
     }
     public YVariable P2Left()
     {
-        return new YVariable("Input.P2Left");
+        return new YInt(1) * new YVariable("Input.P2Left");
     }
 
     public YVariable P2RightDown()
@@ -110,7 +110,7 @@ public class YInputService : YService<YInputService>
     }
     public YVariable P2Right()
     {
-        return new YVariable("Input.P2Right");
+        return new YInt(1) * new YVariable("Input.P2Right");
     }
 
     public YVariable P2UpDown()
@@ -123,6 +123,6 @@ public class YInputService : YService<YInputService>
     }
     public YVariable P2Up()
     {
-        return new YVariable("Input.P2Up");
+        return new YInt(1) * new YVariable("Input.P2Up");
     }
 }

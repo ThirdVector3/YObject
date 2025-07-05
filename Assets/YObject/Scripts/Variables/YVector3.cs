@@ -5,7 +5,7 @@ public class YVector3 : YVector2
     public YVariable z;
     public YVector3(float x, float y, float z) : base(x,y)
     {
-        z = new YFloat(z);
+        this.z = new YFloat(z);
     }
     public YVector3(int xId, int yId, int zId) : base(xId, yId)
     {

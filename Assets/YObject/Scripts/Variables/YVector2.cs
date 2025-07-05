@@ -4,8 +4,8 @@
     public YVariable y;
     public YVector2(float x, float y)
     {
-        x = new YFloat(x);
-        y = new YFloat(y);
+        this.x = new YFloat(x);
+        this.y = new YFloat(y);
     }
     public YVector2(int xId, int yId)
     {

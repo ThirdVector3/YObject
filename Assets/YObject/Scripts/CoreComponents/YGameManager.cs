@@ -234,7 +234,7 @@ public class YGameManager : MonoBehaviour
     {
         startRecordingPoolIndex.Add(globalPool.Count);
     }
-    public YTrigger[] StopRecordPool(bool removeRecord = true)
+    public YTrigger[] StopRecordPool(bool removeRecord = false)
     {
         var returning = globalPool.GetRange(startRecordingPoolIndex.Last(), globalPool.Count - startRecordingPoolIndex.Last()).ToArray();
         if (removeRecord)

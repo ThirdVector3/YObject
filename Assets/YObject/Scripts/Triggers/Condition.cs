@@ -83,7 +83,7 @@ public class Condition : YTrigger
 
         block();
 
-        trueTriggers = YGameManager.Instance.StopRecordPool();
+        trueTriggers = YGameManager.Instance.StopRecordPool(true);
 
         foreach (var trig in trueTriggers)
             trig.isFirstLevel = false;
@@ -102,7 +102,7 @@ public class Condition : YTrigger
 
         block();
 
-        falseTriggers = YGameManager.Instance.StopRecordPool();
+        falseTriggers = YGameManager.Instance.StopRecordPool(true);
 
         foreach (var trig in falseTriggers)
             trig.isFirstLevel = false;

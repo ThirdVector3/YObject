@@ -249,7 +249,7 @@ public class YTransform : YMonoBehaviour
         curY += Y;
         curZ += Z;
 
-        return YGameManager.Instance.StopRecordPool(false);
+        return YGameManager.Instance.StopRecordPool();
     }
     public virtual YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
     {

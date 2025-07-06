@@ -18,8 +18,6 @@ public class Condition : YTrigger
     private YTrigger[] trueTriggers;
     private YTrigger[] falseTriggers;
 
-    private ItemCompare itemCompare = null;
-
     public Condition(YVariable var1, YVariable var2, ItemCompare.Operation operation)
     {
         this.id1 = var1.GetID();
@@ -50,6 +48,27 @@ public class Condition : YTrigger
         falseId = 0;
     }
 
+    public void ChangeChildrenFromFirstLayer()
+    {
+        if (trueTriggers != null)
+        {
+            foreach (var trig in trueTriggers)
+            {
+                trig.isFirstLevel = false;
+                if (trig is ItemCompare)
+                    ((ItemCompare)trig).ChangeChildrenFromFirstLayer();
+            }
+        }
+        if (falseTriggers != null)
+        {
+            foreach (var trig in falseTriggers)
+            {
+                trig.isFirstLevel = false;
+                if (trig is ItemCompare)
+                    ((ItemCompare)trig).ChangeChildrenFromFirstLayer();
+            }
+        }
+    }
 
     public override void Activate()
     {
@@ -71,6 +90,7 @@ public class Condition : YTrigger
         trueId = YGameManager.Instance.IDsManager.GetFreeGroup();
         YGameManager.Instance.IDsManager.AddGroup(trueId);
 
+        //ChangeChildrenFromFirstLayer();
 
         return this;
     }
@@ -89,6 +109,7 @@ public class Condition : YTrigger
         falseId = YGameManager.Instance.IDsManager.GetFreeGroup();
         YGameManager.Instance.IDsManager.AddGroup(falseId);
 
+        //ChangeChildrenFromFirstLayer();
 
         return this;
     }

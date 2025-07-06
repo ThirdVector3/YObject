@@ -229,14 +229,19 @@ public class YGameManager : MonoBehaviour
         IDsManager.SetMemoryValueByName("PI", 3.1415926535f);
     }
 
-    private int startRecordingPoolIndex = 0;
+    private List<int> startRecordingPoolIndex = new List<int>();
     public void RecordPool()
     {
-        startRecordingPoolIndex = globalPool.Count;
+        startRecordingPoolIndex.Add(globalPool.Count);
     }
-    public YTrigger[] StopRecordPool()
+    public YTrigger[] StopRecordPool(bool removeRecord = true)
     {
-        return globalPool.GetRange(startRecordingPoolIndex, globalPool.Count - startRecordingPoolIndex).ToArray();
+        var returning = globalPool.GetRange(startRecordingPoolIndex.Last(), globalPool.Count - startRecordingPoolIndex.Last()).ToArray();
+        if (removeRecord)
+            globalPool.RemoveRange(startRecordingPoolIndex.Last(), globalPool.Count - startRecordingPoolIndex.Last());
+        startRecordingPoolIndex.RemoveAt(startRecordingPoolIndex.Count - 1);
+        //print("pool count = " + startRecordingPoolIndex.Count);
+        return returning;
     }
 
     private void InitAll()

@@ -210,7 +210,7 @@ public class YTransform : YMonoBehaviour
         curY += Y;
         curZ += Z;
 
-        return YGameManager.Instance.StopRecordPool();
+        return YGameManager.Instance.StopRecordPool(false);
     }
     public virtual YTrigger[] TranslateLocal(float x, float y, float z)
     {
@@ -249,7 +249,7 @@ public class YTransform : YMonoBehaviour
         curY += Y;
         curZ += Z;
 
-        return YGameManager.Instance.StopRecordPool();
+        return YGameManager.Instance.StopRecordPool(false);
     }
     public virtual YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
     {

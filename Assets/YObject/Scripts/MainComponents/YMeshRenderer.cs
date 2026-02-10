@@ -270,7 +270,7 @@ public class YMeshRenderer : YMonoBehaviour
                 });
                 spawn35.AddGroups(1003, LODGroupId);// = new int[] { 1003 };
 
-                var collisionTrigger = new Collision(layersIds[t.layer], 1, gradientOffGroup, false);
+                var collisionTrigger = new CollisionTrigger(layersIds[t.layer], 1, gradientOffGroup, false);
 
                 if (YIDsManager.Instance.GetCurrentGroupName() == null)
                     collisionTrigger.AddGroup(1001);

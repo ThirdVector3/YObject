@@ -12,6 +12,37 @@ public class YVector3 : YVector2
         z = new YVariable(zId, true);
     }
 
+    public void SetValue(YVector3 value)
+    {
+        x.SetValue(value.x);
+        y.SetValue(value.y);
+        z.SetValue(value.z);
+    }
+    public void Add(YVector3 value)
+    {
+        x.Add(value.x);
+        y.Add(value.y);
+        z.Add(value.z);
+    }
+    public void Subtract(YVector3 value)
+    {
+        x.Subtract(value.x);
+        y.Subtract(value.y);
+        z.Subtract(value.z);
+    }
+    public void Multiply(YVector3 value)
+    {
+        x.Multiply(value.x);
+        y.Multiply(value.y);
+        z.Multiply(value.z);
+    }
+    public void Divide(YVector3 value)
+    {
+        x.Divide(value.x);
+        y.Divide(value.y);
+        z.Divide(value.z);
+    }
+
     public static YVector3 operator +(YVector3 a, YVector3 b)
     {
         a.x += b.x;

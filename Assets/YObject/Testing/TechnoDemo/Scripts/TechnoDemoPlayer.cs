@@ -30,7 +30,7 @@ public class TechnoDemoPlayer : YMonoBehaviour
     {
         YVariable rotation = new YFloat(110f) * new YVariable("Time.deltaTime");
         YInput.GetP1Right(GetComponent<YTransform>().Rotate(0, rotation, 0), new YTrigger[0]);
-        rotation *= -1;
+        rotation.Multiply(-1);
         YInput.GetP1Left(GetComponent<YTransform>().Rotate(0, rotation, 0), new YTrigger[0]);
     }
 }

@@ -24,6 +24,39 @@ public class YVariable
     {
         new ItemEdit(id, isFloat, ItemEdit.Operation.Equals, value);
     }
+    public void Add(YVariable value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Add, 1, value.id, value.isFloat, 0, true, ItemEdit.Operation.Add);
+    }
+    public void Add(float value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Add, value);
+    }
+    public void Subtract(YVariable value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Subtract, 1, value.id, value.isFloat, 0, true, ItemEdit.Operation.Add);
+    }
+    public void Subtract(float value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Subtract, value);
+    }
+    public void Multiply(YVariable value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Multiply, 1, value.id, value.isFloat, 0, true, ItemEdit.Operation.Add);
+    }
+    public void Multiply(float value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Multiply, value);
+    }
+    public void Divide(YVariable value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Divide, 1, value.id, value.isFloat, 0, true, ItemEdit.Operation.Add);
+    }
+    public void Divide(float value)
+    {
+        new ItemEdit(id, isFloat, ItemEdit.Operation.Divide, value);
+    }
+
 
     private static int lastTmpId = 9999;
     private static int GetNewTmpId()
@@ -55,45 +88,61 @@ public class YVariable
 
     public static YVariable operator +(YVariable a, YVariable b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Add, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Add, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
+        return c;
     }
     public static YVariable operator +(YVariable a, float b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Add, b);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Add, b);
+        return c;
     }
     public static YVariable operator +(float a, YVariable b)
     {
-        new ItemEdit(b.id, b.isFloat, ItemEdit.Operation.Add, a);
-        return b;
+        YVariable c = new YVariable(GetNewTmpId(), true);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Add, a);
+        return c;
     }
 
     public static YVariable operator *(YVariable a, YVariable b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Multiply, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Multiply, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
+        return c;
     }
     public static YVariable operator *(YVariable a, float b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Multiply, b);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Multiply, b);
+        return c;
     }
     public static YVariable operator *(float a, YVariable b)
     {
-        new ItemEdit(b.id, b.isFloat, ItemEdit.Operation.Multiply, a);
-        return b;
+        YVariable c = new YVariable(GetNewTmpId(), true);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Multiply, a);
+        return c;
     }
 
     public static YVariable operator -(YVariable a, YVariable b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Subtract, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Subtract, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
+        return c;
     }
     public static YVariable operator -(YVariable a, float b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Subtract, b);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Subtract, b);
+        return c;
     }
     public static YVariable operator -(float a, YVariable b)
     {
@@ -104,13 +153,17 @@ public class YVariable
 
     public static YVariable operator /(YVariable a, YVariable b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Divide, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Divide, 1, b.id, b.isFloat, 0, true, ItemEdit.Operation.Add);
+        return c;
     }
     public static YVariable operator /(YVariable a, float b)
     {
-        new ItemEdit(a.id, a.isFloat, ItemEdit.Operation.Divide, b);
-        return a;
+        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Divide, b);
+        return c;
     }
     public static YVariable operator /(float a, YVariable b)
     {

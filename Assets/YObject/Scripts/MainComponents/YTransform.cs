@@ -193,22 +193,22 @@ public class YTransform : YMonoBehaviour
         YVariable Z = new YFloat(0);
 
 
-        X += new YFloat(1) * new YVariable(idInX, true) * cosY;
+        X.Add(new YFloat(1) * new YVariable(idInX, true) * cosY);
         //Y += 0;
-        Z += new YFloat(-1) * new YVariable(idInX, true) * sinY;
+        Z.Add(new YFloat(-1) * new YVariable(idInX, true) * sinY);
 
-        X += new YFloat(1) * new YVariable(idInY, true) * sinY * sinX;
-        Y += new YFloat(1) * new YVariable(idInY, true) * cosX;
-        Z += new YFloat(1) * new YVariable(idInY, true) * cosY * sinX;
+        X.Add(new YFloat(1) * new YVariable(idInY, true) * sinY * sinX);
+        Y.Add(new YFloat(1) * new YVariable(idInY, true) * cosX);
+        Z.Add(new YFloat(1) * new YVariable(idInY, true) * cosY * sinX);
 
-        X += new YFloat(1) * new YVariable(idInZ, true) * sinY * cosX;
-        Y += new YFloat(1) * new YVariable(idInZ, true) * sinX;
-        Z += new YFloat(1) * new YVariable(idInZ, true) * cosY * cosX;
+        X.Add(new YFloat(1) * new YVariable(idInZ, true) * sinY * cosX);
+        Y.Add(new YFloat(1) * new YVariable(idInZ, true) * sinX);
+        Z.Add(new YFloat(1) * new YVariable(idInZ, true) * cosY * cosX);
 
 
-        curX += X;
-        curY += Y;
-        curZ += Z;
+        curX.Add(X);
+        curY.Add(Y);
+        curZ.Add(Z);
 
         return YGameManager.Instance.StopRecordPool(false);
     }
@@ -232,22 +232,22 @@ public class YTransform : YMonoBehaviour
         YVariable Z = new YFloat(0);
 
 
-        X += new YFloat(x) * cosY;
+        X.Add(new YFloat(x) * cosY);
         //Y += 0;
-        Z += new YFloat(-x) * sinY;
+        Z.Add(new YFloat(-x) * sinY);
 
-        X += new YFloat(y) * sinY * sinX;
-        Y += new YFloat(y) * cosX;
-        Z += new YFloat(y) * cosY * sinX;
+        X.Add(new YFloat(y) * sinY * sinX);
+        Y.Add(new YFloat(y) * cosX);
+        Z.Add(new YFloat(y) * cosY * sinX);
 
-        X += new YFloat(z) * sinY * cosX;
-        Y += new YFloat(z) * sinX;
-        Z += new YFloat(z) * cosY * cosX;
+        X.Add(new YFloat(z) * sinY * cosX);
+        Y.Add(new YFloat(z) * sinX);
+        Z.Add(new YFloat(z) * cosY * cosX);
 
 
-        curX += X;
-        curY += Y;
-        curZ += Z;
+        curX.Add(X);
+        curY.Add(Y);
+        curZ.Add(Z);
 
         return YGameManager.Instance.StopRecordPool();
     }

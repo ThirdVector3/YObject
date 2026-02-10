@@ -52,13 +52,7 @@ public class BoxCollider3Dash : YMonoBehaviour
         new Condition(hasCollision)
             .Then(() =>
             {
-                isColliding += 1;
-                //player.GetYTransform().Translate(0, 0.01f, 0);
-                //player.IsGrounded = new YInt(1);
-            })
-            .Else(() =>
-            {
-                //player.IsGrounded = new YInt(0);
+                isColliding.Add(1);
             });
     }
 

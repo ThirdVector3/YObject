@@ -145,6 +145,12 @@ YGameManager.Instance.StopRecordPool();
     YVariable variable = ...;
     variable.SetValue(1); // float
     variable.SetValue(new YFloat(2) * new YFloat(3)); // other variable
+    
+    // to change value of existing variable do this
+    variable.Add(10);
+    variable.Subtract(5);
+    variable.Multiply(2);
+    variable.Divide(4);
 
     // (ATTENTION) when you make operations you rewrite value of left variable instead when you make boolean operations
 

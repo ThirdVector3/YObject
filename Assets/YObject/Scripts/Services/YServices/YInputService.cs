@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 public class YInputService : YService<YInputService>
 {
     private YVariable previousP1LeftTMP;

@@ -19,9 +19,9 @@ public class TechnoDemoPickable : YMonoBehaviour
         GetComponent<YTransform>().GetPosition(posX, posY, posZ);
         playerHand.GetPosition(playerPosX, playerPosY, playerPosZ);
 
-        posX -= playerPosX;
-        posY -= playerPosY;
-        posZ -= playerPosZ;
+        posX.Subtract(playerPosX);
+        posY.Subtract(playerPosY);
+        posZ.Subtract(playerPosZ);
 
         YVariable distanceSquared = posX * posX + posY * posY + posZ * posZ;
 
@@ -74,6 +74,6 @@ public class TechnoDemoPickable : YMonoBehaviour
     private void Lerp(YVariable var1, YVariable var2, float t)
     {
         YVariable dist = new YFloat(0) + var2 - var1; 
-        var1 = var1 + t * dist;
+        var1.Add(t * dist);
     }
 }

@@ -39,7 +39,7 @@ public class Player3Dash : YMonoBehaviour
             })
             .Else(() =>
             {
-                velocityY -= 0.5f; 
+                velocityY.Subtract(0.5f); 
             });
 
         new Condition(new YInt(1) * YInputService.Get().P1Up() * isGrounded)

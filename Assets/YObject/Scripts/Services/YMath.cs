@@ -182,7 +182,7 @@ public static class YMath
         //triggers.Add(new ItemCompare(idIn, 0, true, true, 1, 100, ItemCompare.Operation.Less));
         triggers.Add(trigger1);
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Add, 1, idIn, true, idOut, true, ItemEdit.Operation.Divide));
             triggers.Add(new ItemEdit(idOut, true, ItemEdit.Operation.Multiply, 0.5f));

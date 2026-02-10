@@ -20,7 +20,7 @@ public class Camera3Dash : YMonoBehaviour
         YVector3 cameraPosition = new YVector3(0f, 0f, 0f);
         player.GetYTransform().GetPosition(playerPosition.x, playerPosition.y, playerPosition.z);
         YMainCamera.Instance.GetPosition(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-        cameraPosition -= new YVector3(offset.x, offset.y, offset.z);
+        cameraPosition.Subtract(new YVector3(offset.x, offset.y, offset.z));
 
         YVector3 newPosition = new YVector3(offset.x, offset.y, offset.z) + LerpPosition(cameraPosition, playerPosition, 0.1f);
         YMainCamera.Instance.SetPosition(newPosition.x, newPosition.y, newPosition.z);

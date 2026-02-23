@@ -10,12 +10,21 @@ public class Camera3Dash : YMonoBehaviour
 
     private Player3Dash player;
 
+    public YTransform[] a;
+
     public override void Init()
     {
         player = FindObjectOfType<Player3Dash>();
     }
     public override void Tick()
     {
+        foreach (YTransform t in a)
+        {
+            t.SetState(true, false);
+            t.Rotate(1.78f, 3.42f, 5.4f);
+        }
+
+        return;
         YVector3 playerPosition = new YVector3(0f, 0f, 0f);
         YVector3 cameraPosition = new YVector3(0f, 0f, 0f);
         player.GetYTransform().GetPosition(playerPosition.x, playerPosition.y, playerPosition.z);

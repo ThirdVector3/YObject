@@ -58,7 +58,7 @@ public class YGameManager : MonoBehaviour
     public string sampleLevelName = "SampleLevel";
     public LevelSavingType levelSavingType;
     public bool updateLevel;
-    public int firstFreeID = 600;
+    public int firstFreeID = 700;
     public string playerName = "YObject";
 
     public enum LevelSavingType
@@ -269,7 +269,8 @@ public class YGameManager : MonoBehaviour
         groupsGameobject.Clear();
 
 
-        IDsManager.SetCurrentGroupName(null);
+        //IDsManager.SetCurrentGroupName(null);
+        YGameobjectGroupsManager.Instance.CurrentGroupCompile = null;
         YColorManager.InitColors();
 
         YCoroutines.Init();
@@ -288,7 +289,8 @@ public class YGameManager : MonoBehaviour
     }
     private void InitServices()
     {
-        IDsManager.SetCurrentGroupName(null);
+        //IDsManager.SetCurrentGroupName(null);
+        YGameobjectGroupsManager.Instance.CurrentGroupCompile = null;
         foreach (var yService in services)
         {
             yService.Uninit();
@@ -333,7 +335,8 @@ public class YGameManager : MonoBehaviour
     }
     private void InitGameobjects()
     {
-        IDsManager.SetCurrentGroupName(null);
+        //IDsManager.SetCurrentGroupName(null);
+        YGameobjectGroupsManager.Instance.CurrentGroupCompile = null;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
             yMono.Uninit();
@@ -451,7 +454,8 @@ public class YGameManager : MonoBehaviour
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup))
             {
-                IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                //IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                YGameobjectGroupsManager.Instance.CurrentGroupCompile = yGameobjectGroup.GetName();
 
                 globalGDObjectsPool.Clear();
 
@@ -470,7 +474,8 @@ public class YGameManager : MonoBehaviour
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && (yMono is YTransform || yMono is YMainCamera))
             {
-                IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                //IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                YGameobjectGroupsManager.Instance.CurrentGroupCompile = yGameobjectGroup.GetName();
                 globalPool.Clear();
                 //var a =
                 yMono.Begin();
@@ -502,7 +507,8 @@ public class YGameManager : MonoBehaviour
         {
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !(yMono is YTransform || yMono is YMainCamera))
             {
-                IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                //IDsManager.SetCurrentGroupName(yGameobjectGroup.GetName());
+                YGameobjectGroupsManager.Instance.CurrentGroupCompile = yGameobjectGroup.GetName();
                 globalPool.Clear();
                 //var a =
                 yMono.Begin();

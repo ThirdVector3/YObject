@@ -15,6 +15,7 @@ MonoBehaviour:
   triangleShader: {fileID: -6465566751694194690, guid: f25f26daeae042b498a7c8136249da05, type: 3}
   vertexPrefab: {fileID: 2625958304142248768, guid: 301efea202185754ba1483f861cdf3ca, type: 3}
   trianglePrefab: {fileID: 1658627886748779419, guid: 7d9c59f7e5e94314a8e0db00d2fdb5b5, type: 3}
+  meshRendererMaterial: {fileID: 2100000, guid: b7bf7a475575c42448feae3105099654, type: 2}
   songs:
     _serializedList:
     - Key: 467339
@@ -34,7 +35,7 @@ MonoBehaviour:
   - {r: 0.17822178, g: 0.1882751, b: 0.4245283, a: 1}
   - {r: 1, g: 0.1462264, b: 0.1462264, a: 1}
   - {r: 0, g: 0.052033424, b: 1, a: 1}
-  - {r: 0.13071728, g: 1, b: 0, a: 1}
+  - {r: 0.12941194, g: 1, b: 0, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}

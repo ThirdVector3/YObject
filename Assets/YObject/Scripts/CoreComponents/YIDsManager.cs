@@ -41,6 +41,8 @@ public class YIDsManager
     private Dictionary<string, List<int>> groupsPickedGroups = new Dictionary<string, List<int>>();
     private List<int> globalPickedGradientIDs = new List<int>();
     private Dictionary<string, List<int>> groupsPickedGradientIDs = new Dictionary<string, List<int>>();
+    private List<int> globalPickedColors = new List<int>();
+    private Dictionary<string, List<int>> groupsPickedColors = new Dictionary<string, List<int>>();
 
     private List<int> globalFreeInts;
     private List<int> globalFreeFloats;
@@ -52,7 +54,7 @@ public class YIDsManager
 
 
 
-    private string currentGroupName = null;
+    //private string currentGroupName = null;
     public YIDsManager(int lastID)
     {
         Instance = this;
@@ -122,6 +124,7 @@ public class YIDsManager
             groupsVariables.Add(group, new Dictionary<string, (int, bool)>());
             groupsPickedGroups.Add(group, new List<int>());
             groupsPickedGradientIDs.Add(group, new List<int>());
+            groupsPickedColors.Add(group, new List<int>());
 
 
             groupsFreeInts.Add(group, new List<int>());
@@ -134,17 +137,9 @@ public class YIDsManager
         }
     }
 
-    public void SetCurrentGroupName(string groupName)
-    {
-        currentGroupName = groupName;
-    }
-    public string GetCurrentGroupName()
-    {
-        return currentGroupName;
-    }
     public int AddVariable(string name, int id, bool isFloat)
     {
-        return AddVariable(name, id, isFloat, currentGroupName);
+        return AddVariable(name, id, isFloat, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int AddVariable(string name, int id, bool isFloat, string groupName)
     {
@@ -184,7 +179,7 @@ public class YIDsManager
     }
     public void RemoveVariable(string name)
     {
-        RemoveVariable(name, currentGroupName);
+        RemoveVariable(name, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public void RemoveVariable(string name, string groupName)
     {
@@ -234,11 +229,11 @@ public class YIDsManager
     }
     public void SetMemoryValueByName(string name, float value)
     {
-        SetMemoryValueByName(name, value, currentGroupName);
+        SetMemoryValueByName(name, value, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public void SetMemoryValueByName(string name, int value)
     {
-        SetMemoryValueByName(name, value, currentGroupName);
+        SetMemoryValueByName(name, value, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public void SetMemoryValueByName(string name, float value, string groupName)
     {
@@ -262,7 +257,7 @@ public class YIDsManager
     }
     public (int, float) GetMemoryValueByName(string name)
     {
-        return GetMemoryValueByName(name, currentGroupName);
+        return GetMemoryValueByName(name, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public (int, float) GetMemoryValueByName(string name, string groupName)
     {
@@ -270,7 +265,7 @@ public class YIDsManager
     }
     public int GetIdByName(string name)
     {
-        return GetIdByName(name, currentGroupName);
+        return GetIdByName(name, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetIdByName(string name, string groupName)
     {
@@ -284,7 +279,7 @@ public class YIDsManager
     }
     public bool GetIsFloatByName(string name)
     {
-        return GetIsFloatByName(name, currentGroupName);
+        return GetIsFloatByName(name, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public bool GetIsFloatByName(string name, string groupName)
     {
@@ -298,7 +293,7 @@ public class YIDsManager
     }
     public int GetFreeIdInt()
     {
-        return GetFreeIdInt(currentGroupName);
+        return GetFreeIdInt(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetFreeIdInt(string groupName)
     {
@@ -333,7 +328,7 @@ public class YIDsManager
     }
     public int GetFreeIdFloat()
     {
-        return GetFreeIdFloat(currentGroupName);
+        return GetFreeIdFloat(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetFreeIdFloat(string groupName)
     {
@@ -367,7 +362,7 @@ public class YIDsManager
     }
     public int GetFreeGroup()
     {
-        return GetFreeGroup(currentGroupName);
+        return GetFreeGroup(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetFreeGroup(string groupName)
     {
@@ -398,7 +393,7 @@ public class YIDsManager
     }
     public void AddGroup(int group)
     {
-        AddGroup(group, currentGroupName);
+        AddGroup(group, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public void AddGroup(int group, string groupName)
     {
@@ -420,7 +415,7 @@ public class YIDsManager
     }
     public int GetFreeGradient()
     {
-        return GetFreeGradient(currentGroupName);
+        return GetFreeGradient(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetFreeGradient(string groupName)
     {
@@ -448,7 +443,7 @@ public class YIDsManager
     }
     public void AddGradient(int group)
     {
-        AddGradient(group, currentGroupName);
+        AddGradient(group, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public void AddGradient(int group, string groupName)
     {
@@ -463,9 +458,56 @@ public class YIDsManager
                 groupsPickedGradientIDs[groupName].Add(group);
         }
     }
+
+    public int GetFreeColor()
+    {
+        return GetFreeColor(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
+    }
+    public int GetFreeColor(string groupName)
+    {
+        List<int> allIds = new List<int>();
+        for (int i = 1; i < 1000; i++)
+        {
+            allIds.Add(i);
+        }
+        foreach (var group in globalPickedColors)
+        {
+            if (allIds.Contains(group))
+                allIds.Remove(group);
+        }
+        if (groupName != null)
+        {
+            foreach (var group in groupsPickedColors[groupName])
+            {
+                if (allIds.Contains(group))
+                    allIds.Remove(group);
+            }
+        }
+        if (allIds.Count == 0)
+            return 999;
+        return allIds.Max();
+    }
+    public void AddColor(int group)
+    {
+        AddColor(group, YGameobjectGroupsManager.Instance.CurrentGroupCompile);
+    }
+    public void AddColor(int group, string groupName)
+    {
+        if (groupName == null)
+        {
+            if (!globalPickedColors.Contains(group))
+                globalPickedColors.Add(group);
+        }
+        else
+        {
+            if (!globalPickedColors.Contains(group) && !groupsPickedColors[groupName].Contains(group))
+                groupsPickedColors[groupName].Add(group);
+        }
+    }
+
     public int GetFreeIdFloatAndGroup()
     {
-        return GetFreeIdFloatAndGroup(currentGroupName);
+        return GetFreeIdFloatAndGroup(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetFreeIdFloatAndGroup(string groupName)
     {
@@ -535,7 +577,7 @@ public class YIDsManager
     }
     public int GetFreeIdIntAndGroup()
     {
-        return GetFreeIdIntAndGroup(currentGroupName);
+        return GetFreeIdIntAndGroup(YGameobjectGroupsManager.Instance.CurrentGroupCompile);
     }
     public int GetFreeIdIntAndGroup(string groupName)
     {

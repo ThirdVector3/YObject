@@ -10,6 +10,7 @@ public class YProjectSettings : ScriptableObject
     public Shader triangleShader;
     public YVertex vertexPrefab;
     public YTriangle trianglePrefab;
+    public Material meshRendererMaterial;
     [SerializedDictionary("ID", "AudioClip")]
     public SerializedDictionary<int, AudioClip> songs;
     public UnityEngine.Color[] colorChannels;

@@ -13,9 +13,21 @@
             currentGroup = value;
         }
     }
-    public YGameobjectGroupsManager()
+    private string currentGroupCompile = null;
+    public string CurrentGroupCompile
     {
-        Instance = this;
+        get
+        {
+            return currentGroupCompile;
+        }
+        set
+        {
+            currentGroupCompile = value;
+        }
+    }
+    static YGameobjectGroupsManager()
+    {
+        Instance = new YGameobjectGroupsManager();
     }
     public YTrigger SetCurrentGroup(string group)
     {

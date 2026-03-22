@@ -25,7 +25,7 @@ public class Testing2WallsControler : YMonoBehaviour
     public override void Tick()
     {
 
-        player.GetPosition(playerX, playerY, playerZ);
+        new YVector3(playerX, playerY, playerZ).SetValue(player.GetPosition());
 
         Move();
 

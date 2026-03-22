@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-
+﻿
 public class YVector3 : YVector2
 {
     public YVariable z;
@@ -41,6 +40,17 @@ public class YVector3 : YVector2
         x.Divide(value.x);
         y.Divide(value.y);
         z.Divide(value.z);
+    }
+    public override YVariable Length()
+    {
+        return YMathService.Get().Sqrt(x * x + y * y + z * z);
+    }
+    public override void Normalize()
+    {
+        var length = Length();
+        x.Divide(length);
+        y.Divide(length);
+        z.Divide(length);
     }
 
     public static YVector3 operator +(YVector3 a, YVector3 b)

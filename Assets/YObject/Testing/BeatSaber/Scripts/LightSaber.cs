@@ -100,9 +100,9 @@ public class LightSaber : YMonoBehaviour
 
         for (int i = 0; i < 15; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Rotate(2 * (rot - 5), 0, 0));
+            GetComponent<YTransform>().Rotate(2 * (rot - 5), 0, 0);
 
-            triggers.AddRange(YMainCamera.Instance.Rotate(-(rot-5) / 10, 0, 0));
+            //triggers.AddRange(YMainCamera.Instance.Rotate(-(rot-5) / 10, 0, 0));
 
             triggers.Add(new YWaitForSeconds(0.015f));
             rot += 1;
@@ -110,9 +110,9 @@ public class LightSaber : YMonoBehaviour
         rot = 0;
         for (int i = 0; i < 15; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Rotate(2 * (5 - rot), 0, 0));
+            GetComponent<YTransform>().Rotate(2 * (5 - rot), 0, 0);
 
-            triggers.AddRange(YMainCamera.Instance.Rotate((rot - 5) / 10, 0, 0));
+            //triggers.AddRange(YMainCamera.Instance.Rotate((rot - 5) / 10, 0, 0));
 
             triggers.Add(new YWaitForSeconds(0.015f));
             rot += 1;
@@ -142,22 +142,22 @@ public class LightSaber : YMonoBehaviour
 
         for (int i = 0; i < 15; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Rotate(rot/3, 2 * (rot - 7), 0));
-            if (left)
-                triggers.AddRange(YMainCamera.Instance.Rotate(rot / 10, rot / 13, rot / 15));
-            else
-                triggers.AddRange(YMainCamera.Instance.Rotate(-rot / 10, rot / 13, rot / 15));
+            GetComponent<YTransform>().Rotate(rot/3, 2 * (rot - 7), 0);
+            //if (left)
+            //    triggers.AddRange(YMainCamera.Instance.Rotate(rot / 10, rot / 13, rot / 15));
+            //else
+            //    triggers.AddRange(YMainCamera.Instance.Rotate(-rot / 10, rot / 13, rot / 15));
             triggers.Add(new YWaitForSeconds(0.015f));
             rot += 1;
         }
         rot = 0;
         for (int i = 0; i < 15; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Rotate(-rot/3, 2 * (7 - rot), 0));
-            if (left)
-                triggers.AddRange(YMainCamera.Instance.Rotate(-(14-rot) / 10, -(14 - rot) / 13, -(14 - rot) / 15));
-            else
-                triggers.AddRange(YMainCamera.Instance.Rotate((14 - rot) / 10, -(14 - rot) / 13, -(14 - rot) / 15));
+            GetComponent<YTransform>().Rotate(-rot/3, 2 * (7 - rot), 0);
+            //if (left)
+            //    triggers.AddRange(YMainCamera.Instance.Rotate(-(14-rot) / 10, -(14 - rot) / 13, -(14 - rot) / 15));
+            //else
+            //    triggers.AddRange(YMainCamera.Instance.Rotate((14 - rot) / 10, -(14 - rot) / 13, -(14 - rot) / 15));
             triggers.Add(new YWaitForSeconds(0.015f));
             rot += 1;
         }
@@ -187,22 +187,22 @@ public class LightSaber : YMonoBehaviour
 
         for (int i = 0; i < 15; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Rotate(rot / 3, 2 * (7 - rot), 0));
-            if (left)
-                triggers.AddRange(YMainCamera.Instance.Rotate(-rot / 10, -rot / 13, -rot / 15));
-            else
-                triggers.AddRange(YMainCamera.Instance.Rotate(rot / 10, -rot / 13, -rot / 15));
+            GetComponent<YTransform>().Rotate(rot / 3, 2 * (7 - rot), 0);
+            //if (left)
+            //    triggers.AddRange(YMainCamera.Instance.Rotate(-rot / 10, -rot / 13, -rot / 15));
+            //else
+            //    triggers.AddRange(YMainCamera.Instance.Rotate(rot / 10, -rot / 13, -rot / 15));
             triggers.Add(new YWaitForSeconds(0.015f));
             rot += 1;
         }
         rot = 0;
         for (int i = 0; i < 15; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Rotate(-rot / 3, 2 * (rot - 7), 0));
-            if (left)
-                triggers.AddRange(YMainCamera.Instance.Rotate((14 - rot) / 10, (14 - rot) / 13, (14 - rot) / 15));
-            else
-                triggers.AddRange(YMainCamera.Instance.Rotate(-(14 - rot) / 10, (14 - rot) / 13, (14 - rot) / 15));
+            GetComponent<YTransform>().Rotate(-rot / 3, 2 * (rot - 7), 0);
+            //if (left)
+            //    triggers.AddRange(YMainCamera.Instance.Rotate((14 - rot) / 10, (14 - rot) / 13, (14 - rot) / 15));
+            //else
+            //    triggers.AddRange(YMainCamera.Instance.Rotate(-(14 - rot) / 10, (14 - rot) / 13, (14 - rot) / 15));
             triggers.Add(new YWaitForSeconds(0.015f));
             rot += 1;
         }

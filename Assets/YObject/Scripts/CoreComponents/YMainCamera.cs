@@ -83,19 +83,21 @@ public class YMainCamera : YMonoBehaviour
 
 
 
-    public YTrigger SetFocalLen(float focalLen)
+    public void SetFocalLen(float focalLen)
     {
-        return new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, focalLen);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, focalLen);
     }
-    public YTrigger SetFocalLen(int idIn)
+    public void SetFocalLen(int idIn)
     {
-        return new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, 1, idIn, true, 0, true, ItemEdit.Operation.Add);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, 1, idIn, true, 0, true, ItemEdit.Operation.Add);
     }
-    public YTrigger GetFocalLen(int idOut)
+    public YVariable GetFocalLen()
     {
-        return new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, 0, true, ItemEdit.Operation.Add);
+        var ret = new YVariable("Camera.focalLen") + 0;
+        return ret;
+        //return new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, 0, true, ItemEdit.Operation.Add);
     }
-    public YTrigger[] SetPosition(int idInX, int idInY, int idInZ)
+    public void SetPosition(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -109,9 +111,9 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Equals, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Equals, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] SetPosition(float x, float y, float z)
+    public void SetPosition(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -119,19 +121,25 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Equals, y),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Equals, z)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] GetPosition(int idOutX, int idOutY, int idOutZ)
+    public void SetPosition(YVector3 pos)
     {
-        YTrigger[] result = new YTrigger[]
-        {
-            new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, 0, true, ItemEdit.Operation.Add)
-        };
-        return result;
+        SetPosition(pos.x, pos.y, pos.z);
     }
-    public YTrigger[] Translate(int idInX, int idInY, int idInZ)
+    public YVector3 GetPosition()
+    {
+        var ret = new YVector3(new YVariable("Camera.position.x") + 0, new YVariable("Camera.position.y") + 0, new YVariable("Camera.position.z") + 0);
+        return ret;
+        //YTrigger[] result = new YTrigger[]
+        //{
+        //    new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, 0, true, ItemEdit.Operation.Add)
+        //};
+        //return result;
+    }
+    public void Translate(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -145,9 +153,9 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Add, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Add, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] Translate(float x, float y, float z)
+    public void Translate(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -155,9 +163,13 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Add, y),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Add, z)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] TranslateLocal(int idInX, int idInY, int idInZ)
+    public void Translate(YVector3 pos)
+    {
+        Translate(pos.x, pos.y, pos.z);
+    }
+    public void TranslateLocal(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -165,7 +177,7 @@ public class YMainCamera : YMonoBehaviour
             idInY = 23;
         if (idInZ == 0)
             idInZ = 23;
-        YGameManager.Instance.RecordPool();
+        //YGameManager.Instance.RecordPool();
 
         YVariable sinX = new YVariable("Camera.rotation.sin.x");
         YVariable sinY = new YVariable("Camera.rotation.sin.y");
@@ -199,11 +211,11 @@ public class YMainCamera : YMonoBehaviour
         curY.Add(Y);
         curZ.Add(Z);
 
-        return YGameManager.Instance.StopRecordPool();
+        //return YGameManager.Instance.StopRecordPool();
     }
-    public YTrigger[] TranslateLocal(float x, float y, float z)
+    public void TranslateLocal(float x, float y, float z)
     {
-        YGameManager.Instance.RecordPool();
+        //YGameManager.Instance.RecordPool();
 
         YVariable sinX = new YVariable("Camera.rotation.sin.x");
         YVariable sinY = new YVariable("Camera.rotation.sin.y");
@@ -238,9 +250,13 @@ public class YMainCamera : YMonoBehaviour
         curY.Add(Y);
         curZ.Add(Z);
 
-        return YGameManager.Instance.StopRecordPool();
+        //return YGameManager.Instance.StopRecordPool();
     }
-    public YTrigger[] SetRotation(int idInX, int idInY, int idInZ)
+    public void TranslateLocal(YVector3 pos)
+    {
+        TranslateLocal(pos.x, pos.y, pos.z);
+    }
+    public void SetRotation(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -254,9 +270,9 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -1, idInY, true, 0, true, ItemEdit.Operation.Add),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] SetRotation(float x, float y, float z)
+    public void SetRotation(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -264,19 +280,26 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -y),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -z)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] GetRotation(int idOutX, int idOutY, int idOutZ)
+    public void SetRotation(YVector3 rot)
     {
-        YTrigger[] result = new YTrigger[]
-        {
-            new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, 0, true, ItemEdit.Operation.Add)
-        };
-        return result;
+        SetRotation(rot.x, rot.y, rot.z);
     }
-    public YTrigger[] Rotate(int idInX, int idInY, int idInZ)
+    public YVector3 GetRotation()
+    {
+        var ret = new YVector3(new YVariable("Camera.rotation.x") + 0, new YVariable("Camera.rotation.y") + 0, new YVariable("Camera.rotation.z") + 0);
+        return ret;
+
+        //YTrigger[] result = new YTrigger[]
+        //{
+        //    new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, 0, true, ItemEdit.Operation.Add)
+        //};
+        //return result;
+    }
+    public void Rotate(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
             idInX = 23;
@@ -290,9 +313,9 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Add, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Add, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] Rotate(float x, float y, float z)
+    public void Rotate(float x, float y, float z)
     {
         YTrigger[] result = new YTrigger[]
         {
@@ -300,27 +323,35 @@ public class YMainCamera : YMonoBehaviour
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Add, y),
             new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Add, z)
         };
-        return result;
+        //return result;
     }
-    public YTrigger[] GetSin(int idOutX, int idOutY, int idOutZ)
+    public void Rotate(YVector3 rot)
     {
-        YTrigger[] result = new YTrigger[]
-        {
-            new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.sin.x"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.sin.y"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.sin.z"), true, 0, true, ItemEdit.Operation.Add)
-        };
-        return result;
+        Rotate(rot.x, rot.y, rot.z);
     }
-    public YTrigger[] GetCos(int idOutX, int idOutY, int idOutZ)
+    public YVector3 GetSin()
     {
-        YTrigger[] result = new YTrigger[]
-        {
-            new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.cos.x"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.cos.y"), true, 0, true, ItemEdit.Operation.Add),
-            new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.cos.z"), true, 0, true, ItemEdit.Operation.Add)
-        };
-        return result;
+        var ret = new YVector3(new YVariable("Camera.rotation.sin.x") + 0, new YVariable("Camera.rotation.sin.y") + 0, new YVariable("Camera.rotation.sin.z") + 0);
+        return ret;
+        //YTrigger[] result = new YTrigger[]
+        //{
+        //    new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.sin.x"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.sin.y"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.sin.z"), true, 0, true, ItemEdit.Operation.Add)
+        //};
+        //return result;
+    }
+    public YVector3 GetCos()
+    {
+        var ret = new YVector3(new YVariable("Camera.rotation.cos.x") + 0, new YVariable("Camera.rotation.cos.y") + 0, new YVariable("Camera.rotation.cos.z") + 0);
+        return ret;
+        //YTrigger[] result = new YTrigger[]
+        //{
+        //    new ItemEdit(idOutX, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.cos.x"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutY, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.cos.y"), true, 0, true, ItemEdit.Operation.Add),
+        //    new ItemEdit(idOutZ, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.cos.z"), true, 0, true, ItemEdit.Operation.Add)
+        //};
+        //return result;
     }
 
 }

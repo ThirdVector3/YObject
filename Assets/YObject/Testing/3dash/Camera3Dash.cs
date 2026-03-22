@@ -12,23 +12,43 @@ public class Camera3Dash : YMonoBehaviour
 
     public YTransform[] a;
 
+
     public override void Init()
     {
         player = FindObjectOfType<Player3Dash>();
+    }
+    public override void Begin()
+    {
+        //YQuaternion q = YQuaternion.Euler(new YVector3(90, 0, 0f));
+        //
+        //var e = q.ToSinCos();
+        //
+        //new DebugLog(() => YIDsManager.Instance.GetMemoryValue(e.Item1.z).Item2);
+        //new DebugLog(() => YIDsManager.Instance.GetMemoryValue(e.Item2.z).Item2);
+        //
+        //new DebugLog(() => Mathf.Cos(0 * Mathf.Deg2Rad));
+        //new DebugLog(() => Mathf.Sin(0 * Mathf.Deg2Rad));
     }
     public override void Tick()
     {
         foreach (YTransform t in a)
         {
-            t.SetState(true, false);
-            t.Rotate(1.78f, 3.42f, 5.4f);
+            //t.Rotate(1.78f, 3.42f, 5.4f);
+            t.Rotate(1.78f, 0, 0);
+            //t.SetRotation(10, 20, 30f);
         }
+
+        //new Condition(YInputService.Get().P1UpDown())
+        //    .Then(() =>
+        //    {
+        //        new DebugLog(YRandomService.Get().RangeInt(0, 10));
+        //    });
 
         return;
         YVector3 playerPosition = new YVector3(0f, 0f, 0f);
         YVector3 cameraPosition = new YVector3(0f, 0f, 0f);
-        player.GetYTransform().GetPosition(playerPosition.x, playerPosition.y, playerPosition.z);
-        YMainCamera.Instance.GetPosition(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        playerPosition.SetValue(player.GetYTransform().GetPosition());
+        //YMainCamera.Instance.GetPosition(cameraPosition.x, cameraPosition.y, cameraPosition.z);
         cameraPosition.Subtract(new YVector3(offset.x, offset.y, offset.z));
 
         YVector3 newPosition = new YVector3(offset.x, offset.y, offset.z) + LerpPosition(cameraPosition, playerPosition, 0.1f);

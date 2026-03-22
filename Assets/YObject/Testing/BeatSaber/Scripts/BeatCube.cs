@@ -137,12 +137,12 @@ public class BeatCube : YMonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            triggers.AddRange(GetComponent<YTransform>().Translate(0, -0.05f * adder, 0));
+            GetComponent<YTransform>().Translate(0, -0.05f * adder, 0);
 
             triggers.Add(new YWaitForSeconds(0.015f));
             adder += 1;
         }
-        triggers.AddRange(GetComponent<YTransform>().Translate(0, -10f, 0));
+        GetComponent<YTransform>().Translate(0, -10f, 0);
         Coroutine coroutine = YCoroutines.GetCoroutine();
         hitCoroutine = coroutine;
     }

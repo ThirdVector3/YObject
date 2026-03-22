@@ -32,16 +32,17 @@ public class TestComponent : YMonoBehaviour
 
         GetComponent<YTransform>().Init();
 
+        YGameManager.Instance.RecordPool();
         triggers.Add(new YWaitForSeconds(3));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(0f, 0, 0));
+        GetComponent<YTransform>().SetPosition(0f, 0, 0);
         triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(1f, 1, 1));
+        GetComponent<YTransform>().SetPosition(1f, 1, 1);
         triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(2f, 2, 2));
+        GetComponent<YTransform>().SetPosition(2f, 2, 2);
         triggers.Add(new YWaitForSeconds(1));
-        triggers.AddRange(GetComponent<YTransform>().SetPosition(3f, 3, 3));
+        GetComponent<YTransform>().SetPosition(3f, 3, 3);
 
-        yCoroutine = YCoroutines.GetCoroutine(triggers.ToArray()); //new YCoroutine(triggers.ToArray());
+        yCoroutine = YCoroutines.GetCoroutine(YGameManager.Instance.StopRecordPool(removeNonFirstLevel: true)); //new YCoroutine(triggers.ToArray());
     }
 
     public override void Tick()

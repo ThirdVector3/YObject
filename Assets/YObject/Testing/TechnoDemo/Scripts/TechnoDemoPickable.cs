@@ -16,8 +16,8 @@ public class TechnoDemoPickable : YMonoBehaviour
         YVariable playerPosY = new YFloat();
         YVariable playerPosZ = new YFloat();
 
-        GetComponent<YTransform>().GetPosition(posX, posY, posZ);
-        playerHand.GetPosition(playerPosX, playerPosY, playerPosZ);
+        new YVector3(posX, posY, posZ).SetValue(GetComponent<YTransform>().GetPosition());
+        new YVector3(playerPosX, playerPosY, playerPosZ).SetValue(playerHand.GetPosition());
 
         posX.Subtract(playerPosX);
         posY.Subtract(playerPosY);
@@ -41,8 +41,8 @@ public class TechnoDemoPickable : YMonoBehaviour
         YVariable playerPosY = new YFloat();
         YVariable playerPosZ = new YFloat();
 
-        GetComponent<YTransform>().GetPosition(posX, posY, posZ);
-        playerHand.GetPosition(playerPosX, playerPosY, playerPosZ);
+        new YVector3(posX, posY, posZ).SetValue(GetComponent<YTransform>().GetPosition());
+        new YVector3(playerPosX, playerPosY, playerPosZ).SetValue(playerHand.GetPosition());
 
         Lerp(posX, playerPosX, t);
         Lerp(posY, playerPosY, t);
@@ -55,8 +55,8 @@ public class TechnoDemoPickable : YMonoBehaviour
         YVariable rotY = new YFloat();
         YVariable rotZ = new YFloat();
 
-        playerHand.GetRotation(9999, 9998, 9997);
-        GetComponent<YTransform>().GetRotation(rotX, rotY, rotZ);
+        //playerHand.GetRotation(9999, 9998, 9997);
+        //GetComponent<YTransform>().GetRotation(rotX, rotY, rotZ);
         YVariable x = new YVariable(9999, true) + rotation.x;
         YVariable y = new YVariable(9998, true) + rotation.y;
         YVariable z = new YVariable(9997, true) + rotation.z;

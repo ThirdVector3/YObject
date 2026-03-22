@@ -1,4 +1,6 @@
-﻿using static UnityEditor.PlayerSettings;
+﻿using System;
+using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class YMathService : YService<YMathService>
 {
@@ -51,6 +53,38 @@ public class YMathService : YService<YMathService>
         YMath.CotRad(x, cot);
         return cot;
     }
+    public YVariable Asin(YVariable x)
+    {
+        YVariable t = (1 - Sqrt(1 - x * x)) / x;
+        return 2 * Atan(t);
+    }
+    public YVariable Acos(YVariable x)
+    {
+        return Asin(-x) + Mathf.PI/2;
+    }
+    public YVariable Atan(YVariable x)
+    {
+        YVariable sqrt = Sqrt(25 + 80 / 3 * x * x);
+        return 8 * x / (3 + sqrt);
+    }
+    public YVariable Atan2(YVariable y, YVariable x)
+    {
+        YVariable ret = Atan(y / x);
+        new Condition(x >= 0)
+        .Else(() =>
+        {
+            new Condition(x * y <= 0)
+            .Then(() =>
+            {
+                ret.Add(3.141f);
+            })
+            .Else(() =>
+            {
+                ret.Subtract(3.141f);
+            });
+        });
+        return ret;
+    }
     #endregion
 
 
@@ -60,7 +94,13 @@ public class YMathService : YService<YMathService>
         YMath.Sqrt(x, sqrt);
         return sqrt;
     }
-
+    public YVariable Clamp(YVariable a, YVariable b, YVariable c)
+    {
+        YVariable ret = new YFloat();
+        YMath.Max(a, b, ret);
+        YMath.Min(ret, c, ret);
+        return ret;
+    }
     public YVariable Max(YVariable a, YVariable b)
     {
         YVariable max = new YFloat();
@@ -73,7 +113,14 @@ public class YMathService : YService<YMathService>
         YMath.Min(a, b, min);
         return min;
     }
-
+    public YVariable Sign(YVariable x)
+    {
+        return x / Abs(x);
+    }
+    public YVariable Mod(YVariable a, YVariable b)
+    {
+        return a - (b * Floor(a / b));
+    }
     public YVariable Abs(YVariable x)
     {
         YVariable abs = new YFloat();
@@ -85,5 +132,17 @@ public class YMathService : YService<YMathService>
         YVariable neg = new YFloat();
         new ItemEdit(neg, neg.IsFloat(), ItemEdit.Operation.Equals, 1, x, x.IsFloat(), 0, true, ItemEdit.Operation.Add, ItemEdit.Operation2.None, ItemEdit.Operation3.Negative);
         return neg;
+    }
+    public YVariable Floor(YVariable x)
+    {
+        YVariable floor = new YFloat();
+        new ItemEdit(floor, floor.IsFloat(), ItemEdit.Operation.Equals, 1, x, x.IsFloat(), 0, true, ItemEdit.Operation.Add, ItemEdit.Operation2.Floor, ItemEdit.Operation3.None);
+        return floor;
+    }
+    public YVariable Ceil(YVariable x)
+    {
+        YVariable ceil = new YFloat();
+        new ItemEdit(ceil, ceil.IsFloat(), ItemEdit.Operation.Equals, 1, x, x.IsFloat(), 0, true, ItemEdit.Operation.Add, ItemEdit.Operation2.Ceil, ItemEdit.Operation3.None);
+        return ceil;
     }
 }

@@ -20,6 +20,7 @@ public class YMeshRendererEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        EditorGUILayout.HelpBox("Hint: to draw press P", MessageType.Info);
         //base.OnInspectorGUI();
 
         EditorGUILayout.Space();
@@ -45,12 +46,15 @@ public class YMeshRendererEditor : Editor
         var layerEditMode = serializedObject.FindProperty("layerEditMode");
         var selectedLayerPaint = serializedObject.FindProperty("selectedLayerPaint");
         var renderLight = serializedObject.FindProperty("renderLight");
+        var realtimeRenderLight = serializedObject.FindProperty("realtimeRenderLight");
         serializedObject.Update();
 
 
 
         EditorGUILayout.PropertyField(meshes, true);
         EditorGUILayout.PropertyField(renderLight, true);
+        if (renderLight.boolValue)
+            EditorGUILayout.PropertyField(realtimeRenderLight, true);
 
         EditorGUILayout.LabelField("Painting", EditorStyles.boldLabel);
         EditorGUILayout.Space();

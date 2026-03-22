@@ -18,6 +18,22 @@ public class Condition : YTrigger
     private YTrigger[] trueTriggers;
     private YTrigger[] falseTriggers;
 
+
+
+    public Condition(YVariable condition)
+    {
+        this.id1 = condition.GetID();
+        this.id2 = 0;
+        this.is1float = condition.IsFloat();
+        this.is2float = true;
+        this.multiplier1 = 1;
+        this.multiplier2 = 1;
+        this.operation = ItemCompare.Operation.MoreOrEquals;
+        trueTriggers = new YTrigger[0];
+        falseTriggers = new YTrigger[0];
+        trueId = 0;
+        falseId = 0;
+    }
     public Condition(YVariable var1, YVariable var2, ItemCompare.Operation operation)
     {
         this.id1 = var1.GetID();
@@ -32,22 +48,6 @@ public class Condition : YTrigger
         trueId = 0;
         falseId = 0;
     }
-
-    public Condition(YVariable result)
-    {
-        this.id1 = result.GetID();
-        this.id2 = 0;
-        this.is1float = result.IsFloat();
-        this.is2float = true;
-        this.multiplier1 = 1;
-        this.multiplier2 = 1;
-        this.operation = ItemCompare.Operation.MoreOrEquals;
-        trueTriggers = new YTrigger[0];
-        falseTriggers = new YTrigger[0];
-        trueId = 0;
-        falseId = 0;
-    }
-
     public void ChangeChildrenFromFirstLayer()
     {
         if (trueTriggers != null)

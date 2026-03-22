@@ -58,7 +58,7 @@ public class YGameManager : MonoBehaviour
     public string sampleLevelName = "SampleLevel";
     public LevelSavingType levelSavingType;
     public bool updateLevel;
-    public int firstFreeID = 700;
+    public int firstFreeID = 900;
     public string playerName = "YObject";
 
     public enum LevelSavingType
@@ -215,6 +215,10 @@ public class YGameManager : MonoBehaviour
         TickAll();
     }
 
+    private void Update()
+    {
+        UpdateAllServices();
+    }
 
     private void UpdateCoreVariables()
     {
@@ -234,13 +238,36 @@ public class YGameManager : MonoBehaviour
     {
         startRecordingPoolIndex.Add(globalPool.Count);
     }
-    public YTrigger[] StopRecordPool(bool removeRecord = false)
+    public YTrigger[] StopRecordPool(bool removeRecord = false, bool removeNonFirstLevel = false)
     {
-        var returning = globalPool.GetRange(startRecordingPoolIndex.Last(), globalPool.Count - startRecordingPoolIndex.Last()).ToArray();
+        var returning = globalPool.GetRange(startRecordingPoolIndex.Last(), globalPool.Count - startRecordingPoolIndex.Last());
         if (removeRecord)
             globalPool.RemoveRange(startRecordingPoolIndex.Last(), globalPool.Count - startRecordingPoolIndex.Last());
         startRecordingPoolIndex.RemoveAt(startRecordingPoolIndex.Count - 1);
         //print("pool count = " + startRecordingPoolIndex.Count);
+        if (removeNonFirstLevel)
+            for (int i = 0; i < returning.Count; i++)
+            {
+                if (!returning[i].isFirstLevel)
+                {
+                    returning.RemoveAt(i);
+                    i--;
+                }
+            }
+        return returning.ToArray();
+    }
+    private List<int> startGDObjectRecordingPoolIndex = new List<int>();
+    public void GDObjectRecordPool()
+    {
+        startGDObjectRecordingPoolIndex.Add(globalGDObjectsPool.Count);
+    }
+    public YGDObject[] StopGDObjectRecordPool(bool removeRecord = false)
+    {
+        var returning = globalGDObjectsPool.GetRange(startGDObjectRecordingPoolIndex.Last(), globalGDObjectsPool.Count - startGDObjectRecordingPoolIndex.Last()).ToArray();
+        if (removeRecord)
+            globalGDObjectsPool.RemoveRange(startGDObjectRecordingPoolIndex.Last(), globalGDObjectsPool.Count - startGDObjectRecordingPoolIndex.Last());
+        startGDObjectRecordingPoolIndex.RemoveAt(startGDObjectRecordingPoolIndex.Count - 1);
+
         return returning;
     }
 
@@ -286,6 +313,13 @@ public class YGameManager : MonoBehaviour
             .Where(type => type.IsSubclassOf(typeof(YServiceBase)) && !type.IsAbstract)
             .Select(type => Activator.CreateInstance(type) as YServiceBase)
             .ToList();
+    }
+    private void UpdateAllServices()
+    {
+        foreach (var yService in services)
+        {
+            yService.Update();
+        }
     }
     private void InitServices()
     {

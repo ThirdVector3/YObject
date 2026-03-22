@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class YVariable
@@ -58,17 +59,17 @@ public class YVariable
     }
 
 
-    private static int lastTmpId = 9999;
+    private static int lastTmpId = 9900;
     private static int GetNewTmpId()
     {
         if (--lastTmpId < 9000)
-            lastTmpId = 9999;
+            lastTmpId = 9900;
         return lastTmpId;
     }
 
-    protected static int GetNewID(bool isFloat)
+    protected static int GetNewID(bool isFloat, bool temporary = false)
     {
-        if (YGameManager.Instance.gameobjectsAndServicesInitialization)
+        if (!temporary && YGameManager.Instance.gameobjectsAndServicesInitialization)
             return YIDsManager.Instance.AddVariable(
                 Guid.NewGuid().ToString() + DateTime.UtcNow.Ticks.ToString(),
                 isFloat ? YIDsManager.Instance.GetFreeIdFloat() : YIDsManager.Instance.GetFreeIdInt(),
@@ -95,7 +96,7 @@ public class YVariable
     }
     public static YVariable operator +(YVariable a, float b)
     {
-        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        YVariable c = new YVariable(GetNewTmpId(), true);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Add, b);
         return c;
@@ -117,7 +118,7 @@ public class YVariable
     }
     public static YVariable operator *(YVariable a, float b)
     {
-        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        YVariable c = new YVariable(GetNewTmpId(), true);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Multiply, b);
         return c;
@@ -130,6 +131,10 @@ public class YVariable
         return c;
     }
 
+    public static YVariable operator -(YVariable a)
+    {
+        return 0 - a;
+    }
     public static YVariable operator -(YVariable a, YVariable b)
     {
         YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
@@ -139,7 +144,7 @@ public class YVariable
     }
     public static YVariable operator -(YVariable a, float b)
     {
-        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        YVariable c = new YVariable(GetNewTmpId(), true);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Subtract, b);
         return c;
@@ -160,7 +165,7 @@ public class YVariable
     }
     public static YVariable operator /(YVariable a, float b)
     {
-        YVariable c = new YVariable(GetNewTmpId(), a.isFloat);
+        YVariable c = new YVariable(GetNewTmpId(), true);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Equals, 1, a.id, a.isFloat, 0, true, ItemEdit.Operation.Add);
         new ItemEdit(c.id, c.isFloat, ItemEdit.Operation.Divide, b);
         return c;

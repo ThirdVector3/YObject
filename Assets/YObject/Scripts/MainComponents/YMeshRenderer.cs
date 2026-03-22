@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 [System.Serializable]
 public class MeshLODData
@@ -23,6 +24,9 @@ public class MeshData
 
     [SerializeField] private Color[] triangleColorCorrectorsFlat;
     [SerializeField] private int[] triangleColorCorrectorsLengths;
+
+    [SerializeField] private float[] triangleLightLevelsFlat;
+    [SerializeField] private int[] triangleLightLevelsLengths;
 
     public int[][] triangleColors
     {
@@ -108,6 +112,48 @@ public class MeshData
             triangleColorCorrectorsLengths = lengths.ToArray();
         }
     }
+    public float[][] triangleLightLevels
+    {
+        get
+        {
+            if (triangleLightLevelsFlat == null || triangleLightLevelsLengths == null)
+                return null;
+
+            float[][] result = new float[triangleLightLevelsLengths.Length][];
+            int index = 0;
+            for (int i = 0; i < triangleLightLevelsLengths.Length; i++)
+            {
+                result[i] = new float[triangleLightLevelsLengths[i]];
+                for (int j = 0; j < triangleLightLevelsLengths[i]; j++)
+                {
+                    result[i][j] = triangleLightLevelsFlat[index++];
+                }
+            }
+            return result;
+        }
+        set
+        {
+            if (value == null)
+            {
+                triangleLightLevelsFlat = null;
+                triangleLightLevelsLengths = null;
+                return;
+            }
+
+            List<float> flat = new List<float>();
+            List<int> lengths = new List<int>();
+
+            foreach (var arr in value)
+            {
+                if (arr == null) continue;
+                lengths.Add(arr.Length);
+                flat.AddRange(arr);
+            }
+
+            triangleLightLevelsFlat = flat.ToArray();
+            triangleLightLevelsLengths = lengths.ToArray();
+        }
+    }
 
     public int[] triangleLayers;
 
@@ -123,6 +169,8 @@ public class MeshData
         triangleColorsLengths = new int[0];
         triangleColorCorrectorsFlat = new Color[0];
         triangleColorCorrectorsLengths = new int[0];
+        triangleLightLevelsFlat = new float[0];
+        triangleLightLevelsLengths = new int[0];
 
         triangleLayers = new int[0];
 
@@ -207,6 +255,7 @@ public class YMeshRenderer : YMonoBehaviour
     private Mesh paintedMesh;
     private int[][] triangleColors;
     private Color[][] triangleColorCorrectors;
+    private float[][] triangleLightLevels;
     private int[] triangleLayers;
     private List<Vector3> separatedVertices;
     private List<int> separatedTriangles;
@@ -218,7 +267,12 @@ public class YMeshRenderer : YMonoBehaviour
     private int currentMesh = -1;
     [SerializeField] private MeshLODData[] meshes;
     [SerializeField] private MeshData[] meshDatas;
+
+
     [SerializeField] private bool renderLight;
+    [SerializeField] private bool realtimeRenderLight;
+
+
     [SerializeField] private Color selectedColorCorrector = new Color(0.5f, 0.25f, 0.25f);
     public Color SelectedColorCorrector { get { return selectedColorCorrector; } }
     [SerializeField] private int selectedColorChannel = 1;
@@ -305,7 +359,7 @@ public class YMeshRenderer : YMonoBehaviour
             int idWorldZ = 9976;
 
 
-            if (renderLight)
+            if (renderLight && realtimeRenderLight)
             {
                 idWorldX = YGameManager.Instance.IDsManager.GetFreeIdFloat();
                 YGameManager.Instance.IDsManager.AddVariable($"{gameObject.GetInstanceID()}.{LODIndex}.vertices[{vertexId}].globalx", idWorldX, true);
@@ -325,10 +379,12 @@ public class YMeshRenderer : YMonoBehaviour
             var xItemEdit = new ItemEdit(id1, true, ItemEdit.Operation.Equals, isStatic ? transform.TransformPoint(v).x : v.x);
             var yItemEdit = new ItemEdit(id2, true, ItemEdit.Operation.Equals, isStatic ? transform.TransformPoint(v).y : v.y);
             var zItemEdit = new ItemEdit(id3, true, ItemEdit.Operation.Equals, isStatic ? transform.TransformPoint(v).z : v.z);
+
+
             Spawn spawn136;
             if (!isStatic)
             {
-                spawn136 = new Spawn(136, false, 0, new Dictionary<int, int>()
+                spawn136 = new Spawn(Y3DService.Get().localToCameraPosTranslateFunctionID, false, 0, new Dictionary<int, int>()
                 {
                     { 9999, id1 },
                     { 9998, id2 },
@@ -341,10 +397,10 @@ public class YMeshRenderer : YMonoBehaviour
                     { 9992, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x") },
                     { 9991, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y") },
                     { 9990, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z") },
-                    { 9989, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.x") },
-                    { 9988, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.y") },
-                    { 9987, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.sin.z") },
-                    { 9986, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.x") },
+                    { 9989, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.x") },
+                    { 9988, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.y") },
+                    { 9987, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.z") },
+                    { 9986, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.w") },
                     { 9985, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.y") },
                     { 9984, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.cos.z") },
                     { 9983, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.scale.x") },
@@ -359,7 +415,7 @@ public class YMeshRenderer : YMonoBehaviour
             }
             else
             {
-                spawn136 = new Spawn(136, false, 0, new Dictionary<int, int>()
+                spawn136 = new Spawn(Y3DService.Get().localToCameraPosTranslateFunctionID, false, 0, new Dictionary<int, int>()
                 {
                     { 9999, id1 },
                     { 9998, id2 },
@@ -437,7 +493,7 @@ public class YMeshRenderer : YMonoBehaviour
             bool layerParent = !layerParentsExist.Contains(LOD.triangleLayers[i]);
             if (layerParent)
                 layerParentsExist.Add(LOD.triangleLayers[i]);
-            if (renderLight)
+            if (renderLight && realtimeRenderLight)
             {
                 int color1 = YIDsManager.Instance.GetFreeColor();
                 YIDsManager.Instance.AddColor(color1);
@@ -461,6 +517,21 @@ public class YMeshRenderer : YMonoBehaviour
                     color3original = LOD.triangleColors[i][2],
                 });
                 //lastUsedColor -= 3;
+            }
+            else if (renderLight && !realtimeRenderLight)
+            {
+                triangles.Add(new YMeshRendererTriangle
+                {
+                    vertices = new YMeshRendererVertex[] { vertices[LOD.triangles[i * 3]], vertices[LOD.triangles[i * 3 + 1]], vertices[LOD.triangles[i * 3 + 2]] },
+                    layer = LOD.triangleLayers[i],
+                    color1 = LOD.triangleColors[i][0],
+                    color2 = LOD.triangleColors[i][1],
+                    color3 = LOD.triangleColors[i][2],
+                    color1Corrector = LOD.triangleColorCorrectors[i][0] * LOD.triangleLightLevels[i][0],
+                    color2Corrector = LOD.triangleColorCorrectors[i][1] * LOD.triangleLightLevels[i][1],
+                    color3Corrector = LOD.triangleColorCorrectors[i][2] * LOD.triangleLightLevels[i][2],
+                    layerParent = layerParent
+                });
             }
             else
             {
@@ -565,7 +636,7 @@ public class YMeshRenderer : YMonoBehaviour
             spawn146.AddGroup(1002);// = new int[] { 1002 };
             spawn146.AddGroup(LODGroupId);
 
-            if (renderLight)
+            if (renderLight && realtimeRenderLight)
             {
                 var colorSet1 = new ColorTrigger(t.color1, 0, Color.red, t.color1original);
                 var colorSet2 = new ColorTrigger(t.color2, 0, Color.red, t.color2original);
@@ -700,6 +771,7 @@ public class YMeshRenderer : YMonoBehaviour
 
         int triangleCount = separatedTriangles.Count / 3;
         triangleColorCorrectors = new Color[triangleCount][];
+        triangleLightLevels = new float[triangleCount][];
         triangleColors = new int[triangleCount][];
         triangleLayers = new int[triangleCount];
 
@@ -716,6 +788,13 @@ public class YMeshRenderer : YMonoBehaviour
             triangleColors[i][0] = 1;
             triangleColors[i][1] = 1;
             triangleColors[i][2] = 1;
+        }
+        for (int i = 0; i < triangleLightLevels.Length; i++)
+        {
+            triangleLightLevels[i] = new float[3];
+            triangleLightLevels[i][0] = 1;
+            triangleLightLevels[i][1] = 1;
+            triangleLightLevels[i][2] = 1;
         }
 
         UpdateMeshColors();
@@ -864,6 +943,9 @@ public class YMeshRenderer : YMonoBehaviour
             }
             else
                 EditTriangleLayerByIndex(triangleIndex, selectedLayerPaint);
+
+            if (!Application.isPlaying)
+                SaveMeshData();
         }
     }
     public void PaintTriangleByIndex(int triangleIndex, Color[] colors, int[] colorChannels)
@@ -898,8 +980,6 @@ public class YMeshRenderer : YMonoBehaviour
 
         paintedMesh.colors = separatedColors.ToArray();
 
-        if (!Application.isPlaying)
-            SaveMeshData();
     }
     private void UpdateMeshColors()
     {
@@ -915,17 +995,39 @@ public class YMeshRenderer : YMonoBehaviour
                     separatedVertices[separatedTriangles[i*3]],
                     separatedVertices[separatedTriangles[i*3+1]],
                     separatedVertices[separatedTriangles[i*3+2]]
-                }));
+                }, i));
         }
 
     }
-    private Color[] GetLightedTriangleColors(int[] channels, Color[] correctors, Vector3[] vertices)
+    public void BakeLighting()
+    {
+        for (int i = 0; i < triangleColors.Length; i++)
+        {
+            var vertices = new Vector3[] { 
+                transform.TransformPoint(separatedVertices[separatedTriangles[i * 3]]),
+                transform.TransformPoint(separatedVertices[separatedTriangles[i * 3 + 1]]), 
+                transform.TransformPoint(separatedVertices[separatedTriangles[i * 3 + 2]])
+            };
+
+            float[] lights = new float[3];
+            foreach (var lightSource in FindObjectsByType<YLightSource>(FindObjectsSortMode.None))
+            {
+                var lightLevels = lightSource.GetLightLevel(vertices);
+                lights[0] += lightLevels[0];
+                lights[1] += lightLevels[1];
+                lights[2] += lightLevels[2];
+            }
+
+            triangleLightLevels[i] = lights;
+        }
+        SaveMeshData();
+    }
+    private Color[] GetLightedTriangleColors(int[] channels, Color[] correctors, Vector3[] vertices, int triangleIndex)
     {
         Color[] colors = GetChannelPlusCorrectorColors(channels, correctors);
 
-        if (renderLight)
+        if (renderLight && realtimeRenderLight)
         {
-
             vertices = new Vector3[] { transform.TransformPoint(vertices[0]), transform.TransformPoint(vertices[1]), transform.TransformPoint(vertices[2]) };
 
             float[] lights = new float[3];
@@ -940,6 +1042,12 @@ public class YMeshRenderer : YMonoBehaviour
             colors[0] *= lights[0];
             colors[1] *= lights[1];
             colors[2] *= lights[2];
+        }
+        if (renderLight && !realtimeRenderLight)
+        {
+            colors[0] *= triangleLightLevels[triangleIndex][0];
+            colors[1] *= triangleLightLevels[triangleIndex][1];
+            colors[2] *= triangleLightLevels[triangleIndex][2];
         }
 
         return colors;
@@ -981,6 +1089,7 @@ public class YMeshRenderer : YMonoBehaviour
         {
             triangleColors = triangleColors,
             triangleColorCorrectors = triangleColorCorrectors,
+            triangleLightLevels = triangleLightLevels,
             triangleLayers = triangleLayers,
             vertices = paintedMesh.vertices,
             triangles = paintedMesh.triangles,
@@ -999,6 +1108,7 @@ public class YMeshRenderer : YMonoBehaviour
             data = meshDatas[currentMesh];
         triangleColors = data.triangleColors;
         triangleColorCorrectors = data.triangleColorCorrectors;
+        triangleLightLevels = data.triangleLightLevels;
         triangleLayers = data.triangleLayers;
 
         paintedMesh = new Mesh();
@@ -1051,6 +1161,7 @@ public class YMeshRenderer : YMonoBehaviour
             uv = meshData.uv,
             triangleLayers = meshData.triangleLayers,
             triangleColorCorrectors = meshData.triangleColorCorrectors,
+            triangleLightLevels = meshData.triangleLightLevels,
             triangleColors = meshData.triangleColors
         };
     }
@@ -1111,5 +1222,13 @@ public class YMeshRenderer : YMonoBehaviour
             lastMesh = currentMesh;
         }
         UpdateMeshColors();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorApplication.QueuePlayerLoopUpdate();
+        }
     }
 }

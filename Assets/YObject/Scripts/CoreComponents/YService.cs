@@ -12,4 +12,5 @@ public abstract class YServiceBase
     public virtual void Init() { }
     public virtual void Begin() { }
     public virtual void Tick() { }
+    public virtual void Update() { }
 }

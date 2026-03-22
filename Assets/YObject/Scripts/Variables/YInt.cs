@@ -1,9 +1,17 @@
 ﻿public class YInt : YVariable
 {
-    public YInt() : base(GetNewID(false), false)
+    public YInt(bool temporary = false) : base(GetNewID(false, temporary), false)
     {
     }
     public YInt(int value) : base(GetNewID(false), false)
+    {
+        SetDefaultValue(value);
+    }
+    public YInt(int value, bool temporary) : base(GetNewID(false, temporary), false)
+    {
+        SetDefaultValue(value);
+    }
+    private void SetDefaultValue(int value)
     {
         var trig = new ItemEdit(id, false, ItemEdit.Operation.Equals, value);
         if (YGameManager.Instance.gameobjectsAndServicesInitialization)

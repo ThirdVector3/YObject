@@ -1,4 +1,5 @@
-﻿public class YVector2
+﻿
+public class YVector2
 {
     public YVariable x;
     public YVariable y;
@@ -11,6 +12,11 @@
     {
         x = new YVariable(xId, true);
         y = new YVariable(yId, true);
+    }
+    public YVector2(YVariable x, YVariable y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
     public void SetValue(YVector2 value)
@@ -37,6 +43,16 @@
     {
         x.Divide(value.x);
         y.Divide(value.y);
+    }
+    public virtual YVariable Length()
+    {
+        return YMathService.Get().Sqrt(x*x + y*y);
+    }
+    public virtual void Normalize()
+    {
+        var length = Length();
+        x.Divide(length);
+        y.Divide(length);
     }
 
     public static YVector2 operator +(YVector2 a, YVector2 b)

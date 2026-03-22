@@ -15,7 +15,7 @@ public class PlayerMesh3Dash : YMonoBehaviour
     public override void Tick()
     {
         YVector3 playerPosition = new YVector3(0f, 0f, 0f);
-        player.GetYTransform().GetPosition(playerPosition.x, playerPosition.y, playerPosition.z);
+        playerPosition.SetValue(player.GetYTransform().GetPosition());
         yTransform.SetPosition(playerPosition.x, playerPosition.y, playerPosition.z);
 
         new Condition(player.IsGrounded)

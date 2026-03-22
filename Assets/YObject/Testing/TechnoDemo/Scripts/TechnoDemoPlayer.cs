@@ -10,17 +10,18 @@ public class TechnoDemoPlayer : YMonoBehaviour
         Rotate();
         Move();
 
-        GetComponent<YTransform>().GetPosition(9999, 9998, 9997);
-        GetComponent<YTransform>().GetRotation(9996, 9995, 9994);
-        YMainCamera.Instance.SetPosition(9999, 9998, 9997);
-        YMainCamera.Instance.SetRotation(9996, 9995, 9994);
+        //new YVector3(9999,9998,9997).SetValue(GetComponent<YTransform>().GetPosition());
+        //new YQuaternion(9996, 9995, 9994, 9993).SetValue(GetComponent<YTransform>().GetRotation());
+        var v = YQuaternion.Euler(new YVector3(0,0f,0f)).ToEulerAngles();
+        YMainCamera.Instance.SetPosition(GetComponent<YTransform>().GetPosition());
+        YMainCamera.Instance.SetRotation(v.x, v.y, v.z);
     }
 
     private void Move()
     {
         YVariable move = new YFloat(2.5f) * new YVariable("Time.deltaTime");
         //YInput.GetP1Up(GetComponent<YTransform>().TranslateLocal(0, 0, move.GetID()), new YTrigger[0]);
-        new Condition(new YVariable("Input.P1Up"), new YFloat(1), ItemCompare.Operation.Equals)
+        new Condition(YInputService.Get().P1Up())
             .Then(() =>
             {
                 GetComponent<YTransform>().TranslateLocal(0, 0, move);
@@ -29,8 +30,9 @@ public class TechnoDemoPlayer : YMonoBehaviour
     private void Rotate()
     {
         YVariable rotation = new YFloat(110f) * new YVariable("Time.deltaTime");
-        YInput.GetP1Right(GetComponent<YTransform>().Rotate(0, rotation, 0), new YTrigger[0]);
+        print("Input disabled!!!");
+        //YInput.GetP1Right(GetComponent<YTransform>().Rotate(0, rotation, 0), new YTrigger[0]);
         rotation.Multiply(-1);
-        YInput.GetP1Left(GetComponent<YTransform>().Rotate(0, rotation, 0), new YTrigger[0]);
+        //YInput.GetP1Left(GetComponent<YTransform>().Rotate(0, rotation, 0), new YTrigger[0]);
     }
 }

@@ -42,7 +42,7 @@ public class BoxCollider3Dash : YMonoBehaviour
 
 
         YVector3 playerPosition = new YVector3(0f, 0f, 0f);
-        player.GetYTransform().GetPosition(playerPosition.x, playerPosition.y, playerPosition.z);
+        playerPosition.SetValue( player.GetYTransform().GetPosition());
         YVariable hasCollision = YPhysics.AABBAABBCollision(
             new YVector3(-0.5f, -0.5f, -0.5f) + playerPosition,
             new YVector3(0.5f, 0.5f, 0.5f) + playerPosition,

@@ -55,15 +55,48 @@ public class FlyCamera : YMonoBehaviour
         //new ItemEdit(9998, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
         //new ItemEdit(9995, true, ItemEdit.Operation.Multiply, -1, 9996, true, 0, true, ItemEdit.Operation.Add);
         //new ItemEdit(9993, true, ItemEdit.Operation.Equals, -1, 9995, true, 0, true, ItemEdit.Operation.Add);
-        YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]);
-        YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]);
-        YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]);
-        YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]);
+        //YInput.GetP1Left(YMainCamera.Instance.Rotate(0,3f,0), new YTrigger[0]);
+        //YInput.GetP1Right(YMainCamera.Instance.Rotate(0,-3f,0), new YTrigger[0]);
+        //YInput.GetP2Left(YMainCamera.Instance.Rotate(3f, 0, 0), new YTrigger[0]);
+        //YInput.GetP2Right(YMainCamera.Instance.Rotate(-3f, 0, 0), new YTrigger[0]);
+
+        new Condition(YInputService.Get().P1Left())
+            .Then(() =>
+            {
+                YMainCamera.Instance.Rotate(0, 3f, 0);
+            });
+        new Condition(YInputService.Get().P1Right())
+            .Then(() =>
+            {
+                YMainCamera.Instance.Rotate(0, -3f, 0);
+            });
+        new Condition(YInputService.Get().P2Left())
+            .Then(() =>
+            {
+                YMainCamera.Instance.Rotate(3f, 0, 0);
+            });
+        new Condition(YInputService.Get().P2Right())
+            .Then(() =>
+            {
+                YMainCamera.Instance.Rotate(-3f, 0, 0);
+            });
+
         //YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]);
         //YInput.GetP2Up(YMainCamera.Instance.Translate(9993, 23, 9998), new YTrigger[0]);
 
-        YInput.GetP1Up(YMainCamera.Instance.TranslateLocal(0, 0, 0.1f), new YTrigger[0]);
-        YInput.GetP2Up(YMainCamera.Instance.TranslateLocal(-0.1f, 0, 0), new YTrigger[0]);
+        //YInput.GetP1Up(YMainCamera.Instance.TranslateLocal(0, 0, 0.1f), new YTrigger[0]);
+        //YInput.GetP2Up(YMainCamera.Instance.TranslateLocal(-0.1f, 0, 0), new YTrigger[0]);
+
+        new Condition(YInputService.Get().P1Up())
+            .Then(() =>
+            {
+                YMainCamera.Instance.TranslateLocal(0, 0, 0.1f);
+            });
+        new Condition(YInputService.Get().P2Up())
+            .Then(() =>
+            {
+                YMainCamera.Instance.TranslateLocal(-0.1f, 0, 0);
+            });
 
         //return triggers.ToArray();
     }

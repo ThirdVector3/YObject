@@ -26,7 +26,7 @@ public class YAABBColliderBase : IYColliderBase
             });
 
 
-        YVector3 normal = new YVector3(0,0,0);
+        YVector3 normal = new YVector3(0,0,0f);
 
         return new YCollisionData(collision, normal, collision);
     }

@@ -20,7 +20,8 @@ public class YMeshRendererEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.HelpBox("Hint: to draw press P", MessageType.Info);
+        EditorGUILayout.HelpBox("Hint: to create mesh add mesh to Meshes and press \"Initialize All Meshes\"", MessageType.Info);
+        EditorGUILayout.HelpBox("Hint: to draw hold P and move mouse on object", MessageType.Info);
         //base.OnInspectorGUI();
 
         EditorGUILayout.Space();

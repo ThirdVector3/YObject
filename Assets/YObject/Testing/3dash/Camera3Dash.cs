@@ -19,6 +19,7 @@ public class Camera3Dash : YMonoBehaviour
     }
     public override void Begin()
     {
+        YGameService.Get().SetFPS(60);
         //YQuaternion q = YQuaternion.Euler(new YVector3(90, 0, 0f));
         //
         //var e = q.ToSinCos();
@@ -34,14 +35,19 @@ public class Camera3Dash : YMonoBehaviour
         foreach (YTransform t in a)
         {
             //t.Rotate(1.78f, 3.42f, 5.4f);
-            t.Rotate(1.78f, 0, 0);
+            //t.Rotate(1.78f, 0, 0);
             //t.SetRotation(10, 20, 30f);
+
+            t.TranslateLocal(new YVector3(YMathService.Get().SinRad(new YVariable("Time.time"))*0.04f, new YFloat(0), new YFloat(0)));
         }
 
         //new Condition(YInputService.Get().P1UpDown())
         //    .Then(() =>
         //    {
-        //        new DebugLog(YRandomService.Get().RangeInt(0, 10));
+        //        foreach (YTransform t in a)
+        //        {
+        //            t.SetPosition(new YVector3(0,0,1));
+        //        }
         //    });
 
         return;

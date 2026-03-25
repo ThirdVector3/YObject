@@ -15,9 +15,9 @@ For a quick start you need to have YGameManager and Camera with YMainCamera comp
 
 ![](imgs/3.png)
 
-Let's get started with adding simple cube on scene. You can create an empty gameobject and put YMeshRenderer on it. Then you can put mesh on this object by selecting mesh and pressing "Create Mesh".
+Let's get started with adding simple cube on scene. You can create an empty gameobject and put YMeshRenderer on it. Then you can put mesh on this object by creating new mesh in Meshes and pressing "Initialize All Meshes".
 
-![](imgs/1.png)
+![](imgs/7.png)
 
 Then you can create YMonoBehaviour (NOT MonoBehaviour) class (it will be your component). Implement there Init, Begin and Tick methods.
 - In Init you can create variables, objects, coroutines etc.
@@ -88,8 +88,9 @@ public class MyComponent : YMonoBehaviour
 
 ### 🧱 GameObjects
 - Every item in the game world is a GameObject.
-- Objects are organized into groups or located in global world.
+- GameObjects are organized into groups or located in global world.
 - Groups can be loaded/unloaded.
+- GameObjects can be attached to other GameObjects.
 
 ### 🧬 Component System
 - Each GameObject holds a set of modular components.
@@ -169,6 +170,12 @@ YGameManager.Instance.StopRecordPool();
     // You can create Int variable using this
     YVariable floatVar = new YFloat(1.25f);
     ```
+- YVector
+    ```cs
+    // You can create Int variable using this
+    YVariable vector2 = new YVector2(0.5f, 1.5f);
+    YVariable vector3 = new YVector3(0.5f, 1.5f, 2.5f);
+    ```
 
 
 ### 🧩 Main Triggers For Code Logic
@@ -188,6 +195,8 @@ YGameManager.Instance.StopRecordPool();
     new RandomTrigger(50f, GetComponent<YTransform>().Translate(0.1f, 0, 0), GetComponent<YTransform>().Translate(-0.1f, 0, 0));
     // RandomTrigger(float percentage,
     // YTrigger[] triggers1, YTrigger[] triggers2)
+
+    // This is legacy syntax for random! Use YRandomService.Get().Random(percentage) instead
     ```
 - DebugLog
     ```cs
@@ -232,11 +241,11 @@ YGameManager.Instance.StopRecordPool();
     // there are all functions in YTransform:
 
     yTransform.SetPosition(x, y, z) or
-    yTransform.SetPosition(xID, yID, zID):
+    yTransform.SetPosition(xID, yID, zID)
     // Sets the position of an object based on the specified x, y, and z coordinates.
 
-    yTransform.GetPosition(xID, yID, zID):
-    //Gets the position of an object and writes x, y, and z values to the specified IDs.
+    yTransform.GetPosition()
+    //Gets the position of an object and returns YVector3.
     
     yTransform.Translate(x, y, z) or
     yTransform.Translate(xID, yID, zID):
@@ -250,8 +259,8 @@ YGameManager.Instance.StopRecordPool();
     yTransform.SetRotation(xID, yID, zID):
     //Sets the rotation of an object based on the specified x, y, and z coordinates.
     
-    yTransform.GetRotation(xID, yID, zID):
-    //Gets the rotation of an object and writes x, y, and z values to the specified IDs.
+    yTransform.GetRotation():
+    //Gets the rotation of an object and returns YQuaternion;
     
     yTransform.Rotate(x, y, z) or
     yTransform.Rotate(xID, yID, zID):
@@ -261,17 +270,14 @@ YGameManager.Instance.StopRecordPool();
     yTransform.SetScale(xID, yID, zID):
     //Sets the scale of an object based on the specified x, y, and z coordinates.
     
-    yTransform.GetScale(xID, yID, zID):
-    //Gets the scale of an object and writes x, y, and z values to the specified IDs.
+    yTransform.GetScale():
+    //Gets the scale of an object and returns YVector3
 
     yTransform.SetState(canRotate, canScale)
     //Sets the state of an object based on the specified canRotate (bool) and canScale (bool)
-    
-    yTransform.GetSin(xID, yID, zID):
-    //Gets the sine of an object and writes x, y, and z values to the specified IDs.
-    
-    yTransform.GetCos(xID, yID, zID):
-    //Gets the cosine of an object and writes x, y, and z values to the specified IDs.
+
+    yTransform.GetState()
+    //Gets the state of an object and returns YVariable
 
     ```
 - YMeshRenderer: Renders 3D models
@@ -283,8 +289,8 @@ YGameManager.Instance.StopRecordPool();
     YMainCamera.Instance.SetPosition(xID, yID, zID):
     // Sets the position of the camera based on the specified x, y, and z coordinates.
 
-    YMainCamera.Instance.GetPosition(xID, yID, zID):
-    //Gets the position of the camera and writes x, y, and z values to the specified IDs.
+    YMainCamera.Instance.GetPosition():
+    //Gets the position of the camera and returns YVector3
     
     YMainCamera.Instance.Translate(x, y, z) or
     YMainCamera.Instance.Translate(xID, yID, zID):
@@ -298,18 +304,18 @@ YGameManager.Instance.StopRecordPool();
     YMainCamera.Instance.SetRotation(xID, yID, zID):
     //Sets the rotation of the camera based on the specified x, y, and z coordinates.
     
-    YMainCamera.Instance.GetRotation(xID, yID, zID):
-    //Gets the rotation of the camera and writes x, y, and z values to the specified IDs.
+    YMainCamera.Instance.GetRotation():
+    //Gets the rotation of the camera and returns YVector3
     
     YMainCamera.Instance.Rotate(x, y, z) or
     YMainCamera.Instance.Rotate(xID, yID, zID):
     //Rotates an object.
     
-    YMainCamera.Instance.GetSin(xID, yID, zID):
-    //Gets the sine of the camera and writes x, y, and z values to the specified IDs.
+    YMainCamera.Instance.GetSin():
+    //Gets the sine of the camera and returns YVector3
     
     YMainCamera.Instance.GetCos(xID, yID, zID):
-    //Gets the cosine of the camera and writes x, y, and z values to the specified IDs.
+    //Gets the cosine of the camera and returns YVector3
 
     ```
 
@@ -340,15 +346,20 @@ YGameManager.Instance.StopRecordPool();
 ```
 
 ### ✎ Level of Detail (LOD)
-Reduce mesh detail based on camera distance.
+Reduce mesh detail based on camera distance. Add new meshes to YMeshRenderer and set their max visible distance
 
-![](imgs/2.png)
+### 💡 Light
+
+You can add light sources to your game. Just add YLightSource component to some object on scene. To see light on your meshes toggle on "Render Light" and for realtime light toggle on "Realtime Render Light".
+To use baked light press Bake All Lights button in YLightSource component
+
+![](imgs/8.png)
+![](imgs/7.png)
 
 ### ✎ Triangle layer
 
-You can set layer (layer means triangles with one layer will be spawned on one layer) and layer parent (layer parent means this triangle will be main triangle for layer calculations) of triangle
+You can set layer (layer means triangles with one layer will be spawned on one layer) and layer parent (layer parent means this triangle will be main triangle for layer calculations) of triangle. Just check Layer Edit Mode in YMeshRenderer and paint layers
 
-![](imgs/6.png)
 
 ### 📦 Group Loading / Unloading
 To add group to an object you need to add YGameobjectGroup component to it
@@ -427,7 +438,11 @@ P2UpUp()
 
 ### 🎲 Random
 ```cs
-new RandomTrigger(50f, GetComponent<YTransform>().Translate(0.05f, 0, 0), GetComponent<YTransform>().Translate(-0.05f, 0, 0))
+new Condition(YRandomService.Get().Random(percentage))
+        .Then(() =>
+        {
+            // code
+        });
 ```
 
 ### ⏱️ Delta Time & Time Control
@@ -439,24 +454,31 @@ GetComponent<YTransform>().Rotate(0, new YVariable("Time.time"), 0);
 // 23 - zero variable
 ```
 
+### ⏱️ FPS control
+
+```cs
+YGameService.Get().SetFPS(60);
+```
+
 ### 📐 Math
 ```cs
 // There are some math functions
-YMath.SinDeg(idIn, idOut);
-YMath.SinRad(idIn, idOut);
-YMath.CosDeg(idIn, idOut);
-YMath.CosRad(idIn, idOut);
-YMath.TanDeg(idIn, idOut);
-YMath.TanRad(idIn, idOut);
-YMath.CotDeg(idIn, idOut);
-YMath.CotRad(idIn, idOut);
-YMath.Sqrt(idIn, idOut);
-YMath.Max(idIn1, idIn2, idOut);
-YMath.Min(idIn1, idIn2, idOut);
+YMathService.Get().SinDeg(value);
+YMathService.Get().SinRad(value);
+YMathService.Get().CosDeg(value);
+YMathService.Get().CosRad(value);
+YMathService.Get().TanDeg(value);
+YMathService.Get().TanRad(value);
+YMathService.Get().CotDeg(value);
+YMathService.Get().CotRad(value);
+YMathService.Get().Sqrt(value);
+YMathService.Get().Max(value1, value2);
+YMathService.Get().Min(value1, value2);
+// and other...
 ```
 
 ## How to use
-- download unity (version >= 2021.3.38f1)
+- download unity (version >= 6000.3.7f1)
 - add this files as project (Add project button)
 - open project
 - create game of your dreams

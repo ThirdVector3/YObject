@@ -6,7 +6,7 @@ public class TechnoDemoPlayerHand : YMonoBehaviour
     public Vector3 offset;
     public override void Tick()
     {
-        new YVector3(9999, 9998, 9997).SetValue(player.GetPosition());
+        //new YVector3(9999, 9998, 9997).SetValue(player.GetPosition());
         GetComponent<YTransform>().SetPosition(9999, 9998, 9997);
         //player.GetRotation(9996, 9995, 9994);
         YInput.GetP2Up(new YTrigger[] {

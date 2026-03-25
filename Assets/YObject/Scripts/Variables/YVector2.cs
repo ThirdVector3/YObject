@@ -8,10 +8,10 @@ public class YVector2
         this.x = new YFloat(x);
         this.y = new YFloat(y);
     }
-    public YVector2(int xId, int yId)
+    public YVector2(float x, float y, bool temporary)
     {
-        x = new YVariable(xId, true);
-        y = new YVariable(yId, true);
+        this.x = new YFloat(x, temporary);
+        this.y = new YFloat(y, temporary);
     }
     public YVector2(YVariable x, YVariable y)
     {

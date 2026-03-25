@@ -13,13 +13,16 @@ public static class YCoroutines
     }
     public static void RecordCoroutine()
     {
-        startOfRecording = YGameManager.Instance.globalPool.Count;
+        //startOfRecording = YGameManager.Instance.globalPool.Count;
+
+        YGameManager.Instance.RecordPool();
     }
     public static Coroutine GetCoroutine()
     {
-        List<YTrigger> triggers = YGameManager.Instance.globalPool.GetRange(startOfRecording, YGameManager.Instance.globalPool.Count - startOfRecording);
+        //List<YTrigger> triggers = YGameManager.Instance.globalPool.GetRange(startOfRecording, YGameManager.Instance.globalPool.Count - startOfRecording);
+        var triggers = YGameManager.Instance.StopRecordPool(removeNonFirstLevel: true);
 
-        var yCoroutine = new Coroutine(triggers.ToArray());
+        var yCoroutine = new Coroutine(triggers);
         yCoroutine.pos = pos;
 
         pos += new Vector2(0, 10);
@@ -30,13 +33,17 @@ public static class YCoroutines
     {
         //if (pos == Vector2.zero)
         //    pos = new Vector2(1, 0);
+        List<YTrigger> firstLevelTriggers = new List<YTrigger>();
 
         foreach (var trigger in triggers)
         {
-            trigger.isFirstLevel = false;
+            if (trigger.isFirstLevel)
+            {
+                firstLevelTriggers.Add(trigger);
+            }
         }
 
-        var yCoroutine = new Coroutine(triggers.ToArray());
+        var yCoroutine = new Coroutine(firstLevelTriggers.ToArray());
         yCoroutine.pos = pos;
 
         pos += new Vector2(0, 10);

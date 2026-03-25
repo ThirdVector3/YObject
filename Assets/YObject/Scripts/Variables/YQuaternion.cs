@@ -12,14 +12,14 @@ public class YQuaternion
         this.x = new YFloat(x);
         this.y = new YFloat(y);
         this.z = new YFloat(z);
-        this.w = new YFloat(2);
+        this.w = new YFloat(w);
     }
-    public YQuaternion(int xId, int yId, int zId, int wId)
+    public YQuaternion(float x, float y, float z, float w, bool temporary)
     {
-        x = new YVariable(xId, true);
-        y = new YVariable(yId, true);
-        z = new YVariable(zId, true);
-        w = new YVariable(wId, true);
+        this.x = new YFloat(x, temporary);
+        this.y = new YFloat(y, temporary);
+        this.z = new YFloat(z, temporary);
+        this.w = new YFloat(w, temporary);
     }
     public YQuaternion(YVariable x, YVariable y, YVariable z, YVariable w)
     {
@@ -86,7 +86,7 @@ public class YQuaternion
         var cy = YMathService.Get().CosDeg(yaw);
         var sy = YMathService.Get().SinDeg(yaw);
 
-        YQuaternion q = new YQuaternion(0,0,0,0);
+        YQuaternion q = new YQuaternion(new YFloat(), new YFloat(), new YFloat(), new YFloat());
         q.w = cx * cy * cz + sx * sy * sz;
         q.x = sx * cy * cz - cx * sy * sz;
         q.y = cx * sy * cz + sx * cy * sz;
@@ -109,75 +109,6 @@ public class YQuaternion
                         1.0f - 2.0f * (y * y + z * z)) * Mathf.Rad2Deg);
 
         return new YVector3(xRet, yRet, zRet);
-    }
-    public (YVector3, YVector3) ToSinCos()
-    {
-        Normalize();
-
-
-
-        YVector3 s = new YVector3(0, 0, 0);
-        YVector3 c = new YVector3(0, 0, 0);
-
-        YQuaternion q = this;
-
-
-        s.x = 2f * (q.w * q.x - q.y * q.z);
-        c.x = YMathService.Get().Sqrt(1f - s.x * s.x);
-
-        s.y = 2f * (q.w * q.y + q.z * q.x);
-        c.y = 1f - 2f * (q.x * q.x + q.y * q.y);
-
-        s.z = 2f * (q.w * q.z + q.x * q.y);
-        c.z = 1f - 2f * (q.x * q.x + q.z * q.z);
-
-
-        return (s, c);
-
-
-        var m00 = 1f - 2f * (q.y * q.y + q.z * q.z);
-        var m01 = 2f * (q.x * q.y - q.w * q.z);
-        var m02 = 2f * (q.x * q.z + q.w * q.y);
-
-        var m10 = 2f * (q.x * q.y + q.w * q.z);
-        var m11 = 1f - 2f * (q.x * q.x + q.z * q.z);
-        var m12 = 2f * (q.y * q.z - q.w * q.x);
-
-        var m20 = 2f * (q.x * q.z - q.w * q.y);
-        var m21 = 2f * (q.y * q.z + q.w * q.x);
-        var m22 = 1f - 2f * (q.x * q.x + q.y * q.y);
-
-        // синусы и косинусы для ZXY
-        s.x = YMathService.Get().Clamp(m21, new YFloat(-1f), new YFloat(1f));          // sinX
-        c.x = YMathService.Get().Sqrt(1f - s.x * s.x); // cosX
-
-        s.y = -m20; // sinY
-        c.y = m22;  // cosY
-
-        s.z = -m01; // sinZ
-        c.z = m00;  // cosZ
-
-        return (s,c);
-
-
-
-
-
-        // X (pitch)
-        var sinX = 2f * (q.w * q.x - q.y * q.z);
-        //sinX = YMathService.Get().Clamp(sinX, -1f, 1f);
-        s.x = sinX;
-        c.x = YMathService.Get().Sqrt(1f - sinX * sinX);
-
-        // Y (yaw)
-        s.y = 2f * (q.w * q.y + q.z * q.x);
-        c.y = 1f - 2f * (q.x * q.x + q.y * q.y);
-
-        // Z (roll)
-        s.z = 2f * (q.w * q.z + q.x * q.y);
-        c.z = 1f - 2f * (q.x * q.x + q.z * q.z);
-
-        return (s,c);
     }
     public YQuaternion Conjugate()
     {
@@ -236,7 +167,7 @@ public class YQuaternion
         var num10 = rotation.w * num;
         var num11 = rotation.w * num2;
         var num12 = rotation.w * num3;
-        YVector3 result = new YVector3(0,0,0);
+        YVector3 result = new YVector3(new YFloat(), new YFloat(), new YFloat());
         result.x = (1f - (num5 + num6)) * point.x + (num7 - num12) * point.y + (num8 + num11) * point.z;
         result.y = (num7 + num12) * point.x + (1f - (num4 + num6)) * point.y + (num9 - num10) * point.z;
         result.z = (num8 - num11) * point.x + (num9 + num10) * point.y + (1f - (num4 + num5)) * point.z;

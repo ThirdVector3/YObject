@@ -334,7 +334,7 @@ public class YTransform : YMonoBehaviour
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Equals, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Equals, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         //};
-        SetPosition(new YVector3(idInX, idInY, idInZ));
+        SetPosition(new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true)));
         //return result;
     }
     public virtual void SetPosition(float x, float y, float z)
@@ -382,7 +382,7 @@ public class YTransform : YMonoBehaviour
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Equals, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Equals, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         //};
-        SetLocalPosition(new YVector3(idInX, idInY, idInZ));
+        SetLocalPosition(new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true)));
         //return result;
     }
     public virtual void SetLocalPosition(float x, float y, float z)
@@ -425,7 +425,7 @@ public class YTransform : YMonoBehaviour
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Add, 1, idInY, true, 0, true, ItemEdit.Operation.Add),
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Add, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         //};
-        position.Add(new YVector3(idInX, idInY, idInZ));
+        position.Add(new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true)));
         //return result;
     }
     public virtual void Translate(float x, float y, float z)
@@ -486,7 +486,7 @@ public class YTransform : YMonoBehaviour
         //curY.Add(Y);
         //curZ.Add(Z);
 
-        position.Add(rotation * new YVector3(0, 0, 1f) * new YVector3(idInX, idInY, idInZ));
+        position.Add(rotation * new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true)));
 
         //return YGameManager.Instance.StopRecordPool(false);
     }
@@ -561,7 +561,7 @@ public class YTransform : YMonoBehaviour
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.z"), true, ItemEdit.Operation.Equals, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         //};
         //return result;
-        SetLocalRotation(YQuaternion.Euler(new YVector3(idInX, idInY, idInZ)));
+        SetLocalRotation(YQuaternion.Euler(new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true))));
     }
     public virtual void SetLocalRotation(float x, float y, float z)
     {
@@ -615,7 +615,7 @@ public class YTransform : YMonoBehaviour
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.rotation.z"), true, ItemEdit.Operation.Equals, 1, idInZ, true, 0, true, ItemEdit.Operation.Add)
         //};
         //return result;
-        SetRotation(YQuaternion.Euler(new YVector3(idInX, idInY, idInZ)));
+        SetRotation(YQuaternion.Euler(new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true))));
     }
     public virtual void SetRotation(float x, float y, float z)
     {
@@ -652,7 +652,7 @@ public class YTransform : YMonoBehaviour
             idInY = 23;
         if (idInZ == 0)
             idInZ = 23;
-        rotation.Multiply(YQuaternion.Euler(new YVector3(idInX, idInY, idInZ)));
+        rotation.Multiply(YQuaternion.Euler(new YVector3(new YVariable(idInX, true), new YVariable(idInY, true), new YVariable(idInZ, true))));
         //YTrigger[] result = new YTrigger[]
         //{
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.x"), true, ItemEdit.Operation.Add, 1, idInX, true, 0, true, ItemEdit.Operation.Add),

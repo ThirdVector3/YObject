@@ -2,13 +2,17 @@
 public class YVector3 : YVector2
 {
     public YVariable z;
-    public YVector3(float x, float y, float z) : base(x,y)
+    public YVector3(float x, float y, float z) : base(x, y)
     {
         this.z = new YFloat(z);
     }
-    public YVector3(int xId, int yId, int zId) : base(xId, yId)
+    public YVector3(float x, float y, float z, bool temporary) : base(x, y, temporary)
     {
-        z = new YVariable(zId, true);
+        this.z = new YFloat(z, temporary);
+    }
+    public YVector3(YVariable x, YVariable y, YVariable z) : base(x, y)
+    {
+        this.z = z;
     }
 
     public void SetValue(YVector3 value)

@@ -11,7 +11,7 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 public class MeshLODData
 {
     [SerializeField] public Mesh mesh;
-    [SerializeField] public float distance;
+    [SerializeField] public float distance = 100f;
 }
 
 [System.Serializable]

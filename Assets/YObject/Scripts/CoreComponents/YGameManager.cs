@@ -193,10 +193,12 @@ public class YGameManager : MonoBehaviour
     {
         YColorManager.InitColors();
     }
+
+    [ContextMenu("Import Sample Level")]
     private async void ImportSampleLevel()
     {
-        var local = await LocalLevels.LoadFileAsync();
-        string level = await PrintLevelStringAsync("SampleLevelA");
+        //var local = await LocalLevels.LoadFileAsync();
+        string level = await PrintLevelStringAsync(sampleLevelName);
 
         File.WriteAllText(Application.dataPath + "/sampleLevel.txt", level);
         print("imported");

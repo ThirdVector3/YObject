@@ -3,6 +3,11 @@ public class YVector2
 {
     public YVariable x;
     public YVariable y;
+    public YVector2()
+    {
+        this.x = new YFloat();
+        this.y = new YFloat();
+    }
     public YVector2(float x, float y)
     {
         this.x = new YFloat(x);
@@ -79,7 +84,19 @@ public class YVector2
         a.y *= b;
         return a;
     }
+    public static YVector2 operator *(YVector2 a, YVariable b)
+    {
+        a.x *= b;
+        a.y *= b;
+        return a;
+    }
     public static YVector2 operator *(float a, YVector2 b)
+    {
+        b.x *= a;
+        b.y *= a;
+        return b;
+    }
+    public static YVector2 operator *(YVariable a, YVector2 b)
     {
         b.x *= a;
         b.y *= a;
@@ -97,7 +114,19 @@ public class YVector2
         a.y /= b;
         return a;
     }
+    public static YVector2 operator /(YVector2 a, YVariable b)
+    {
+        a.x /= b;
+        a.y /= b;
+        return a;
+    }
     public static YVector2 operator /(float a, YVector2 b)
+    {
+        b.x = a / b.x;
+        b.y = a / b.y;
+        return b;
+    }
+    public static YVector2 operator /(YVariable a, YVector2 b)
     {
         b.x = a / b.x;
         b.y = a / b.y;

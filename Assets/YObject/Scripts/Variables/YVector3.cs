@@ -2,6 +2,10 @@
 public class YVector3 : YVector2
 {
     public YVariable z;
+    public YVector3() : base()
+    {
+        this.z = new YFloat();
+    }
     public YVector3(float x, float y, float z) : base(x, y)
     {
         this.z = new YFloat(z);
@@ -85,7 +89,21 @@ public class YVector3 : YVector2
         a.z *= b;
         return a;
     }
+    public static YVector3 operator *(YVector3 a, YVariable b)
+    {
+        a.x *= b;
+        a.y *= b;
+        a.z *= b;
+        return a;
+    }
     public static YVector3 operator *(float a, YVector3 b)
+    {
+        b.x *= a;
+        b.y *= a;
+        b.z *= a;
+        return b;
+    }
+    public static YVector3 operator *(YVariable a, YVector3 b)
     {
         b.x *= a;
         b.y *= a;
@@ -106,11 +124,11 @@ public class YVector3 : YVector2
         a.z /= b;
         return a;
     }
-    public static YVector3 operator /(float a, YVector3 b)
+    public static YVector3 operator /(YVector3 a, YVariable b)
     {
-        b.x = a / b.x;
-        b.y = a / b.y;
-        b.z = a / b.z;
-        return b;
+        a.x /= b;
+        a.y /= b;
+        a.z /= b;
+        return a;
     }
 }

@@ -11,7 +11,7 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 public class MeshLODData
 {
     [SerializeField] public Mesh mesh;
-    [SerializeField] public float distance = 100f;
+    [SerializeField] public float maxVisibleDistance = 100f;
 }
 
 [System.Serializable]
@@ -308,9 +308,9 @@ public class YMeshRenderer : YMonoBehaviour
         int LODIndex = 0;
         foreach (var LOD in meshes)
         {
-            objects.AddRange(LODInit(CompressMeshData(meshDatas[LODIndex]), LODIndex, minDist, LOD.distance));
+            objects.AddRange(LODInit(CompressMeshData(meshDatas[LODIndex]), LODIndex, minDist, LOD.maxVisibleDistance));
 
-            minDist = LOD.distance;
+            minDist = LOD.maxVisibleDistance;
 
             LODIndex++;
         }
@@ -1167,6 +1167,12 @@ public class YMeshRenderer : YMonoBehaviour
     }
     private void OnValidate()
     {
+        foreach (var mesh in meshes)
+        {
+            if (mesh.maxVisibleDistance == 0)
+                mesh.maxVisibleDistance = 100;
+        }
+
         if (meshFilter == null)
             meshFilter = GetComponent<MeshFilter>();
         if (meshRenderer == null)
@@ -1202,12 +1208,12 @@ public class YMeshRenderer : YMonoBehaviour
             {
                 float lastDistance = 0;
                 if (i > 0)
-                    lastDistance = meshes[i - 1].distance;
+                    lastDistance = meshes[i - 1].maxVisibleDistance;
 
                 float distanceToCamera = !Application.isPlaying ? Vector3.Distance(transform.position, SceneView.lastActiveSceneView.camera.transform.position)
                     : Vector3.Distance(transform.position, YMainCamera.Instance.transform.position);
 
-                if (meshes[i].distance > distanceToCamera &&
+                if (meshes[i].maxVisibleDistance > distanceToCamera &&
                         lastDistance < distanceToCamera)
                 {
                     currentMesh = i;

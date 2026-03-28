@@ -131,4 +131,18 @@ public class YVector3 : YVector2
         a.z /= b;
         return a;
     }
+    public static YVector3 operator /(float a, YVector3 b)
+    {
+        b.x = a / b.x;
+        b.y = a / b.y;
+        b.z = a / b.z;
+        return b;
+    }
+    public static YVector3 operator /(YVariable a, YVector3 b)
+    {
+        b.x = a / b.x;
+        b.y = a / b.y;
+        b.z = a / b.z;
+        return b;
+    }
 }

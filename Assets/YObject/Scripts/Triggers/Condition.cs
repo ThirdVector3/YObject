@@ -27,8 +27,8 @@ public class Condition : YTrigger
         this.is1float = condition.IsFloat();
         this.is2float = true;
         this.multiplier1 = 1;
-        this.multiplier2 = 1;
-        this.operation = ItemCompare.Operation.MoreOrEquals;
+        this.multiplier2 = 0;
+        this.operation = ItemCompare.Operation.More;
         trueTriggers = new YTrigger[0];
         falseTriggers = new YTrigger[0];
         trueId = 0;

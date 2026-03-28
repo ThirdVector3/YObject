@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
@@ -509,12 +510,12 @@ public class YMeshRenderer : YMonoBehaviour
                     color2 = color2,
                     color3 = color3,
                     color1Corrector = LOD.triangleColorCorrectors[i][0],
-                    color2Corrector = LOD.triangleColorCorrectors[i][1],
-                    color3Corrector = LOD.triangleColorCorrectors[i][2],
+                    color2Corrector = LOD.triangleColorCorrectors[i][2],
+                    color3Corrector = LOD.triangleColorCorrectors[i][1],
                     layerParent = layerParent,
                     color1original = LOD.triangleColors[i][0],
-                    color2original = LOD.triangleColors[i][1],
-                    color3original = LOD.triangleColors[i][2],
+                    color2original = LOD.triangleColors[i][2],
+                    color3original = LOD.triangleColors[i][1],
                 });
                 //lastUsedColor -= 3;
             }
@@ -525,11 +526,11 @@ public class YMeshRenderer : YMonoBehaviour
                     vertices = new YMeshRendererVertex[] { vertices[LOD.triangles[i * 3]], vertices[LOD.triangles[i * 3 + 1]], vertices[LOD.triangles[i * 3 + 2]] },
                     layer = LOD.triangleLayers[i],
                     color1 = LOD.triangleColors[i][0],
-                    color2 = LOD.triangleColors[i][1],
-                    color3 = LOD.triangleColors[i][2],
+                    color2 = LOD.triangleColors[i][2],
+                    color3 = LOD.triangleColors[i][1],
                     color1Corrector = LOD.triangleColorCorrectors[i][0] * LOD.triangleLightLevels[i][0],
-                    color2Corrector = LOD.triangleColorCorrectors[i][1] * LOD.triangleLightLevels[i][1],
-                    color3Corrector = LOD.triangleColorCorrectors[i][2] * LOD.triangleLightLevels[i][2],
+                    color2Corrector = LOD.triangleColorCorrectors[i][1] * LOD.triangleLightLevels[i][2],
+                    color3Corrector = LOD.triangleColorCorrectors[i][2] * LOD.triangleLightLevels[i][1],
                     layerParent = layerParent
                 });
             }
@@ -540,11 +541,11 @@ public class YMeshRenderer : YMonoBehaviour
                     vertices = new YMeshRendererVertex[] { vertices[LOD.triangles[i * 3]], vertices[LOD.triangles[i * 3 + 1]], vertices[LOD.triangles[i * 3 + 2]] },
                     layer = LOD.triangleLayers[i],
                     color1 = LOD.triangleColors[i][0],
-                    color2 = LOD.triangleColors[i][1],
-                    color3 = LOD.triangleColors[i][2],
+                    color2 = LOD.triangleColors[i][2],
+                    color3 = LOD.triangleColors[i][1],
                     color1Corrector = LOD.triangleColorCorrectors[i][0],
-                    color2Corrector = LOD.triangleColorCorrectors[i][1],
-                    color3Corrector = LOD.triangleColorCorrectors[i][2],
+                    color2Corrector = LOD.triangleColorCorrectors[i][2],
+                    color3Corrector = LOD.triangleColorCorrectors[i][1],
                     layerParent = layerParent
                 });
             }
@@ -1039,15 +1040,31 @@ public class YMeshRenderer : YMonoBehaviour
                 lights[2] += lightLevels[2];
             }
 
-            colors[0] *= lights[0];
-            colors[1] *= lights[1];
-            colors[2] *= lights[2];
+            colors = new Color[3];
+            for (int i = 0; i < colors.Length; i++)
+            {
+                var channel = channels[i] < 1 ? 1 : channels[i];
+
+                colors[i] = GetPlusCorrectorColor(YColorManager.GetColors()[channel] * lights[i], correctors[i]);
+            }
+
+            //colors[0] *= lights[0];
+            //colors[1] *= lights[1];
+            //colors[2] *= lights[2];
         }
         if (renderLight && !realtimeRenderLight)
         {
-            colors[0] *= triangleLightLevels[triangleIndex][0];
-            colors[1] *= triangleLightLevels[triangleIndex][1];
-            colors[2] *= triangleLightLevels[triangleIndex][2];
+            colors = new Color[3];
+            for (int i = 0; i < colors.Length; i++)
+            {
+                var channel = channels[i] < 1 ? 1 : channels[i];
+
+                colors[i] = GetPlusCorrectorColor(YColorManager.GetColors()[channel] * triangleLightLevels[triangleIndex][i], correctors[i]);
+            }
+
+            //colors[0] *= triangleLightLevels[triangleIndex][0];
+            //colors[1] *= triangleLightLevels[triangleIndex][1];
+            //colors[2] *= triangleLightLevels[triangleIndex][2];
         }
 
         return colors;
@@ -1070,16 +1087,20 @@ public class YMeshRenderer : YMonoBehaviour
 
         UnityEngine.Color c1 = YColorManager.GetColors()[channel];
 
-        UnityEngine.Color.RGBToHSV(c1, out float h11, out float s11, out float v11);
+        return GetPlusCorrectorColor(c1, corrector);
+    }
+    private Color GetPlusCorrectorColor(Color color, Color corrector)
+    {
+        UnityEngine.Color.RGBToHSV(color, out float h11, out float s11, out float v11);
         UnityEngine.Color.RGBToHSV(corrector, out float h12, out float s12, out float v12);
         h11 += h12;
         if (h11 > 1)
             h11 -= 1;
         s11 = Mathf.Clamp01(s11 + (s12 - 0.5f) * 2);
         v11 = Mathf.Clamp01(v11 + (v12 - 0.5f) * 2);
-        c1 = UnityEngine.Color.HSVToRGB(h11, s11, v11);
+        color = UnityEngine.Color.HSVToRGB(h11, s11, v11);
 
-        return c1;
+        return color;
     }
     public void SaveMeshData()
     {

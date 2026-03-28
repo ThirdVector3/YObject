@@ -27,10 +27,10 @@ public class YTransform : YMonoBehaviour
         new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localposition.y"), true, ItemEdit.Operation.Equals, transform.localPosition.y);
         new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localposition.z"), true, ItemEdit.Operation.Equals, transform.localPosition.z);
 
-        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.x"), true, ItemEdit.Operation.Equals, transform.rotation.x);
-        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.y"), true, ItemEdit.Operation.Equals, transform.rotation.y);
-        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.z"), true, ItemEdit.Operation.Equals, transform.rotation.z);
-        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.w"), true, ItemEdit.Operation.Equals, transform.rotation.w);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.x"), true, ItemEdit.Operation.Equals, transform.localRotation.x);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.y"), true, ItemEdit.Operation.Equals, transform.localRotation.y);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.z"), true, ItemEdit.Operation.Equals, transform.localRotation.z);
+        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.w"), true, ItemEdit.Operation.Equals, transform.localRotation.w);
 
         new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Equals, transform.position.x);
         new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Equals, transform.position.y);
@@ -231,20 +231,21 @@ public class YTransform : YMonoBehaviour
             new YVariable(gameObject.GetInstanceID() + ".transform.scale.z") + 0);
 
         ret.rotation = new YQuaternion(
-            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.x") + 0,
-            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.y") + 0,
-            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.z") + 0,
-            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.w") + 0);
+            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.x"),
+            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.y"),
+            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.z"),
+            new YVariable(gameObject.GetInstanceID() + ".transform.localrotation.w"));
 
-        var parentData = transform.parent.GetComponent<YTransform>().LocalToParentTransform();
+        //var parentData = transform.parent.GetComponent<YTransform>().LocalToParentTransform();
+        var parentTransform = transform.parent.GetComponent<YTransform>();
 
-        ret.position = ret.position * parentData.scale;
+        ret.position = ret.position * parentTransform.GetScale();
 
-        ret.rotation.SetValue(parentData.rotation * ret.rotation);
+        ret.rotation = (parentTransform.GetRotation() * ret.rotation);
 
-        ret.position.SetValue(parentData.rotation * ret.position);
+        ret.position.SetValue(parentTransform.GetRotation() * ret.position);
 
-        ret.position.Add(parentData.position);
+        ret.position.Add(parentTransform.GetPosition());
 
         return ret;
     }

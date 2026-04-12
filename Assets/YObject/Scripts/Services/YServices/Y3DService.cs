@@ -82,7 +82,7 @@ public class Y3DService : YService<Y3DService>
             + new YVariable(9994, true) * new YVariable(9994, true)));
         
         
-        new Condition(new YVariable(9994, true))
+        new Condition(new YVariable(9994, true), new YFloat(0.01f, true), ItemCompare.Operation.More)
             .Then(() =>
             {
                 new YVariable(9996, true).SetValue(new YVariable(16, true) * new YVariable(9996, true) / new YVariable(9994, true));

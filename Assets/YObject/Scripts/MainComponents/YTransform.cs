@@ -188,7 +188,7 @@ public class YTransform : YMonoBehaviour
         return triggers.ToArray();
     }
 
-    private class TransformValue
+    public class TransformValue
     {
         public TransformValue() { }
 
@@ -196,7 +196,7 @@ public class YTransform : YMonoBehaviour
         public YQuaternion rotation;
         public YVector3 scale;
     }
-    private TransformValue LocalToParentTransform()
+    public TransformValue LocalToParentTransform()
     {
         var ret = new TransformValue();
         if (!transform.parent || !transform.parent.GetComponent<YTransform>())
@@ -249,7 +249,7 @@ public class YTransform : YMonoBehaviour
 
         return ret;
     }
-    private TransformValue ParentToLocalTransform()
+    public TransformValue ParentToLocalTransform()
     {
 
         var ret = new TransformValue();
@@ -672,6 +672,10 @@ public class YTransform : YMonoBehaviour
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.localrotation.z"), true, ItemEdit.Operation.Add, z)
         //};
         //return result;
+    }
+    public virtual void SetScale(YVector3 scale)
+    {
+        SetScale(scale.x, scale.y, scale.z);
     }
     public virtual void SetScale(int idInX, int idInY, int idInZ)
     {

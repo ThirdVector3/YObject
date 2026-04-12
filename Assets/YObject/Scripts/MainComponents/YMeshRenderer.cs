@@ -529,8 +529,8 @@ public class YMeshRenderer : YMonoBehaviour
                     color2 = LOD.triangleColors[i][2],
                     color3 = LOD.triangleColors[i][1],
                     color1Corrector = LOD.triangleColorCorrectors[i][0] * LOD.triangleLightLevels[i][0],
-                    color2Corrector = LOD.triangleColorCorrectors[i][1] * LOD.triangleLightLevels[i][2],
-                    color3Corrector = LOD.triangleColorCorrectors[i][2] * LOD.triangleLightLevels[i][1],
+                    color2Corrector = LOD.triangleColorCorrectors[i][2] * LOD.triangleLightLevels[i][2],
+                    color3Corrector = LOD.triangleColorCorrectors[i][1] * LOD.triangleLightLevels[i][1],
                     layerParent = layerParent
                 });
             }
@@ -743,7 +743,7 @@ public class YMeshRenderer : YMonoBehaviour
             triggers.Add(new ItemCompare(9999, 0, true, true, 1, maxDist * maxDist, ItemCompare.Operation.More, triggers2.ToArray(), new YTrigger[] { trig }));
 
             foreach (var trigger in triggers)
-                trigger.AddGroups(1003, LODGroupId);
+                trigger.AddGroup(1003);
 
             objects.AddRange(triggers);
         }
@@ -919,7 +919,7 @@ public class YMeshRenderer : YMonoBehaviour
 
             int triangleIndex = hit.triangleIndex;
 
-            if (!layerEditMode)
+            if (!layerEditMode && triangleColorCorrectors.Length > triangleIndex)
             {
                 Color[] colors = triangleColorCorrectors[triangleIndex];
                 int[] colorChannels = triangleColors[triangleIndex];
@@ -1058,8 +1058,7 @@ public class YMeshRenderer : YMonoBehaviour
             for (int i = 0; i < colors.Length; i++)
             {
                 var channel = channels[i] < 1 ? 1 : channels[i];
-
-                colors[i] = GetPlusCorrectorColor(YColorManager.GetColors()[channel] * triangleLightLevels[triangleIndex][i], correctors[i]);
+                colors[i] = GetPlusCorrectorColor(YColorManager.GetColors()[channel], correctors[i] * triangleLightLevels[triangleIndex][i]);
             }
 
             //colors[0] *= triangleLightLevels[triangleIndex][0];

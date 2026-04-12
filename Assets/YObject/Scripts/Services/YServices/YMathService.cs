@@ -145,4 +145,9 @@ public class YMathService : YService<YMathService>
         new ItemEdit(ceil, ceil.IsFloat(), ItemEdit.Operation.Equals, 1, x, x.IsFloat(), 0, true, ItemEdit.Operation.Add, ItemEdit.Operation2.Ceil, ItemEdit.Operation3.None);
         return ceil;
     }
+
+    public YVariable Lerp(YVariable a, YVariable b, YVariable t)
+    {
+        return a + (b - a) * t;
+    }
 }

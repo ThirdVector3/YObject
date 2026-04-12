@@ -96,7 +96,11 @@ public class YMeshRendererEditor : Editor
         if (isPainting && e.button == 0 && !e.control)
         {
             Undo.RecordObject(meshRenderer, "Paint triangle");
-            meshRenderer.PaintTriangle(meshRenderer.SelectedColorCorrector, meshRenderer.SelectedColorChannel);
+            try
+            {
+                meshRenderer.PaintTriangle(meshRenderer.SelectedColorCorrector, meshRenderer.SelectedColorChannel);
+            }
+            finally { }
 
             e.Use();
             SceneView.RepaintAll();

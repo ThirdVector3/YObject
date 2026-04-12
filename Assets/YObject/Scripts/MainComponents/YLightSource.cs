@@ -16,8 +16,8 @@ public class YLightSource : YMonoBehaviour
     [SerializeField] private float intensity = 1f;
     [SerializeField] private float distance = 10f;
 
-    private YFloat intensityTimer;
-    private YFloat distanceTimer;
+    private YVariable intensityTimer;
+    private YVariable distanceTimer;
 
     public void SetIntensity(YVariable intensity)
     {
@@ -82,6 +82,12 @@ public class YLightSource : YMonoBehaviour
 
             triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Equals, 1.04f));
 
+            triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Add, 1, 9986, true, 9987, true, ItemEdit.Operation.Divide));
+            triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Multiply, 0.5f));
+            triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Add, 1, 9986, true, 9987, true, ItemEdit.Operation.Divide));
+            triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Multiply, 0.5f));
+            triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Add, 1, 9986, true, 9987, true, ItemEdit.Operation.Divide));
+            triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Multiply, 0.5f));
             triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Add, 1, 9986, true, 9987, true, ItemEdit.Operation.Divide));
             triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Multiply, 0.5f));
             triggers.Add(new ItemEdit(9987, true, ItemEdit.Operation.Add, 1, 9986, true, 9987, true, ItemEdit.Operation.Divide));

@@ -288,7 +288,7 @@ public class YMainCamera : YMonoBehaviour
     }
     public YVector3 GetRotation()
     {
-        var ret = new YVector3(new YVariable("Camera.rotation.x") + 0, new YVariable("Camera.rotation.y") + 0, new YVariable("Camera.rotation.z") + 0);
+        var ret = -new YVector3(new YVariable("Camera.rotation.x") + 0, new YVariable("Camera.rotation.y") + 0, new YVariable("Camera.rotation.z") + 0);
         return ret;
 
         //YTrigger[] result = new YTrigger[]

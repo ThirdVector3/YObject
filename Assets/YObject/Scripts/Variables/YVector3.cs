@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 public class YVector3 : YVector2
 {
     public YVariable z;
@@ -17,6 +19,10 @@ public class YVector3 : YVector2
     public YVector3(YVariable x, YVariable y, YVariable z) : base(x, y)
     {
         this.z = z;
+    }
+    public YVector3(Vector3 vector3) : base(vector3.x, vector3.y)
+    {
+        this.z = new YFloat(vector3.z);
     }
 
     public void SetValue(YVector3 value)
@@ -60,6 +66,18 @@ public class YVector3 : YVector2
         y.Divide(length);
         z.Divide(length);
     }
+    public static YVector3 Lerp(YVector3 a, YVector3 b, YVariable t)
+    {
+        YVector3 result = new YVector3();
+        result.x = a.x + (b.x - a.x) * t;
+        result.y = a.y + (b.y - a.y) * t;
+        result.z = a.z + (b.z - a.z) * t;
+        return result;
+    }
+    public static YVariable Dot(YVector3 a, YVector3 b)
+    {
+        return a.x * b.x + a.y * b.y + a.z * b.z;
+    }
 
     public static YVector3 operator +(YVector3 a, YVector3 b)
     {
@@ -73,6 +91,13 @@ public class YVector3 : YVector2
         a.x -= b.x;
         a.y -= b.y;
         a.z -= b.z;
+        return a;
+    }
+    public static YVector3 operator -(YVector3 a)
+    {
+        a.x *= -1;
+        a.y *= -1;
+        a.z *= -1;
         return a;
     }
     public static YVector3 operator *(YVector3 a, YVector3 b)

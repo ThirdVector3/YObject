@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 public class YVector2
 {
     public YVariable x;
@@ -22,6 +24,11 @@ public class YVector2
     {
         this.x = x;
         this.y = y;
+    }
+    public YVector2(Vector2 vector2)
+    {
+        this.x = new YFloat(vector2.x);
+        this.y = new YFloat(vector2.y);
     }
 
     public void SetValue(YVector2 value)
@@ -59,6 +66,17 @@ public class YVector2
         x.Divide(length);
         y.Divide(length);
     }
+    public static YVector2 Lerp(YVector2 a, YVector2 b, YVariable t)
+    {
+        YVector2 result = new YVector2();
+        result.x = a.x + (b.x - a.x) * t;
+        result.y = a.y + (b.y - a.y) * t;
+        return result;
+    }
+    public static YVariable Dot(YVector2 a, YVector2 b)
+    {
+        return a.x * b.x + a.y * b.y;
+    }
 
     public static YVector2 operator +(YVector2 a, YVector2 b)
     {
@@ -70,6 +88,12 @@ public class YVector2
     {
         a.x -= b.x;
         a.y -= b.y;
+        return a;
+    }
+    public static YVector2 operator -(YVector2 a)
+    {
+        a.x *= -1;
+        a.y *= -1;
         return a;
     }
     public static YVector2 operator *(YVector2 a, YVector2 b)

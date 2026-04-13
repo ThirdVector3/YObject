@@ -63,23 +63,23 @@ public class YIDsManager
 
         globalVariables = new Dictionary<string, (int, bool)>()
         {
-            {"Camera.position.x", (1, true) },
-            {"Camera.position.y", (2, true) },
-            {"Camera.position.z", (3, true) },
-
-            {"Camera.rotation.x", (4, true) },
-            {"Camera.rotation.y", (5, true) },
-            {"Camera.rotation.z", (11, true) },
-
-            {"Camera.rotation.sin.x", (6, true) },
-            {"Camera.rotation.sin.y", (7, true) },
-            {"Camera.rotation.sin.z", (12, true) },
-
-            {"Camera.rotation.cos.x", (8, true) },
-            {"Camera.rotation.cos.y", (9, true) },
-            {"Camera.rotation.cos.z", (13, true) },
-
-            {"Camera.focalLen", (16, true) },
+            //{"Camera.position.x", (1, true) },
+            //{"Camera.position.y", (2, true) },
+            //{"Camera.position.z", (3, true) },
+            //
+            //{"Camera.rotation.x", (4, true) },
+            //{"Camera.rotation.y", (5, true) },
+            //{"Camera.rotation.z", (11, true) },
+            //
+            //{"Camera.rotation.sin.x", (6, true) },
+            //{"Camera.rotation.sin.y", (7, true) },
+            //{"Camera.rotation.sin.z", (12, true) },
+            //
+            //{"Camera.rotation.cos.x", (8, true) },
+            //{"Camera.rotation.cos.y", (9, true) },
+            //{"Camera.rotation.cos.z", (13, true) },
+            //
+            //{"Camera.focalLen", (16, true) },
 
             {"PI", (10, true) },
 
@@ -96,7 +96,7 @@ public class YIDsManager
             {"Time.deltaTime", (14, true) },
             {"Time.time", (15, true) },
         };
-        SetMemoryValueByName("Camera.focalLen", 8f);
+        //SetMemoryValueByName("Camera.focalLen", 8f);
         globalPickedGroups = standartTakenGroups.ToList();
 
         globalFreeInts = new List<int>();

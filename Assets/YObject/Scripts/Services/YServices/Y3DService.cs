@@ -12,6 +12,8 @@ public class Y3DService : YService<Y3DService>
         localToCameraPosTranslateFunctionID = YIDsManager.Instance.GetFreeGroup();
         YIDsManager.Instance.AddGroup(localToCameraPosTranslateFunctionID);
 
+        YMainCamera.Instance.Init();
+
         YGameManager.Instance.RecordPool();
 
         new YVariable(9996, true).SetValue(new YVariable(9999, true));
@@ -42,39 +44,44 @@ public class Y3DService : YService<Y3DService>
         new YVariable(9976, true).SetValue(new YVariable(9996, true));
         new YVariable(9975, true).SetValue(new YVariable(9995, true));
         new YVariable(9974, true).SetValue(new YVariable(9994, true));
-        
-        new YVariable(9996, true).Subtract(new YVariable(1, true));
-        new YVariable(9995, true).Subtract(new YVariable(2, true));
-        new YVariable(9994, true).Subtract(new YVariable(3, true));
-        
-        
-        
-        
-        
-        var siny = new YVariable("Camera.rotation.sin.y");
-        var cosy = new YVariable("Camera.rotation.cos.y");
-        
-        var yawX = new YVariable(9994, true) * siny + new YVariable(9996, true) * cosy;
-        var yawZ = new YVariable(9994, true) * cosy - new YVariable(9996, true) * siny;
-        
-        
-        var cosX = new YVariable("Camera.rotation.cos.x");
-        var sinX = new YVariable("Camera.rotation.sin.x");
-        
-        var pitchY = new YVariable(9995, true) * cosX - yawZ * sinX;
-        var pitchZ = new YVariable(9995, true) * sinX + yawZ * cosX;
-        
-        
-        var sinz = new YVariable("Camera.rotation.sin.z");
-        var cosz = new YVariable("Camera.rotation.cos.z");
-        
-        var rollX = yawX * cosz - pitchY * sinz;
-        var rollY = yawX * sinz + pitchY * cosz;
-        
-        
-        new YVariable(9996, true).SetValue(rollX);
-        new YVariable(9995, true).SetValue(rollY);
-        new YVariable(9994, true).SetValue(pitchZ);
+
+        var camPos = YMainCamera.Instance.yTransform.GetPosition();
+
+        new YVariable(9996, true).Subtract(new YVariable(camPos.x, true));
+        new YVariable(9995, true).Subtract(new YVariable(camPos.y, true));
+        new YVariable(9994, true).Subtract(new YVariable(camPos.z, true));
+
+
+
+
+
+        //var siny = new YVariable("Camera.rotation.sin.y");
+        //var cosy = new YVariable("Camera.rotation.cos.y");
+        //
+        //var yawX = new YVariable(9994, true) * siny + new YVariable(9996, true) * cosy;
+        //var yawZ = new YVariable(9994, true) * cosy - new YVariable(9996, true) * siny;
+        //
+        //
+        //var cosX = new YVariable("Camera.rotation.cos.x");
+        //var sinX = new YVariable("Camera.rotation.sin.x");
+        //
+        //var pitchY = new YVariable(9995, true) * cosX - yawZ * sinX;
+        //var pitchZ = new YVariable(9995, true) * sinX + yawZ * cosX;
+        //
+        //
+        //var sinz = new YVariable("Camera.rotation.sin.z");
+        //var cosz = new YVariable("Camera.rotation.cos.z");
+        //
+        //var rollX = yawX * cosz - pitchY * sinz;
+        //var rollY = yawX * sinz + pitchY * cosz;
+
+        var rotatedPoint = YMainCamera.Instance.yTransform.GetRotation().Conjugate() * new YVector3(new YVariable(9996, true), new YVariable(9995, true), new YVariable(9994, true));
+
+
+
+        new YVariable(9996, true).SetValue(rotatedPoint.x);
+        new YVariable(9995, true).SetValue(rotatedPoint.y);
+        new YVariable(9994, true).SetValue(rotatedPoint.z);
         
         
         new YVariable(9977, true).SetValue(YMathService.Get().Sqrt(new YVariable(9996, true) * new YVariable(9996, true)
@@ -85,8 +92,8 @@ public class Y3DService : YService<Y3DService>
         new Condition(new YVariable(9994, true), new YFloat(0.01f, true), ItemCompare.Operation.More)
             .Then(() =>
             {
-                new YVariable(9996, true).SetValue(new YVariable(16, true) * new YVariable(9996, true) / new YVariable(9994, true));
-                new YVariable(9995, true).SetValue(new YVariable(16, true) * new YVariable(9995, true) / new YVariable(9994, true));
+                new YVariable(9996, true).SetValue(YMainCamera.Instance.GetFocalLen() * new YVariable(9996, true) / new YVariable(9994, true));
+                new YVariable(9995, true).SetValue(YMainCamera.Instance.GetFocalLen() * new YVariable(9995, true) / new YVariable(9994, true));
                 new YVariable(9979, true).SetValue(1);
             })
             .Else(() =>

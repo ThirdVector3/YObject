@@ -122,7 +122,7 @@ public class YQuaternion
     {
         q1 = new YQuaternion(q1.x+0, q1.y+0, q1.z+0, q1.w+0);
         var dot = Dot(q0, q1);
-        // Shortest path interpolation
+
         new Condition(dot < 0.0f)
         .Then(() =>
         {
@@ -143,7 +143,15 @@ public class YQuaternion
         });
         return ret;
     }
-
+    public static YQuaternion Lerp(YQuaternion a, YQuaternion b, YVariable t)
+    {
+        YQuaternion c = new YQuaternion(0,0,0,0);
+        c.x = a.x - t * (a.x - b.x);
+        c.y = a.y - t * (a.y - b.y);
+        c.z = a.z - t * (a.z - b.z);
+        c.w = a.w - t * (a.w - b.w);
+        return c;
+    }
     public static YQuaternion operator *(YQuaternion a, YQuaternion b)
     {
         return new YQuaternion(

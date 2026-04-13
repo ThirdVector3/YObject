@@ -54,7 +54,7 @@ public class Testing2WallsControler : YMonoBehaviour
 
     private void CamMove()
     {
-        YMainCamera.Instance.SetPosition(playerX, playerY, playerZ);
+        YMainCamera.Instance.yTransform.SetPosition(playerX, playerY, playerZ);
 
     }
 

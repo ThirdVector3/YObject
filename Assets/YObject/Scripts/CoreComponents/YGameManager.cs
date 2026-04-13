@@ -304,6 +304,8 @@ public class YGameManager : MonoBehaviour
 
         YCoroutines.Init();
 
+        UninitServicesAndGameobjects();
+
         InitServices();
         InitGameobjects();
     }
@@ -327,10 +329,10 @@ public class YGameManager : MonoBehaviour
     {
         //IDsManager.SetCurrentGroupName(null);
         YGameobjectGroupsManager.Instance.CurrentGroupCompile = null;
-        foreach (var yService in services)
-        {
-            yService.Uninit();
-        }
+        //foreach (var yService in services)
+        //{
+        //    yService.Uninit();
+        //}
         gameobjectsAndServicesInitialization = true;
         foreach (var yService in services)
         {
@@ -369,13 +371,24 @@ public class YGameManager : MonoBehaviour
             }
         }
     }
+    private void UninitServicesAndGameobjects()
+    {
+        foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
+        {
+            yMono.Uninit();
+        }
+        foreach (var yService in services)
+        {
+            yService.Uninit();
+        }
+    }
     private void InitGameobjects()
     {
         //IDsManager.SetCurrentGroupName(null);
         YGameobjectGroupsManager.Instance.CurrentGroupCompile = null;
         foreach (var yMono in FindObjectsOfType<YMonoBehaviour>(false))
         {
-            yMono.Uninit();
+            //yMono.Uninit();
             if (yMono.TryGetComponent(out YGameobjectGroup yGameobjectGroup) && !groupsBeginTriggers.ContainsKey(yGameobjectGroup.GetName()))
             {
                 groupsBeginTriggers.Add(yGameobjectGroup.GetName(), new List<YTrigger>());

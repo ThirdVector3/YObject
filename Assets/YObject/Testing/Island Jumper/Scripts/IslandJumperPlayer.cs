@@ -53,8 +53,8 @@ public class IslandJumperPlayer : YMonoBehaviour
         cameraPosLocalPosition.y.SetValue(YMathService.Get().Lerp(cameraPosLocalPosition.y, yVelocity * 10 + 1, new YVariable("Time.deltaTime") * lerpSpeed));
         cameraPos.SetLocalPosition(cameraPosLocalPosition);
 
-        YMainCamera.Instance.SetPosition(YVector3.Lerp(YMainCamera.Instance.GetPosition(), cameraPosPosition, new YVariable("Time.deltaTime") * lerpSpeed));
-        YMainCamera.Instance.SetRotation(YVector3.Lerp(YMainCamera.Instance.GetRotation(), cameraRotation, new YVariable("Time.deltaTime") * lerpSpeed));
+        YMainCamera.Instance.yTransform.SetPosition(YVector3.Lerp(YMainCamera.Instance.yTransform.GetPosition(), cameraPosPosition, new YVariable("Time.deltaTime") * lerpSpeed));
+        YMainCamera.Instance.yTransform.SetRotation(YQuaternion.Lerp(YMainCamera.Instance.yTransform.GetRotation(), YQuaternion.Euler(cameraRotation), new YVariable("Time.deltaTime") * lerpSpeed));
 
 
         yTransform.SetRotation(rotation);

@@ -18,6 +18,28 @@ public class YMainCamera : YMonoBehaviour
             return _instance;
         }
     }
+    private YTransform _yTransform;
+    public YTransform yTransform {
+        get
+        {
+            if (_yTransform == null)
+            {
+                _yTransform = GetComponent<YTransform>();
+                if (_yTransform == null)
+                {
+                    _yTransform = gameObject.AddComponent<YTransform>();
+                }
+            }
+            return _yTransform;
+        }
+    }
+
+
+
+
+
+
+    private YVariable focalLength;
 
     private void Awake()
     {
@@ -33,6 +55,8 @@ public class YMainCamera : YMonoBehaviour
 
     private void SetDefaultSettings()
     {
+        if (Application.isEditor)
+            yTransform.SetState(true, false, true);
         cameraComponent = GetComponent<Camera>();
         cameraComponent.usePhysicalProperties = true;
         cameraComponent.sensorSize = new Vector2(16, 9);
@@ -40,44 +64,59 @@ public class YMainCamera : YMonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(
-            YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.x").Item2,
-            YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.y").Item2,
-            YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.z").Item2
-        );
-        transform.eulerAngles = -new Vector3(
-            YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2,
-            YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2,
-            YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2
-        );
-        cameraComponent.focalLength = YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.focalLen").Item2;
+        //transform.position = new Vector3(
+        //    YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.x").Item2,
+        //    YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.y").Item2,
+        //    YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.position.z").Item2
+        //);
+        //transform.eulerAngles = -new Vector3(
+        //    YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2,
+        //    YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2,
+        //    YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2
+        //);
+        cameraComponent.focalLength = YGameManager.Instance.IDsManager.GetMemoryValue(focalLength).Item2;
 
-        YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.x", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2 * Mathf.Deg2Rad));
-        YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.y", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
-        YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.z", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
+        //YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.x", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2 * Mathf.Deg2Rad));
+        //YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.y", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
+        //YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.sin.z", Mathf.Sin(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
+        //
+        //YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.x", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2 * Mathf.Deg2Rad));
+        //YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.y", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
+        //YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.z", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
+    }
 
-        YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.x", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.x").Item2 * Mathf.Deg2Rad));
-        YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.y", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.y").Item2 * Mathf.Deg2Rad));
-        YGameManager.Instance.IDsManager.SetMemoryValueByName("Camera.rotation.cos.z", Mathf.Cos(YGameManager.Instance.IDsManager.GetMemoryValueByName("Camera.rotation.z").Item2 * Mathf.Deg2Rad));
+    public override void Init()
+    {
+        if (initialised)
+            return;
+
+        yTransform.Init();
+
+
+        focalLength = new YFloat(8);
+
+
+        initialised = true;
     }
 
     public override void Begin()
     {
         SetDefaultSettings();
         cameraComponent = GetComponent<Camera>();
-        List<YTrigger> triggers = new List<YTrigger>()
-        {
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Equals, transform.position.x),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Equals, transform.position.y),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Equals, transform.position.z),
+        //List<YTrigger> triggers = new List<YTrigger>()
+        //{
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.x"), true, ItemEdit.Operation.Equals, transform.position.x),
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.y"), true, ItemEdit.Operation.Equals, transform.position.y),
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.position.z"), true, ItemEdit.Operation.Equals, transform.position.z),
+        //
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.x),
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.y),
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.z),
+        //
+        //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, cameraComponent.focalLength),
+        //};
 
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.x"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.x),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.y"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.y),
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.rotation.z"), true, ItemEdit.Operation.Equals, -transform.eulerAngles.z),
-
-            new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, cameraComponent.focalLength),
-        };
-
+        focalLength.SetValue(cameraComponent.focalLength);
         //return triggers.ToArray();
     }
 
@@ -85,18 +124,22 @@ public class YMainCamera : YMonoBehaviour
 
     public void SetFocalLen(float focalLen)
     {
-        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, focalLen);
+        //new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, focalLen);
+        focalLength.SetValue(focalLen);
     }
-    public void SetFocalLen(int idIn)
+    public void SetFocalLen(YVariable focalLen)
     {
-        new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, 1, idIn, true, 0, true, ItemEdit.Operation.Add);
+        //new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, ItemEdit.Operation.Equals, 1, idIn, true, 0, true, ItemEdit.Operation.Add);
+        focalLength.SetValue(focalLen);
     }
     public YVariable GetFocalLen()
     {
-        var ret = new YVariable("Camera.focalLen") + 0;
-        return ret;
+        return focalLength + 0;
+        //var ret = new YVariable("Camera.focalLen") + 0;
+        //return ret;
         //return new ItemEdit(idOut, true, ItemEdit.Operation.Equals, 1, YGameManager.Instance.IDsManager.GetIdByName("Camera.focalLen"), true, 0, true, ItemEdit.Operation.Add);
     }
+    /*
     public void SetPosition(int idInX, int idInY, int idInZ)
     {
         if (idInX == 0)
@@ -353,5 +396,5 @@ public class YMainCamera : YMonoBehaviour
         //};
         //return result;
     }
-
+    */
 }

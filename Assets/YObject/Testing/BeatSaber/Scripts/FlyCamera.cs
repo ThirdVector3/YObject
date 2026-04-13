@@ -63,22 +63,22 @@ public class FlyCamera : YMonoBehaviour
         new Condition(YInputService.Get().P1Left())
             .Then(() =>
             {
-                YMainCamera.Instance.Rotate(0, 3f, 0);
+                YMainCamera.Instance.yTransform.Rotate(0, 3f, 0);
             });
         new Condition(YInputService.Get().P1Right())
             .Then(() =>
             {
-                YMainCamera.Instance.Rotate(0, -3f, 0);
+                YMainCamera.Instance.yTransform.Rotate(0, -3f, 0);
             });
         new Condition(YInputService.Get().P2Left())
             .Then(() =>
             {
-                YMainCamera.Instance.Rotate(3f, 0, 0);
+                YMainCamera.Instance.yTransform.Rotate(3f, 0, 0);
             });
         new Condition(YInputService.Get().P2Right())
             .Then(() =>
             {
-                YMainCamera.Instance.Rotate(-3f, 0, 0);
+                YMainCamera.Instance.yTransform.Rotate(-3f, 0, 0);
             });
 
         //YInput.GetP1Up(YMainCamera.Instance.Translate(9998, 9999, 9995), new YTrigger[0]);
@@ -90,12 +90,12 @@ public class FlyCamera : YMonoBehaviour
         new Condition(YInputService.Get().P1Up())
             .Then(() =>
             {
-                YMainCamera.Instance.TranslateLocal(0, 0, 0.1f);
+                YMainCamera.Instance.yTransform.TranslateLocal(0, 0, 0.1f);
             });
         new Condition(YInputService.Get().P2Up())
             .Then(() =>
             {
-                YMainCamera.Instance.TranslateLocal(-0.1f, 0, 0);
+                YMainCamera.Instance.yTransform.TranslateLocal(-0.1f, 0, 0);
             });
 
         //return triggers.ToArray();

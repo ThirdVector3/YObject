@@ -714,8 +714,12 @@ public class YTransform : YMonoBehaviour
         };
         return v;
     }
-    public virtual void SetState(bool canRotate, bool canScale)
+    public virtual void SetState(bool canRotate, bool canScale, bool inEditor = false)
     {
+        this.canRotate = canRotate;
+        this.canScale = canScale;
+        if (inEditor)
+            return;
         YTrigger[] result;// = new YTrigger[]
         //{
         //    new ItemEdit(YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.state"), true, ItemEdit.Operation.Equals, state),

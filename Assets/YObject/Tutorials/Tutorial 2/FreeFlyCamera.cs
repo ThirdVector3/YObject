@@ -14,17 +14,17 @@ public class FreeFlyCamera : YMonoBehaviour
         new Condition(YInputService.Get().P1Left())
             .Then(() =>
             {
-                YMainCamera.Instance.Rotate(0, 2f, 0);
+                YMainCamera.Instance.yTransform.Rotate(0, 2f, 0);
             });
         new Condition(YInputService.Get().P1Right())
             .Then(() =>
             {
-                YMainCamera.Instance.Rotate(0, -2f, 0);
+                YMainCamera.Instance.yTransform.Rotate(0, -2f, 0);
             });
         new Condition(YInputService.Get().P1Up())
             .Then(() =>
             {
-                YMainCamera.Instance.TranslateLocal(0, 0, 0.1f);
+                YMainCamera.Instance.yTransform.TranslateLocal(0, 0, 0.1f);
             });
     }
 }

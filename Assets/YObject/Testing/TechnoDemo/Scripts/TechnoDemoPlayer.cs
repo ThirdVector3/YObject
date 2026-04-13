@@ -13,8 +13,8 @@ public class TechnoDemoPlayer : YMonoBehaviour
         //new YVector3(9999,9998,9997).SetValue(GetComponent<YTransform>().GetPosition());
         //new YQuaternion(9996, 9995, 9994, 9993).SetValue(GetComponent<YTransform>().GetRotation());
         var v = YQuaternion.Euler(new YVector3(0,0f,0f)).ToEulerAngles();
-        YMainCamera.Instance.SetPosition(GetComponent<YTransform>().GetPosition());
-        YMainCamera.Instance.SetRotation(v.x, v.y, v.z);
+        YMainCamera.Instance.yTransform.SetPosition(GetComponent<YTransform>().GetPosition());
+        YMainCamera.Instance.yTransform.SetRotation(v.x, v.y, v.z);
     }
 
     private void Move()

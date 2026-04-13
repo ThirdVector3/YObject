@@ -85,8 +85,8 @@ public class DoorsPlayer : YMonoBehaviour
             });
 
 
-        YMainCamera.Instance.SetPosition(yTransform.GetPosition());
-        YMainCamera.Instance.SetRotation(rotation);
+        YMainCamera.Instance.yTransform.SetPosition(yTransform.GetPosition());
+        YMainCamera.Instance.yTransform.SetRotation(rotation);
         yTransform.SetRotation(rotation);
     }
 

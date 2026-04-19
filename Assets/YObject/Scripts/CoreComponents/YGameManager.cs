@@ -222,6 +222,16 @@ public class YGameManager : MonoBehaviour
         UpdateAllServices();
     }
 
+    public void InvokeGroup(int group)
+    {
+        foreach (var obj in globalInitGDObjects)
+        {
+            if (obj is YTrigger trigger && trigger.HasGroup(group))
+            {
+                trigger.Activate();
+            }
+        }
+    }
     private void UpdateCoreVariables()
     {
         IDsManager.SetMemoryValueByName("Input.P1Left", Input.GetKey(KeyCode.A) ? 1f : 0f);

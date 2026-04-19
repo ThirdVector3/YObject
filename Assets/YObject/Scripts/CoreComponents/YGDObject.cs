@@ -17,7 +17,10 @@ public abstract class YGDObject
     }
 
     public abstract string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null);
-
+    public bool HasGroup(int group)
+    {
+        return groups.Contains(group); 
+    }
     public virtual void AddGroup(int group, bool toChildren = false)
     {
         List<int> gs = groups.ToList();

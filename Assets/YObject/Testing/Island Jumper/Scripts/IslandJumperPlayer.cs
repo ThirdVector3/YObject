@@ -16,7 +16,10 @@ public class IslandJumperPlayer : YMonoBehaviour
     private YVector3 cameraRotation;
     private YVariable yVelocity;
     private YVariable onGround;
+    private YVariable jumpFrame;
 
+
+    private int fixedTickGroup;
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position, 0.5f);
@@ -32,14 +35,40 @@ public class IslandJumperPlayer : YMonoBehaviour
         cameraRotation = new YVector3(0, 0, 0);
         yVelocity = new YFloat(0);
         onGround = new YInt(0);
+        jumpFrame = new YInt(0);
+
+
+        fixedTickGroup = YIDsManager.Instance.GetFreeGroup();
+        YIDsManager.Instance.AddGroup(fixedTickGroup);
+
+        YGameManager.Instance.RecordPool();
+
+        new Spawn(fixedTickGroup, 0.01f);
+        YTransform yTransform = GetComponent<YTransform>();
+        yTransform.Translate(new YVector3(new YFloat(0), yVelocity, new YFloat(0)));
+
+        foreach (var trigger in YGameManager.Instance.StopRecordPool(removeNonFirstLevel: true))
+        {
+            trigger.AddGroup(fixedTickGroup);
+        }
 
         initialised = true;
     }
+    public override void Tick()
+    {
+        new Condition(1 - IslandJumperGameManager.Instance.InMenu)
+            .Then(() =>
+            {
+                InGame();
+            });
+    }
+
     public override void Begin()
     {
-        YGameService.Get().SetFPS(45);
+        new Spawn(fixedTickGroup);
     }
-    public override void Tick()
+
+    private void InGame()
     {
         YTransform yTransform = GetComponent<YTransform>();
 
@@ -54,47 +83,61 @@ public class IslandJumperPlayer : YMonoBehaviour
         cameraPos.SetLocalPosition(cameraPosLocalPosition);
 
         YMainCamera.Instance.yTransform.SetPosition(YVector3.Lerp(YMainCamera.Instance.yTransform.GetPosition(), cameraPosPosition, new YVariable("Time.deltaTime") * lerpSpeed));
-        YMainCamera.Instance.yTransform.SetRotation(YQuaternion.Lerp(YMainCamera.Instance.yTransform.GetRotation(), YQuaternion.Euler(cameraRotation), new YVariable("Time.deltaTime") * lerpSpeed));
+        YMainCamera.Instance.yTransform.SetRotation(YQuaternion.Lerp(YMainCamera.Instance.yTransform.GetRotation(), YQuaternion.Euler(cameraRotation), new YVariable("Time.deltaTime") * lerpSpeed).Normalized());
 
 
         yTransform.SetRotation(rotation);
     }
     private void Jump()
     {
+        jumpFrame.SetValue(0);
         new Condition(YInputService.Get().P2UpDown() * onGround)
             .Then(() =>
             {
+                jumpFrame.SetValue(1);
                 yVelocity.SetValue(JumpForce * 0.01f);
             });
     }
     private void Fall()
     {
         YTransform yTransform = GetComponent<YTransform>();
-        yTransform.Translate(new YVector3(new YFloat(0), yVelocity, new YFloat(0)));
         yVelocity.Subtract(0.2f * new YVariable("Time.deltaTime"));
         onGround.SetValue(0);
         foreach (var collider in FindObjectsByType<IslandJumperPlaneCollider>(sortMode: FindObjectsSortMode.InstanceID))
         {
             var collision = collider.SphereCollision(yTransform.GetPosition(), 0.5f);
-            new Condition(collision * (yVelocity < 0))
+            ProcessCollision(collision);
+        }
+        foreach (var collider in FindObjectsByType<IslandJumperBoxCollider>(sortMode: FindObjectsSortMode.InstanceID))
+        {
+            var collision = collider.SphereCollision(yTransform.GetPosition(), 0.5f);
+            ProcessCollision(collision);
+        }
+
+        yTransform.SetScale(new YVector3(new YFloat(1), 1 + yVelocity * 3, new YFloat(1)));
+    }
+    private void ProcessCollision(IslandJumperCollisionData collision)
+    {
+        YTransform yTransform = GetComponent<YTransform>();
+        new Condition(collision.HasCollision * (1 - jumpFrame))
+            .Then(() =>
+            {
+                new Condition(collision.Normal.y > 0)
                 .Then(() =>
                 {
                     yVelocity.SetValue(0);
                     onGround.SetValue(1);
                 });
-        }
-        foreach (var collider in FindObjectsByType<IslandJumperBoxCollider>(sortMode: FindObjectsSortMode.InstanceID))
-        {
-            var collision = collider.SphereCollision(yTransform.GetPosition(), 0.5f);
-            new Condition(collision)
-                .Then(() =>
+                yTransform.Translate(collision.Penetration * 0.8f);
+                if (collision.Deadly)
                 {
                     yTransform.SetPosition(0, 0, 0);
-                    yVelocity.SetValue(0);
-                });
-        }
-
-        yTransform.SetScale(new YVector3(new YFloat(1), 1 + yVelocity * 3, new YFloat(1)));
+                }
+                if (collision.Finish)
+                {
+                    new Spawn(847);
+                }
+            });
     }
     private void Move()
     {

@@ -73,6 +73,11 @@ public class YQuaternion
         z.Divide(length);
         w.Divide(length);
     }
+    public YQuaternion Normalized()
+    {
+        Normalize();
+        return this;
+    }
     public static YQuaternion Euler(YVector3 value)
     {
         var roll = value.z / 2;

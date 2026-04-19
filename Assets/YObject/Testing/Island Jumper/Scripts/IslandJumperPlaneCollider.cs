@@ -3,15 +3,19 @@ using UnityEngine.UIElements;
 
 public class IslandJumperPlaneCollider : MonoBehaviour
 {
+    [field: SerializeField] public bool IsDeadly { get; private set; }
     private void OnDrawGizmos()
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
         Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 1, 0.01f));
     }
 
-    public YVariable SphereCollision(YVector3 sphereCenter, float sphereRadius)
+    public IslandJumperCollisionData SphereCollision(YVector3 sphereCenter, float sphereRadius)
     {
+        IslandJumperCollisionData collisionData = new IslandJumperCollisionData();
+
         YVariable hasCollision = new YInt();
+        YVector3 penetration = new YVector3();
 
         YVector3 right = new YVector3(transform.right);
         YVector3 up = new YVector3(transform.up);
@@ -40,11 +44,12 @@ public class IslandJumperPlaneCollider : MonoBehaviour
         var deltaZ = localZ;
 
         var distanceSqr = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
-        var distance = YMathService.Get().Sqrt(distanceSqr);
 
-        new Condition(distance <= sphereRadius)
+        new Condition(distanceSqr <= sphereRadius * sphereRadius)
         .Then(() =>
         {
+            var distance = YMathService.Get().Sqrt(distanceSqr);
+            penetration.SetValue((sphereRadius - distance) * normal);
             hasCollision.SetValue(1);
         })
         .Else(() =>
@@ -52,6 +57,11 @@ public class IslandJumperPlaneCollider : MonoBehaviour
             hasCollision.SetValue(0);
         });
 
-        return hasCollision;
+        collisionData.HasCollision = hasCollision;
+        collisionData.Penetration = penetration;
+        collisionData.Deadly = IsDeadly;
+        collisionData.Normal = normal;
+
+        return collisionData;
     }
 }

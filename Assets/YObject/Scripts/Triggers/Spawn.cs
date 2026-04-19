@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using UnityEngine;
 public class Spawn : YTrigger
 {
@@ -40,7 +41,13 @@ public class Spawn : YTrigger
 
     public override void Activate()
     {
-        
+        InvokeGroup();
+    }
+
+    private async void InvokeGroup()
+    {
+        await Task.Delay((int)(delay * 1000));
+        YGameManager.Instance.InvokeGroup(spawnID);
     }
 
     public override string GetString(Vector2? pos, int[] groups = null, int[] groupsParent = null)

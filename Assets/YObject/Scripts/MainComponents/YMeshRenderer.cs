@@ -284,7 +284,6 @@ public class YMeshRenderer : YMonoBehaviour
 
     private static List<int> points = new List<int>();
     private static List<int> collisionBlocks = new List<int>();
-    private int isLODActiveID = 0;
 
     public override void Uninit()
     {
@@ -298,7 +297,7 @@ public class YMeshRenderer : YMonoBehaviour
     {
         List<YGDObject> objects = new List<YGDObject>();
 
-        isLODActiveID = YIDsManager.Instance.AddVariable($"{gameObject.GetInstanceID()}.MeshRenderer.isLODActive", YIDsManager.Instance.GetFreeIdInt(), false);
+        //isLODActiveID = YIDsManager.Instance.AddVariable($"{gameObject.GetInstanceID()}.MeshRenderer.isLODActive", YIDsManager.Instance.GetFreeIdInt(), false);
 
         if (!YGameManager.Instance.transportingToGd)
             return;
@@ -325,6 +324,8 @@ public class YMeshRenderer : YMonoBehaviour
 
         int LODGroupId = YGameManager.Instance.IDsManager.GetFreeGroup();
         YGameManager.Instance.IDsManager.AddGroup(LODGroupId);
+        int isLODActiveID = YGameManager.Instance.IDsManager.GetFreeIdInt();
+        YGameManager.Instance.IDsManager.AddVariable($"{gameObject.GetInstanceID()}.{LODIndex}.active", isLODActiveID, false);
 
         int vertexId = 0;
         int perfomanceUpdate = 1010;
@@ -706,9 +707,10 @@ public class YMeshRenderer : YMonoBehaviour
 
             List<YTrigger> triggers1 = new List<YTrigger>()
             {
-                new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 1, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Subtract),
-                new ItemEdit(9998, true, ItemEdit.Operation.Equals, 1, 2, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Subtract),
-                new ItemEdit(9997, true, ItemEdit.Operation.Equals, 1, 3, true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Subtract),
+
+                new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, YIDsManager.Instance.GetIdByName(YMainCamera.Instance.gameObject.GetInstanceID() + ".transform.position.x"), true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.x"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9998, true, ItemEdit.Operation.Equals, 1, YIDsManager.Instance.GetIdByName(YMainCamera.Instance.gameObject.GetInstanceID() + ".transform.position.y"), true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.y"), true, ItemEdit.Operation.Subtract),
+                new ItemEdit(9997, true, ItemEdit.Operation.Equals, 1, YIDsManager.Instance.GetIdByName(YMainCamera.Instance.gameObject.GetInstanceID() + ".transform.position.z"), true, YGameManager.Instance.IDsManager.GetIdByName(gameObject.GetInstanceID() + ".transform.position.z"), true, ItemEdit.Operation.Subtract),
 
                 new ItemEdit(9999, true, ItemEdit.Operation.Equals, 1, 9999, true, 9999, true, ItemEdit.Operation.Multiply),
                 new ItemEdit(9999, true, ItemEdit.Operation.Add, 1, 9998, true, 9998, true, ItemEdit.Operation.Multiply),
@@ -726,11 +728,13 @@ public class YMeshRenderer : YMonoBehaviour
 
             List<YTrigger> triggers3 = new List<YTrigger>()
             {
-                new Toggle(LODGroupId, true),
+
                 //new Spawn(LODGroupId, false, 0, new Dictionary<int, int>())
                 new ItemCompare(isLODActiveID, 0, false, false, 1, 0, ItemCompare.Operation.Equals,
                 new YTrigger[]
                 {
+                    new Toggle(LODGroupId, true),
+                    //new Stop(LODGroupId),
                     new Spawn(LODGroupId, false, 0, new Dictionary<int, int>()),
                     new ItemEdit(isLODActiveID, false, ItemEdit.Operation.Equals, 1)
                 },
@@ -1002,26 +1006,34 @@ public class YMeshRenderer : YMonoBehaviour
     }
     public void BakeLighting()
     {
-        for (int i = 0; i < triangleColors.Length; i++)
+        int tmpMesh = currentMesh;
+        for (int j = 0; j < meshes.Length; j++)
         {
-            var vertices = new Vector3[] { 
-                transform.TransformPoint(separatedVertices[separatedTriangles[i * 3]]),
-                transform.TransformPoint(separatedVertices[separatedTriangles[i * 3 + 1]]), 
-                transform.TransformPoint(separatedVertices[separatedTriangles[i * 3 + 2]])
-            };
-
-            float[] lights = new float[3];
-            foreach (var lightSource in FindObjectsByType<YLightSource>(FindObjectsSortMode.None))
+            currentMesh = j;
+            LoadMeshData();
+            for (int i = 0; i < triangleColors.Length; i++)
             {
-                var lightLevels = lightSource.GetLightLevel(vertices);
-                lights[0] += lightLevels[0];
-                lights[1] += lightLevels[1];
-                lights[2] += lightLevels[2];
-            }
+                var vertices = new Vector3[] { 
+                    transform.TransformPoint(separatedVertices[separatedTriangles[i * 3]]),
+                    transform.TransformPoint(separatedVertices[separatedTriangles[i * 3 + 1]]), 
+                    transform.TransformPoint(separatedVertices[separatedTriangles[i * 3 + 2]])
+                };
 
-            triangleLightLevels[i] = lights;
+                float[] lights = new float[3];
+                foreach (var lightSource in FindObjectsByType<YLightSource>(FindObjectsSortMode.None))
+                {
+                    var lightLevels = lightSource.GetLightLevel(vertices);
+                    lights[0] += lightLevels[0];
+                    lights[1] += lightLevels[1];
+                    lights[2] += lightLevels[2];
+                }
+
+                triangleLightLevels[i] = lights;
+            }
+            SaveMeshData();
         }
-        SaveMeshData();
+        currentMesh = tmpMesh;
+        LoadMeshData();
     }
     private Color[] GetLightedTriangleColors(int[] channels, Color[] correctors, Vector3[] vertices, int triangleIndex)
     {
